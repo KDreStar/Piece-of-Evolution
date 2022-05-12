@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21e5737c31500e847b5529f61a370734, type: 3}
+  m_Name: HPUPI
+  m_EditorClassIdentifier: 
+  no: 11
+  name: "HP \uC99D\uAC00 I"
+  description: "\uCE90\uB9AD\uD130\uC758 \uCD5C\uB300 HP + 50"
+  skillCost: 0
+  icon: {fileID: 0}
+  statFormula: HP + 50

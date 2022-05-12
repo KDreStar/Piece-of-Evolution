@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0709c0cdf571a234bb366985c1ab0c57, type: 3}
+  m_Name: Slash
+  m_EditorClassIdentifier: 
+  no: 12
+  name: "\uC2AC\uB798\uC2DC"
+  description: "ATK * 1.1 \uC758 \uB370\uBBF8\uC9C0\uB85C \uC801\uC744 \uBCA4\uB2E4."
+  skillCost: 1
+  icon: {fileID: 0}
+  baseCooltime: 10
+  damageFormula: ATK * 1.1
