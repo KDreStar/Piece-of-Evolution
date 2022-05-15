@@ -66,7 +66,7 @@ public class SkillSlot : MonoBehaviour
         if (skill == null)
             return;
 
-        skill.Use();
+        skill.Use(transform);
     }
 
     public Skill GetSkill(int i) {
@@ -106,6 +106,7 @@ public class SkillSlot : MonoBehaviour
 
         //Test
         AddSkill(0, SkillDatabase.Instance.GetSkill(12));
+        AddSkill(1, SkillDatabase.Instance.GetSkill(13));
 
         UseSkill(0);
     }

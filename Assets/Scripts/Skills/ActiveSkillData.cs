@@ -18,4 +18,11 @@ public class ActiveSkillData : SkillData
     public string DamageFormula {
         get { return damageFormula; }
     }
+
+    //이펙트
+    [SerializeField]
+    private GameObject effect;
+    public GameObject Effect {
+        get { return effect; }
+    }
 }
