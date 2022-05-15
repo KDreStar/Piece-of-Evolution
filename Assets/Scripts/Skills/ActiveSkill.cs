@@ -8,10 +8,19 @@ public class ActiveSkill : Skill
 
     private float currentCooltime;
 
-    //스킬을 사용하면 각 스킬에 맞는 오브젝트를 생성하여 보여주는 방식으로 코딩
-    //TO-DO ActiveSkillData에 오브젝트(스킬 이펙트)들을 할당해야함
+    public void SetData(ActiveSkillData data) {
+        skillData = data;
+        activeSkillData = data;
+    }
+
+    //스킬을 사용하면 프리펩을 생성하면 됨
+    //프리펩에는 이펙트랑 스크립트를 가지고 있음
+    //각 스킬 마다 구현하면 될 듯? ㅁ?ㄹ
     public void Use()
     {
+        if (currentCooltime > 0)
+            return;
+
         Debug.Log(activeSkillData.Name + "사용");
         Debug.Log(activeSkillData.DamageFormula);
     }

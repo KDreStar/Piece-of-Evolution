@@ -5,4 +5,8 @@ using UnityEngine;
 public class Skill : MonoBehaviour
 {
     public SkillData skillData;
+
+    public void SetData(SkillData data) {
+        skillData = data;
+    }
 }
