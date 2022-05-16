@@ -66,7 +66,7 @@ public class SkillSlot : MonoBehaviour
         if (skill == null)
             return;
 
-        skill.Use(transform);
+        skill.Use(gameObject);
     }
 
     public Skill GetSkill(int i) {
