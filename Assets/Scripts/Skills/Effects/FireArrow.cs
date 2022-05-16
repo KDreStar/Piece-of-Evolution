@@ -9,24 +9,15 @@ public class FireArrow : SkillEffect
     //테스트로 일단 세팅
     float speed = 10.0f;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        Debug.Log("Create Fire Arrow");
-        Destroy(gameObject, 3.0f);
-    }
-
     // Update is called once per frame
-    void Update()
+    public override void Update()
     {
         Vector2 vector = new Vector2(1, 0);
         transform.Translate(vector * speed * Time.deltaTime);
     }
 
-    void OnTriggerEnter2D(Collider2D col) {
-        //즉 스킬이 시전자가 아닌 캐릭터에게 부딛칠때;
-        if (col.CompareTag(caster.tag) == false) {
-            Debug.Log("데미지 입음");
-        }
+    //여기서 스킬 데미지 계산 처리
+    public override void CalculateDamage() {
+        Debug.Log("데미지 체크");
     }
 }
