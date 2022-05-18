@@ -105,10 +105,7 @@ public class SkillSlot : MonoBehaviour
         }
 
         //Test
-        AddSkill(0, SkillDatabase.Instance.GetSkill(12));
-        AddSkill(1, SkillDatabase.Instance.GetSkill(13));
-
-        UseSkill(0);
+        AddSkill(0, SkillDatabase.Instance.GetSkill(13));
     }
 
     // Update is called once per frame

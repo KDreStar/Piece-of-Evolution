@@ -38,11 +38,14 @@ public class SkillEffect : MonoBehaviour
     }
 
     void OnTriggerEnter2D(Collider2D col) {
-        Debug.Log(col.gameObject.tag);
-        Debug.Log(defender.tag);
-        //즉 스킬이 시전자가 아닌 캐릭터에게 부딛칠때;
+        //시전자가 아닌 캐릭터에게 부딛칠때;
         if (col.CompareTag(defender.tag) == true) {
             CalculateDamage();
+
+            CharacterAgent agent = attacker.transform.parent.GetChild(1).GetComponent<CharacterAgent>();
+
+            if (agent != null)
+                agent.AddReward(1.0f);
         }
     }
 

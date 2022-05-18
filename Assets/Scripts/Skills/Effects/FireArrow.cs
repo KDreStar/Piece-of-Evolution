@@ -19,5 +19,8 @@ public class FireArrow : SkillEffect
     //여기서 스킬 데미지 계산 처리
     public override void CalculateDamage() {
         Debug.Log("데미지 체크");
+
+        float damage = 250;//attackerStatus.CurrentATK  - defenderStatus.CurrentDEF;
+        defenderStatus.TakeDamage(damage);
     }
 }

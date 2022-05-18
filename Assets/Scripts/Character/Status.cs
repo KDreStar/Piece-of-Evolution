@@ -7,17 +7,30 @@ public class Status : MonoBehaviour
     string name; //이름
 
     float currentHP;
+    public float CurrentHP {
+        get { return currentHP; }
+    }
+
     float maxHP;
-    float baseHP;
+    public float MaxHP {
+        get { return maxHP; }
+    }
+    public float baseHP;
 
     float currentATK;
-    float baseATK;
+    public float CurrentATK {
+        get { return currentATK; }
+    }
+    public float baseATK;
     
     float currentDEF; //방어력 DEF
-    float baseDEF; //기본 방어력 baseDEF
+    public float CurrentDEF {
+        get { return currentDEF; }
+    }
+    public float baseDEF; //기본 방어력 baseDEF
 
     float currentSPD; //스피드 SPD
-    float baseSPD; //기본 스피드 baseSPD
+    public float baseSPD; //기본 스피드 baseSPD
 
     public float CurrentSPD {
         get { return currentSPD; }
@@ -47,7 +60,11 @@ public class Status : MonoBehaviour
         baseHP = 500;
         baseSPD = 10;
 
+        maxHP = baseHP;
+
+        currentHP  = baseHP;
         currentATK = baseATK;
+        currentDEF = baseDEF;
         currentSPD = baseSPD;
 
         //현재 오브젝트에 부착되어 있는 것중 SkillSlot을 가져옴
@@ -58,5 +75,13 @@ public class Status : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void SetHP(float hp) {
+        currentHP = hp;
+    }
+
+    public void TakeDamage(float damage) {
+        currentHP -= damage;
     }
 }
