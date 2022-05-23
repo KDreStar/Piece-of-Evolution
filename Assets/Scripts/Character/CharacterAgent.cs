@@ -8,9 +8,9 @@ public class CharacterAgent : Agent
 {
     public GameObject character;
     public Status characterStatus;
-    public SkillSlot characterSkillSlot;
+    public EquipSkills characterEquipSkills;
     public GameObject enemy;
-    public SkillSlot enemySkillSlot;
+    public EquipSkills enemyEquipSkills;
     public Status enemyStatus;
     EnvironmentParameters m_ResetParams;
 
@@ -18,10 +18,10 @@ public class CharacterAgent : Agent
     {
         m_ResetParams = Academy.Instance.EnvironmentParameters;
 
-        characterSkillSlot = character.GetComponent<SkillSlot>();
+        characterEquipSkills = character.GetComponent<EquipSkills>();
         characterStatus = character.GetComponent<Status>();
 
-        enemySkillSlot = enemy.GetComponent<SkillSlot>();
+        enemyEquipSkills = enemy.GetComponent<EquipSkills>();
         enemyStatus = enemy.GetComponent<Status>();
         SetResetParameters();
     }
@@ -36,12 +36,12 @@ public class CharacterAgent : Agent
         sensor.AddObservation(character.transform.position);
         sensor.AddObservation(enemy.transform.position);
 
-        ActiveSkill activeSkill = characterSkillSlot.GetActiveSkill(0);
+        SkillSlot skillSlot = characterEquipSkills.GetSkillSlot(0);
 
-        if (activeSkill == null)
+        if (skillSlot.skill == null)
             sensor.AddObservation(0);
         else
-            sensor.AddObservation(activeSkill.CurrentCooltime);
+            sensor.AddObservation(skillSlot.CurrentCooltime);
     }
 
     //취하는 액션
@@ -58,10 +58,12 @@ public class CharacterAgent : Agent
 
         Vector2 vector = new Vector2(dx[direction], dy[direction]);
 
+        //캐릭터 움직이기
         character.transform.Translate(vector * characterStatus.CurrentSPD * 0.3f * Time.deltaTime);
 
+        //스킬 사용하기
         if (skillIndex > 0) {
-            characterSkillSlot.UseSkill(skillIndex - 1);
+            characterEquipSkills.UseSkill(skillIndex - 1);
 
             //if (result == false)
             //    AddReward(-0.5f)
@@ -147,6 +149,6 @@ public class CharacterAgent : Agent
        character.transform.position = new Vector2(-5, 0);
        enemy.transform.position = new Vector2(5, 0);
        enemyStatus.SetHP(500);
-       //characterSkillSlot.GetActiveSkill(0).ResetCooltime();
+       //characterEquipSkills.GetSkillSlot(0).ResetCooltime();
     }
 }

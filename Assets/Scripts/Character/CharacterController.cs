@@ -5,13 +5,13 @@ using UnityEngine;
 //캐릭터 조작 관련
 public class CharacterController : MonoBehaviour
 {
-    SkillSlot skillSlot;
+    EquipSkills equipSkills;
     Status status;
 
     // Start is called before the first frame update
     void Start()
     {
-        skillSlot = GetComponent<SkillSlot>();
+        equipSkills = GetComponent<EquipSkills>();
         status = GetComponent<Status>();
     }
 
@@ -32,35 +32,35 @@ public class CharacterController : MonoBehaviour
 
     void CheckUseSkill() {
         if (Input.GetKeyDown(KeyCode.Q)) {
-            skillSlot.UseSkill(0);
+            equipSkills.UseSkill(0);
         }
 
         if (Input.GetKeyDown(KeyCode.W)) {
-            skillSlot.UseSkill(1);
+            equipSkills.UseSkill(1);
         }
 
         if (Input.GetKeyDown(KeyCode.E)) {
-            skillSlot.UseSkill(2);
+            equipSkills.UseSkill(2);
         }
 
         if (Input.GetKeyDown(KeyCode.A)) {
-            skillSlot.UseSkill(3);
+            equipSkills.UseSkill(3);
         }
 
         if (Input.GetKeyDown(KeyCode.S)) {
-            skillSlot.UseSkill(4);
+            equipSkills.UseSkill(4);
         }
 
         if (Input.GetKeyDown(KeyCode.D)) {
-            skillSlot.UseSkill(5);
+            equipSkills.UseSkill(5);
         }
 
         if (Input.GetKeyDown(KeyCode.X)) {
-            skillSlot.UseSkill(6);
+            equipSkills.UseSkill(6);
         }
 
         if (Input.GetKeyDown(KeyCode.Space)) {
-            skillSlot.UseSkill(7);
+            equipSkills.UseSkill(7);
         }
     }
 }

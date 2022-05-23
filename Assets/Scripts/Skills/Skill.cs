@@ -1,12 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Skill : MonoBehaviour
+[CreateAssetMenu(menuName = "SkillData")]
+public class Skill : ScriptableObject
 {
-    public SkillData skillData;
+    [SerializeField]
+    private int no;
+    public int No {
+        get { return no; }
+    }
 
-    public void SetData(SkillData data) {
-        skillData = data;
+    [SerializeField]
+    private string name;
+    public string Name {
+        get { return name; }
+    }
+    
+    [SerializeField]
+    [TextArea]
+    private string description;
+    public string Description {
+        get { return description; }
+    }
+
+    [SerializeField]
+    private int skillCost;
+    public int SkillCost {
+        get { return skillCost; }
+    }
+
+    [SerializeField]
+    private Image icon;
+    public Image Icon {
+        get { return icon; }
     }
 }

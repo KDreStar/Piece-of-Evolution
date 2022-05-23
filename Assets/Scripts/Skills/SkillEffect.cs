@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SkillEffect : MonoBehaviour
 {
-    public ActiveSkillData activeSkillData;
+    public ActiveSkill activeSkill;
 
     public GameObject attacker;
     public GameObject defender;

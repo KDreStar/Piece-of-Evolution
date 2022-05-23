@@ -16,8 +16,16 @@ public class SkillInventory : MonoBehaviour
     public int Page {
         get { return page; }
     }
+ 
+    /*
+    public SkillSlot GetSkillSlot(int i) {
+        return slot[i].GetComponent<SkillSlot>();
+    }
 
     public Skill GetSkill(int i) {
+        if (i >= slot.Count)
+            return null;
+
         return slot[i].GetComponent<Skill>();
     }
 
@@ -93,7 +101,7 @@ public class SkillInventory : MonoBehaviour
     }
 
     //스킬 이동시
-    public void TransferSkill(Skill skill) {
+    public void MoveSkill(Skill skill) {
         AddSkill(skill);
         Destroy(skill);
     }
@@ -119,4 +127,5 @@ public class SkillInventory : MonoBehaviour
     {
         
     }
+    */
 }

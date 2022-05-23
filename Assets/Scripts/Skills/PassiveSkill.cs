@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[CreateAssetMenu(menuName = "PassiveSkill")]
 public class PassiveSkill : Skill
 {
-    public PassiveSkillData passiveSkillData;
-
-    public void SetData(PassiveSkillData data) {
-        skillData = data;
-        passiveSkillData = data;
+    //스탯 적용 공식
+    [SerializeField]
+    private string statFormula;
+    public string StatFormula {
+        get { return statFormula; }
     }
 
     public void Calculate()
     {
-        Debug.Log(passiveSkillData.StatFormula);
+        Debug.Log(statFormula);
     }
 }

@@ -38,12 +38,12 @@ public class Status : MonoBehaviour
 
     //버프
     //스킬
-    private SkillSlot skillSlot;
+    private EquipSkills equipSkills;
 
     void CalculateStat() {
         //패시브 스킬, 버프등을 처리하고 currentStat을 설정
-        for (int i=0; i<SkillSlot.maxSlot; i++) {
-            PassiveSkill skill = skillSlot.GetPassiveSkill(i);
+        for (int i=0; i<EquipSkills.maxSlot; i++) {
+            PassiveSkill skill = equipSkills.GetPassiveSkill(i);
 
             if (skill == null)
                 continue;
@@ -67,8 +67,7 @@ public class Status : MonoBehaviour
         currentDEF = baseDEF;
         currentSPD = baseSPD;
 
-        //현재 오브젝트에 부착되어 있는 것중 SkillSlot을 가져옴
-        skillSlot = GetComponent<SkillSlot>();
+        equipSkills = GetComponent<EquipSkills>();
     }
 
     // Update is called once per frame
@@ -77,6 +76,7 @@ public class Status : MonoBehaviour
         
     }
 
+    //Temp
     public void SetHP(float hp) {
         currentHP = hp;
     }

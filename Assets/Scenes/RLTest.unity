@@ -168,7 +168,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillList: []
-  dataList: []
 --- !u!1 &279730195
 GameObject:
   m_ObjectHideFlags: 0
@@ -218,7 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4641c9fbd56c8ab48ac298e47f8afdc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSkillCost: 20
+  skill: {fileID: 0}
 --- !u!212 &279730200
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -455,9 +454,9 @@ MonoBehaviour:
   MaxStep: 1000
   character: {fileID: 1741859596}
   characterStatus: {fileID: 0}
-  characterSkillSlot: {fileID: 0}
+  characterEquipSkills: {fileID: 0}
   enemy: {fileID: 279730195}
-  enemySkillSlot: {fileID: 0}
+  enemyEquipSkills: {fileID: 0}
   enemyStatus: {fileID: 0}
 --- !u!114 &565736514
 MonoBehaviour:
@@ -481,7 +480,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 6b9a4859f2678c147bb039fb91dc32ed, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: 808b574054c077e4dbe5af446a6c2a25, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: Character
@@ -865,7 +864,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4641c9fbd56c8ab48ac298e47f8afdc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSkillCost: 20
+  skill: {fileID: 0}
 --- !u!114 &1741859602
 MonoBehaviour:
   m_ObjectHideFlags: 0
