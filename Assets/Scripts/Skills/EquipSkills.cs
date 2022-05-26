@@ -6,7 +6,8 @@ using UnityEngine;
 public class EquipSkills : MonoBehaviour
 {
     public const int maxSlot = 8;
-    public GameObject[] slot = new GameObject[maxSlot];
+    private GameObject[] slot = new GameObject[maxSlot];
+    public SkillSlot[] skillSlot = new SkillSlot[maxSlot];
 
     //최대 스킬 코스트 (인스펙터에서 설정) 기본 20
     [SerializeField]
@@ -20,10 +21,8 @@ public class EquipSkills : MonoBehaviour
         if (currentSkillCost + skill.SkillCost > maxSkillCost)
             return false;
 
-        SkillSlot skillSlot = GetSkillSlot(i);
-
         //빈 슬롯이면 추가
-        if (skillSlot.IsEmpty()) {
+        if (skillSlot[i].IsEmpty()) {
             AddSkill(i, skill);
         } else {
             //슬롯이 이미 있으면 스킬인벤토리와 스왑 (Destroy)
@@ -38,60 +37,89 @@ public class EquipSkills : MonoBehaviour
 
     //스킬슬롯 내부에서 위치 변경
     public void SwapSkill(int i, int j) {
-        SkillSlot skillSlotI = slot[i].GetComponent<SkillSlot>();
-        SkillSlot skillSlotJ = slot[j].GetComponent<SkillSlot>();
-
-        Skill skillI = skillSlotI.skill;
-        Skill skillJ = skillSlotJ.skill;
+        Skill skillI = skillSlot[i].skill;
+        Skill skillJ = skillSlot[j].skill;
         
-        skillSlotI.skill = skillJ;
-        skillSlotJ.skill = skillI;
+        skillSlot[i].skill = skillJ;
+        skillSlot[j].skill = skillI;
     }
 
     public SkillSlot GetSkillSlot(int i) {
-        return slot[i].GetComponent<SkillSlot>();
+        return skillSlot[i];
     }
 
     //스킬 추가만
     public void AddSkill(int i, Skill skill) {
-        GetSkillSlot(i).skill = skill;
+        skillSlot[i].skill = skill;
     }
 
-    public bool UseSkill(int i) {
-        return GetSkillSlot(i).UseSkill(gameObject);
+    public bool UseSkill(int i){
+        return skillSlot[i].UseSkill(gameObject);
+    }
+
+    public bool UseSkill(int i, int direction) {
+        return skillSlot[i].UseSkill(gameObject, direction);
     }
 
     public Skill GetSkill(int i) {
-        return GetSkillSlot(i).skill;
+        return skillSlot[i].skill;
     }
 
     public ActiveSkill GetActiveSkill(int i) {
-        return GetSkillSlot(i).GetActiveSkill();
+        return skillSlot[i].GetActiveSkill();
     }
 
     public PassiveSkill GetPassiveSkill(int i) {
-        return GetSkillSlot(i).GetPassiveSkill();
+        return skillSlot[i].GetPassiveSkill();
     }
 
 
     // Start is called before the first frame update
-    void Start()
-    {
-        //Temp
-        //나중에 UI로 수정하세요
+
+    void Awake() {
         GameObject equipSkills = new GameObject();
         equipSkills.name = "EquipSkills";
+
+        skillSlot = new SkillSlot[maxSlot];
 
         for (int i=0; i<maxSlot; i++) {
             slot[i] = new GameObject();
 
             slot[i].name = "Slot" + (i + 1);
             slot[i].transform.parent = equipSkills.transform;
-            slot[i].AddComponent<SkillSlot>();
-        }
+            skillSlot[i] = slot[i].AddComponent<SkillSlot>();
 
-        //Test
-        AddSkill(0, SkillDatabase.Instance.GetSkill(13));
+            Debug.Log(skillSlot[i]);
+        }
+    }
+
+    void Start()
+    {
+        //Temp
+        //나중에 UI로 수정하세요
+        /*
+        GameObject equipSkills = new GameObject();
+        equipSkills.name = "EquipSkills";
+
+        skillSlot = new SkillSlot[maxSlot];
+
+        for (int i=0; i<maxSlot; i++) {
+            slot[i] = new GameObject();
+
+            slot[i].name = "Slot" + (i + 1);
+            slot[i].transform.parent = equipSkills.transform;
+            skillSlot[i] = slot[i].AddComponent<SkillSlot>();
+
+            Debug.Log(skillSlot[i]);
+        }
+        */
+        if (gameObject.tag == "Character") {
+            AddSkill(0, SkillDatabase.Instance.GetSkill(13));
+            AddSkill(1, SkillDatabase.Instance.GetSkill(14));
+            AddSkill(2, SkillDatabase.Instance.GetSkill(15));
+        } else {
+            AddSkill(0, SkillDatabase.Instance.GetSkill(16));
+        }
     }
 
     // Update is called once per frame

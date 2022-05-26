@@ -98,6 +98,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8eb3a4637c91794f8d37cd45e2f2a92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  activeSkill: {fileID: 11400000, guid: f16126d946390ae46a8dda48d4df221b, type: 2}
+  attacker: {fileID: 0}
+  defender: {fileID: 0}
+  attackerStatus: {fileID: 0}
+  defenderStatus: {fileID: 0}
+  direction: 0
 --- !u!61 &3933037091745222426
 BoxCollider2D:
   m_ObjectHideFlags: 0

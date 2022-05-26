@@ -9,6 +9,13 @@ public class FireArrow : SkillEffect
     //테스트로 일단 세팅
     float speed = 10.0f;
 
+    public override void Start() {
+        base.Start();
+
+        Debug.Log("Destroy");
+        Destroy(gameObject, 2.5f);
+    }
+    
     // Update is called once per frame
     public override void Update()
     {

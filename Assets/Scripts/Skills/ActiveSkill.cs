@@ -29,11 +29,16 @@ public class ActiveSkill : Skill
     //스킬을 사용하면 프리펩을 생성하면 됨
     //프리펩에는 이펙트랑 스크립트를 가지고 있음
     //각 스킬 마다 구현하면 될 듯? ㅁ?ㄹ
-    public bool Use(GameObject attacker)
+    public bool Use(GameObject attacker, int direction=3)
     {
         //currentCooltime = activeSkillData.BaseCooltime;
-        GameObject clone = Instantiate(effect, attacker.transform.position, attacker.transform.rotation);
+        //바라보는 방향으로 스킬 생성
+        // 1 = ↑ //
+        Vector3 angle = new Vector3(0, 0, 135 - direction * 45);
+
+        GameObject clone = Instantiate(effect, attacker.transform.position, effect.transform.rotation * Quaternion.Euler(angle));
         clone.tag = attacker.tag + "Skill";
+        clone.transform.parent = attacker.transform.parent.transform;
 
         //StartCoroutine(ApplyCooltime());
 

@@ -3,7 +3,12 @@ guid: a8eb3a4637c91794f8d37cd45e2f2a92
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - activeSkill: {fileID: 11400000, guid: f16126d946390ae46a8dda48d4df221b, type: 2}
+  - attacker: {instanceID: 0}
+  - defender: {instanceID: 0}
+  - attackerStatus: {instanceID: 0}
+  - defenderStatus: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

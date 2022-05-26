@@ -1,0 +1,29 @@
+{
+    "Character": {
+        "checkpoints": [
+            {
+                "steps": 177900,
+                "file_path": "results\\CharacterHard\\Character\\Character-177900.onnx",
+                "reward": -5.520345021938455,
+                "creation_time": 1653545604.6830416,
+                "auxillary_file_paths": [
+                    "results\\CharacterHard\\Character\\Character-177900.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 177900,
+            "file_path": "results\\CharacterHard\\Character.onnx",
+            "reward": -5.520345021938455,
+            "creation_time": 1653545604.6830416,
+            "auxillary_file_paths": [
+                "results\\CharacterHard\\Character\\Character-177900.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.28.0",
+        "torch_version": "1.11.0+cu113"
+    }
+}

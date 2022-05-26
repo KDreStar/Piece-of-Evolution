@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 476d5d6f112f5674797fd7c421c9a64b, type: 3}
   m_Name: Slash
   m_EditorClassIdentifier: 
-  no: 12
-  name: "\uC2AC\uB798\uC2DC"
-  description: "ATK * 1.1 \uC758 \uB370\uBBF8\uC9C0\uB85C \uC801\uC744 \uBCA4\uB2E4."
-  skillCost: 1
+  no: 16
+  name: "\uBCA0\uAE30"
+  description: "\uAC80\uC73C\uB85C \uC801\uC744 \uBCA0\uC5B4 ATK \uC758 \uB370\uBBF8\uC9C0\uB97C
+    \uC900\uB2E4."
+  skillCost: 2
   icon: {fileID: 0}
-  baseCooltime: 10
-  damageFormula: ATK * 1.1
-  effect: {fileID: 0}
+  baseCooltime: 0.5
+  damageFormula: ATK
+  effect: {fileID: 6226665961080616665, guid: 4193cd7e872ecfd49be0334151a48833, type: 3}

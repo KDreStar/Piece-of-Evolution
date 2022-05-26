@@ -26,7 +26,8 @@ public class SkillSlot : MonoBehaviour
         return skill as PassiveSkill;
     }
 
-    public bool UseSkill(GameObject gameObject) {
+    /////
+    public bool UseSkill(GameObject gameObject, int direction=3) {
         ActiveSkill activeSkill = GetActiveSkill();
 
         if (activeSkill == null)
@@ -35,7 +36,7 @@ public class SkillSlot : MonoBehaviour
         if (currentCooltime > 0)
             return false;
 
-        activeSkill.Use(gameObject);
+        activeSkill.Use(gameObject, direction);
         currentCooltime = activeSkill.BaseCooltime;
         StartCoroutine(ApplyCooltime());
 
