@@ -1,0 +1,66 @@
+{
+    "Character": {
+        "checkpoints": [
+            {
+                "steps": 999863,
+                "file_path": "results\\CharacterVSEnemy\\Character\\Character-999863.onnx",
+                "reward": -1.8571428571428572,
+                "creation_time": 1653977047.6780207,
+                "auxillary_file_paths": [
+                    "results\\CharacterVSEnemy\\Character\\Character-999863.pt"
+                ]
+            },
+            {
+                "steps": 1499977,
+                "file_path": "results\\CharacterVSEnemy\\Character\\Character-1499977.onnx",
+                "reward": 3.5625,
+                "creation_time": 1653981021.526044,
+                "auxillary_file_paths": [
+                    "results\\CharacterVSEnemy\\Character\\Character-1499977.pt"
+                ]
+            },
+            {
+                "steps": 1999868,
+                "file_path": "results\\CharacterVSEnemy\\Character\\Character-1999868.onnx",
+                "reward": -3.0,
+                "creation_time": 1653985310.2887437,
+                "auxillary_file_paths": [
+                    "results\\CharacterVSEnemy\\Character\\Character-1999868.pt"
+                ]
+            },
+            {
+                "steps": 2499937,
+                "file_path": "results\\CharacterVSEnemy\\Character\\Character-2499937.onnx",
+                "reward": 2.533333333333333,
+                "creation_time": 1653989759.5795097,
+                "auxillary_file_paths": [
+                    "results\\CharacterVSEnemy\\Character\\Character-2499937.pt"
+                ]
+            },
+            {
+                "steps": 2570150,
+                "file_path": "results\\CharacterVSEnemy\\Character\\Character-2570150.onnx",
+                "reward": -2.111111111111111,
+                "creation_time": 1653990297.9572651,
+                "auxillary_file_paths": [
+                    "results\\CharacterVSEnemy\\Character\\Character-2570150.pt"
+                ]
+            }
+        ],
+        "elo": 1600.7197458890485,
+        "final_checkpoint": {
+            "steps": 2570150,
+            "file_path": "results\\CharacterVSEnemy\\Character.onnx",
+            "reward": -2.111111111111111,
+            "creation_time": 1653990297.9572651,
+            "auxillary_file_paths": [
+                "results\\CharacterVSEnemy\\Character\\Character-2570150.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.28.0",
+        "torch_version": "1.11.0+cu113"
+    }
+}

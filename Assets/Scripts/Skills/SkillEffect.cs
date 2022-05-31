@@ -14,22 +14,29 @@ public class SkillEffect : MonoBehaviour
     public int direction;
     private bool isAttacked = false;
 
+    Field field;
+
     // Start is called before the first frame update
-    public virtual void Start()
+    void Start()
     {
-        Transform field = transform.parent;
+
+    }
+
+    public void Initialize() {
+        field = transform.GetComponentInParent<Field>();
 
         if (gameObject.tag == "CharacterSkill") {
-            attacker = field.Find("Character").gameObject;
-            defender = field.Find("Enemy").gameObject;
+            attacker = field.transform.Find("Character").gameObject;
+            defender = field.transform.Find("Enemy").gameObject;
         } else {
-            attacker = field.Find("Enemy").gameObject;
-            defender = field.Find("Character").gameObject;
+            attacker = field.transform.Find("Enemy").gameObject;
+            defender = field.transform.Find("Character").gameObject;
         }
 
         attackerStatus = attacker.GetComponent<Status>();
         defenderStatus = defender.GetComponent<Status>();
 
+        isAttacked = false;
         /*
         공식
         135 - 45 * direction = z
@@ -41,7 +48,9 @@ public class SkillEffect : MonoBehaviour
         Debug.Log("부모 Start 실행" + attacker.tag + " " + defender.tag);
         direction = (int)((135 - transform.rotation.z) / 45);
 
-        field.GetComponent<Field>().Add(this);
+        Invoke("DestroySkillEffect", activeSkill.BaseDestroyTime);
+
+        field.Add(this);
     }
 
     public int GetSkillNo() {
@@ -58,6 +67,13 @@ public class SkillEffect : MonoBehaviour
         
     }
 
+    public void DestroySkillEffect() {
+        Debug.Log("Destroyed");
+
+        field.Remove(this);
+        SkillPool.Instance.ReturnSkillEffect(this);
+    }
+
     public void OnTriggerStay2D(Collider2D col) {
         if (isAttacked)
             return;
@@ -65,20 +81,25 @@ public class SkillEffect : MonoBehaviour
         if (defender == null)
             return;
 
-        Debug.Log("부딛침");
         if (col.CompareTag(defender.tag) == true) {
             isAttacked = true;
-            Debug.Log("부딛침");
             CalculateDamage();
 
-            BattleAgent agent = attacker.GetComponent<BattleAgent>();
+            /*
+            BattleAgent attackerAgent = attacker.GetComponent<BattleAgent>();
+            BattleAgent defenderAgent = defender.GetComponent<BattleAgent>();
 
-            if (agent != null)
-                agent.AddReward(2.0f);
+            if (attackerAgent != null && defenderAgent != null) {
+                attackerAgent.AddReward(0.2f);
+                defenderAgent.AddReward(-0.2f);
+            }
+            */
         }
     }
 
     public virtual void CalculateDamage() {
+		float damage = 100;
 
+		defenderStatus.TakeDamage(damage);
     }
 }

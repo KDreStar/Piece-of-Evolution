@@ -10,18 +10,19 @@ public class Field : MonoBehaviour
         skillEffects.Add(skillEffect);
     }
 
+    public void Remove(SkillEffect skillEffect) {
+        skillEffects.Remove(skillEffect);
+    }
+
     public List<SkillEffect> GetList() {
-        for (int i=0; i<skillEffects.Count; i++) {
-            if (skillEffects[i] == null)
-                skillEffects.RemoveAt(i);
-        }
-
-        skillEffects.TrimExcess();
-
         return skillEffects;
     }
 
     public void ClearEffects() {
+        for (int i=0; i<skillEffects.Count; i++) {
+            skillEffects[i].DestroySkillEffect();
+        }
+
         skillEffects.Clear();
     }
 

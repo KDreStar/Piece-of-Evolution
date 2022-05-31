@@ -50,6 +50,8 @@ public class SkillSlot : MonoBehaviour
     IEnumerator ApplyCooltime() {
         while (currentCooltime > 0) {
             currentCooltime -= Time.deltaTime;
+            if (skill.No == 16)
+                Debug.Log("슬래시쿨" + currentCooltime);
 
             yield return null;
         }

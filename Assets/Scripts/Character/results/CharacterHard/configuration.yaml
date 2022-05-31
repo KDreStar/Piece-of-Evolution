@@ -14,7 +14,7 @@ behaviors:
       beta_schedule: linear
       epsilon_schedule: linear
     network_settings:
-      normalize: true
+      normalize: false
       hidden_units: 512
       num_layers: 3
       vis_encode_type: simple
@@ -38,9 +38,15 @@ behaviors:
     checkpoint_interval: 500000
     max_steps: 30000000
     time_horizon: 1000
-    summary_freq: 30000
+    summary_freq: 20000
     threaded: false
-    self_play: null
+    self_play:
+      save_steps: 10000
+      team_change: 50000
+      swap_steps: 5000
+      window: 10
+      play_against_latest_model_ratio: 0.5
+      initial_elo: 1200.0
     behavioral_cloning: null
 env_settings:
   env_path: null
@@ -65,8 +71,8 @@ checkpoint_settings:
   run_id: CharacterHard
   initialize_from: null
   load_model: false
-  resume: false
-  force: true
+  resume: true
+  force: false
   train_model: false
   inference: false
   results_dir: results

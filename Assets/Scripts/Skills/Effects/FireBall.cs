@@ -4,32 +4,10 @@ using UnityEngine;
 
 public class FireBall : SkillEffect
 {
-    //스킬 이펙트 관련 스크립터블 오브젝트
-
-    //테스트로 일단 세팅
-    float speed = 15.0f;
-
-    public override void Start() {
-        base.Start();
-
-        transform.Translate(new Vector2(0, 1));
-
-        Debug.Log("Destroy");
-        Destroy(gameObject, 2.5f);
-    }
-
     // Update is called once per frame
     public override void Update()
     {
-        Vector2 vector = new Vector2(1, -0.2f);
-        transform.Translate(vector * speed * Time.deltaTime);
-    }
-
-    //여기서 스킬 데미지 계산 처리
-    public override void CalculateDamage() {
-        Debug.Log("데미지 체크");
-
-        float damage = 250;//attackerStatus.CurrentATK  - defenderStatus.CurrentDEF;
-        defenderStatus.TakeDamage(damage);
+        Vector2 vector = new Vector2(1, 0);
+        transform.Translate(vector * activeSkill.BaseSpeed * Time.deltaTime);
     }
 }

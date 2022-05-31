@@ -1,23 +1,51 @@
 {
     "Character": {
+        "elo": 1112.854266231889,
         "checkpoints": [
             {
-                "steps": 177900,
-                "file_path": "results\\CharacterHard\\Character\\Character-177900.onnx",
-                "reward": -5.520345021938455,
-                "creation_time": 1653545604.6830416,
+                "steps": 343578,
+                "file_path": "results\\CharacterHard\\Character\\Character-343578.onnx",
+                "reward": -1.816510369690756,
+                "creation_time": 1653622166.6862624,
                 "auxillary_file_paths": [
-                    "results\\CharacterHard\\Character\\Character-177900.pt"
+                    "results\\CharacterHard\\Character\\Character-343578.pt"
+                ]
+            },
+            {
+                "steps": 499976,
+                "file_path": "results\\CharacterHard\\Character\\Character-499976.onnx",
+                "reward": -1.0558913935933794,
+                "creation_time": 1653623408.2055016,
+                "auxillary_file_paths": [
+                    "results\\CharacterHard\\Character\\Character-499976.pt"
+                ]
+            },
+            {
+                "steps": 721733,
+                "file_path": "results\\CharacterHard\\Character\\Character-721733.onnx",
+                "reward": -0.9588600170612335,
+                "creation_time": 1653625075.4720473,
+                "auxillary_file_paths": [
+                    "results\\CharacterHard\\Character\\Character-721733.pt"
+                ]
+            },
+            {
+                "steps": 800593,
+                "file_path": "results\\CharacterHard\\Character\\Character-800593.onnx",
+                "reward": -0.6458005328054373,
+                "creation_time": 1653625839.617308,
+                "auxillary_file_paths": [
+                    "results\\CharacterHard\\Character\\Character-800593.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 177900,
+            "steps": 800593,
             "file_path": "results\\CharacterHard\\Character.onnx",
-            "reward": -5.520345021938455,
-            "creation_time": 1653545604.6830416,
+            "reward": -0.6458005328054373,
+            "creation_time": 1653625839.617308,
             "auxillary_file_paths": [
-                "results\\CharacterHard\\Character\\Character-177900.pt"
+                "results\\CharacterHard\\Character\\Character-800593.pt"
             ]
         }
     },

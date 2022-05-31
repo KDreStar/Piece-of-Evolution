@@ -19,7 +19,21 @@ public class ActiveSkill : Skill
         get { return damageFormula; }
     }
 
-    //이펙트
+    //스킬 속도
+    [SerializeField]
+    private float baseSpeed;
+    public float BaseSpeed {
+        get { return baseSpeed; }
+    }
+
+    //파괴 시간
+    [SerializeField]
+    private float baseDestroyTime;
+    public float BaseDestroyTime {
+        get { return baseDestroyTime; }
+    }
+
+    //이펙트 프리팹
     [SerializeField]
     private GameObject effect;
     public GameObject Effect {
@@ -35,15 +49,17 @@ public class ActiveSkill : Skill
         //바라보는 방향으로 스킬 생성
         // 1 = ↑ //
         Vector3 angle = new Vector3(0, 0, 135 - direction * 45);
+  
+        SkillEffect skillEffect = SkillPool.Instance.GetSkillEffect(effect);
+        skillEffect.gameObject.tag = attacker.tag + "Skill";
 
-        GameObject clone = Instantiate(effect, attacker.transform.position, effect.transform.rotation * Quaternion.Euler(angle));
-        clone.tag = attacker.tag + "Skill";
-        clone.transform.parent = attacker.transform.parent.transform;
+        skillEffect.transform.position = attacker.transform.position;
+        skillEffect.transform.rotation = effect.transform.rotation * Quaternion.Euler(angle);
+        skillEffect.transform.parent = attacker.transform.parent.transform;
 
-        //StartCoroutine(ApplyCooltime());
+        skillEffect.Initialize();
 
         Debug.Log(name + "사용");
-        Debug.Log(damageFormula);
 
         return true;
     }

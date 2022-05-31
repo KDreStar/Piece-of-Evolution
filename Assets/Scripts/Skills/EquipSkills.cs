@@ -118,7 +118,10 @@ public class EquipSkills : MonoBehaviour
             AddSkill(1, SkillDatabase.Instance.GetSkill(14));
             AddSkill(2, SkillDatabase.Instance.GetSkill(15));
         } else {
-            AddSkill(0, SkillDatabase.Instance.GetSkill(16));
+			//AddSkill(0, SkillDatabase.Instance.GetSkill(13));
+			//AddSkill(1, SkillDatabase.Instance.GetSkill(14));
+			//AddSkill(2, SkillDatabase.Instance.GetSkill(15));
+			AddSkill(0, SkillDatabase.Instance.GetSkill(16));
         }
     }
 

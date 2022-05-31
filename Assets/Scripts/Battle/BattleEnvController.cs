@@ -36,36 +36,50 @@ public class BattleEnvController : MonoBehaviour
     {
         m_ResetTimer += 1;
         if (m_ResetTimer >= MaxEnvironmentSteps && MaxEnvironmentSteps > 0) {
-            End();
+            EndEpisode();
         }
 
         if (characterStatus.CurrentHP <= 0) {
-            characterAgent.AddReward(5.0f);
-            enemyAgent.AddReward(-5.0f);
-
-            End();
+			EndEpisode();
         }
 
         if (enemyStatus.CurrentHP <= 0) {
-            enemyAgent.AddReward(5.0f);
-            characterAgent.AddReward(-5.0f);
-
-            End();
+			EndEpisode();
         }
     }
 
-    public void End() {
+    public void EndEpisode() {
+        float characterHPRate = characterStatus.CurrentHP / characterStatus.MaxHP;
+        float enemyHPRate = enemyStatus.CurrentHP / enemyStatus.MaxHP;
+        float timeBonus = 2 - m_ResetTimer / MaxEnvironmentSteps; //2~1
+
+        float differentHPRate;
+        float rewardBonus = 2.5f;
+        float finalReward;
+
+        characterHPRate = characterHPRate < 0 ? 0 : characterHPRate;
+        enemyHPRate = enemyHPRate < 0 ? 0 : enemyHPRate;
+        timeBonus = timeBonus < 0 ? 0 : timeBonus;
+
+        differentHPRate = characterHPRate - enemyHPRate;
+        finalReward = rewardBonus * timeBonus * differentHPRate;
+
+        characterAgent.AddReward(finalReward);
+        enemyAgent.AddReward(-finalReward);
+
         characterAgent.EndEpisode();
         enemyAgent.EndEpisode();
         ResetScene();
     }
-
+	
     public void ResetScene()
     {
-        m_ResetTimer = 0;
+		m_ResetTimer = 0;
 
-        character.transform.position = field.transform.position + new Vector3(-5, 0, 0);
-        enemy.transform.position = field.transform.position + new Vector3(5, 0, 0);
+        int random = Random.Range(0, 2) * 2 - 1;
+
+        character.transform.position = field.transform.position + new Vector3(-5 * random, Random.Range(-2.0f, 2.0f), 0);
+        enemy.transform.position = field.transform.position + new Vector3(5 * random, Random.Range(-2.0f, 2.0f), 0);
 
         Debug.Log("Reset Position " + character.transform.position);
 
@@ -73,11 +87,11 @@ public class BattleEnvController : MonoBehaviour
         enemy.GetComponent<Status>().SetHP(500);
 
         for (int i=0; i<EquipSkills.maxSlot; i++) {
-            character.GetComponent<EquipSkills>().GetSkillSlot(i).ResetCooltime();
+			character.GetComponent<EquipSkills>().GetSkillSlot(i).ResetCooltime();
             enemy.GetComponent<EquipSkills>().GetSkillSlot(i).ResetCooltime();
         }
 
-        //field.ClearEffects();
+        field.ClearEffects();
         //characterEquipSkills.GetSkillSlot(0).ResetCooltime();
     }
 }

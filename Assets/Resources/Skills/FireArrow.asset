@@ -20,4 +20,6 @@ MonoBehaviour:
   icon: {fileID: 0}
   baseCooltime: 2
   damageFormula: ATK * 1.5
+  baseSpeed: 5
+  baseDestroyTime: 2.5
   effect: {fileID: 1327035046624340984, guid: 24496fe04e1d163469b25cc203f35fb2, type: 3}

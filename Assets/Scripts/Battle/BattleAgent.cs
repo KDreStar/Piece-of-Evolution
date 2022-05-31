@@ -33,35 +33,51 @@ public class BattleAgent : Agent
 
     /*
     수집 정보
-    공격자 18
-    - 위치 2
-    - 스킬 정보 (스킬 번호 / 쿨타임) 2 * 8
+    공격자 139
+    - 위치 3
+    - 스킬 정보 (스킬 번호 / 쿨타임) 17 * 8
+    - 스탯 (HP 비율, ATK, DEF, SPD) 4
     
-    방어자 18
-    - 위치 2
-    - 스킬 정보 (스킬 번호 / 쿨타임) 2 * 8
+    방어자 139
+    - 위치 3
+    - 스킬 정보 (스킬 번호 / 쿨타임) 17 * 8
+    - 스탯 (HP 비율, ATK, DEF, SPD) 4
 
-    스킬 이펙트 [생성 시간 기준 8개를 가져옴] 64 
+    스킬 이펙트 [생성 시간 기준 8개를 가져옴] 256
     - 스킬 번호 / 시전자 / 위치 x, y / 크기 x, y, z / 진행방향 direction 8 * 8
 
-    = 100
+    = 542
 
     */
+
+    private float[] GetBinaryEncoding(int n) {
+        float[] binary = new float[16];
+
+        for (int i=15; i>=0; i--) {
+            binary[i] = n % 2;
+            n = n / 2;
+        }
+
+        return binary;
+    }
+
     public override void CollectObservations(VectorSensor sensor)
     {
         Debug.Log("Collecting...");
-        if (attacker == null) {
-            Debug.Log("Null");
-        }
-
-        if (defender == null)
-            Debug.Log("Null");
         
-        //공격자의 x, y
-        sensor.AddObservation(attacker.transform.position.x);
-        sensor.AddObservation(attacker.transform.position.y);
+        //공격자의 위치 (필드 기준 좌표로 함)
+        sensor.AddObservation(attacker.transform.localPosition);
 
         //공격자의 스킬 8개의 번호, 쿨타임
+        /*
+        스킬 번호를 열거형으로 하면 원핫 인코딩이 되어야함 그러나 그렇게 하면
+        관측하는 벡터가 너무 많아짐
+
+        바이너리 인코딩은 어떨까?
+        스킬 번호를 바이너리로 바꿔서 넣어주면 구분은 될 것이다.
+
+        넉넉하게 길이를 2^16으로
+        */
         for (int i=0; i<EquipSkills.maxSlot; i++) {
             SkillSlot skillSlot = attackerEquipSkills.GetSkillSlot(i);
 
@@ -73,13 +89,19 @@ public class BattleAgent : Agent
                 cooltime = skillSlot.CurrentCooltime;
             }
 
-            sensor.AddObservation(no);
+            
+            sensor.AddObservation(GetBinaryEncoding(no));
             sensor.AddObservation(cooltime);
         }
 
-        //방어자의 x, y
-        sensor.AddObservation(defender.transform.position.x);
-        sensor.AddObservation(defender.transform.position.y);
+        sensor.AddObservation(attackerStatus.CurrentHP / attackerStatus.MaxHP);
+        sensor.AddObservation(attackerStatus.CurrentATK);
+        sensor.AddObservation(attackerStatus.CurrentDEF);
+        sensor.AddObservation(attackerStatus.CurrentSPD);
+
+
+        //방어자의 위치
+        sensor.AddObservation(defender.transform.localPosition);
 
         //방어자의 스킬 8개의 번호, 쿨타임
         for (int i=0; i<EquipSkills.maxSlot; i++) {
@@ -93,9 +115,14 @@ public class BattleAgent : Agent
                 cooltime = skillSlot.CurrentCooltime;
             }
 
-            sensor.AddObservation(no);
+            sensor.AddObservation(GetBinaryEncoding(no));
             sensor.AddObservation(cooltime);
         }
+
+        sensor.AddObservation(defenderStatus.CurrentHP / defenderStatus.MaxHP);
+        sensor.AddObservation(defenderStatus.CurrentATK);
+        sensor.AddObservation(defenderStatus.CurrentDEF);
+        sensor.AddObservation(defenderStatus.CurrentSPD);
         
         //스킬 이펙트 8개
         //스킬 번호 / 시전자 / 위치 x, y / 크기 x, y, z / 진행방향 direction
@@ -106,18 +133,23 @@ public class BattleAgent : Agent
                 SkillEffect effect = skillEffects[i];
 
                 if (effect == null) {
-                    sensor.AddObservation(new float[] {0, 0, 0, 0, 0, 0, 0, 0});
+                    sensor.AddObservation(new float[32]);
                     continue;
                 }
 
-                sensor.AddObservation(effect.GetSkillNo());
-                sensor.AddObservation(effect.GetAttackerTag() == "Character" ? 2 : 3);
-                sensor.AddObservation(effect.transform.position.x);
-                sensor.AddObservation(effect.transform.position.y);
+                sensor.AddObservation(GetBinaryEncoding(effect.GetSkillNo()));
+                //{1, 0} 내 스킬
+                //{0, 1} 상대 스킬
+                if (effect.GetAttackerTag() == gameObject.tag)
+                    sensor.AddObservation(new float[] {1, 0});
+                else
+                    sensor.AddObservation(new float[] {0, 1});
+
+                sensor.AddObservation(effect.transform.localPosition);
                 sensor.AddObservation(effect.transform.localScale);
-                sensor.AddObservation(effect.direction);
+                sensor.AddOneHotObservation(effect.direction - 1, 8);
             } else {
-                sensor.AddObservation(new float[] {0, 0, 0, 0, 0, 0, 0, 0});
+                sensor.AddObservation(new float[32]);
             }
         }
     }
@@ -142,13 +174,12 @@ public class BattleAgent : Agent
         //스킬 사용하기
         if (skillIndex > 0) {
             Debug.Log(skillIndex + " Skill Used " + direction);
-            attackerEquipSkills.UseSkill(skillIndex - 1, direction == 0 ? lastDirection : direction);
+            bool result = attackerEquipSkills.UseSkill(skillIndex - 1, direction == 0 ? lastDirection : direction);
 
-            //if (result == false)
-            //    AddReward(-0.5f)
+            //AddReward(result == true ? 0.02f : 0);
         }
 
-        AddReward(-0.01f);
+        //AddReward(-0.003f);
 
         if (lastDirection != direction && direction > 0)
             lastDirection = direction;
