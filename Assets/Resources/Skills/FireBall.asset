@@ -17,7 +17,7 @@ MonoBehaviour:
   description: "\uD30C\uC774\uC5B4 \uBCFC\uC744 \uBC1C\uC0AC\uD558\uC5EC ATK * 2\uC758
     \uB370\uBBF8\uC9C0\uB97C \uC900\uB2E4."
   skillCost: 2
-  icon: {fileID: 0}
+  icon: {fileID: -5728686177044832811, guid: b1f24b3bc2e2f1d4b858657ad5c115a0, type: 3}
   baseCooltime: 3.5
   damageFormula: ATK * 2
   baseSpeed: 10

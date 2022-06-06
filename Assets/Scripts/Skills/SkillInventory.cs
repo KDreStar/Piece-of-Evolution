@@ -10,23 +10,40 @@ public class SkillInventory : MonoBehaviour
         get { return instance; }
     }
 
-    public List<GameObject> slot;
+    public List<SkillSlot> skillSlot;
 
     private int page = 1;
     public int Page {
         get { return page; }
     }
- 
-    /*
+
     public SkillSlot GetSkillSlot(int i) {
-        return slot[i].GetComponent<SkillSlot>();
+        return skillSlot[i];
+    }
+
+    public void AddSkill(int i, Skill skill) {
+        skillSlot[i].AddSkill(skill);
+    }
+
+    public void AddSkill(Skill skill) {
+        for (int i=0; i<skillSlot.Count; i++) {
+            Skill temp = GetSkill(i);
+
+            if (temp == null) {
+                AddSkill(i, skill);
+                return;
+            }
+        }
+
+        skillSlot.Add(CreateSkillSlot(skillSlot.Count));
+        AddSkill(skillSlot.Count - 1, skill);
     }
 
     public Skill GetSkill(int i) {
-        if (i >= slot.Count)
+        if (i >= skillSlot.Count)
             return null;
 
-        return slot[i].GetComponent<Skill>();
+        return skillSlot[i].skill;
     }
 
     public ActiveSkill GetActiveSkill(int i) {
@@ -48,64 +65,26 @@ public class SkillInventory : MonoBehaviour
     }
 
     public void RemoveSkill(int i) {
-        Skill skill = GetSkill(i);
-
-        Destroy(skill);
+        skillSlot[i].skill = null;
     }
 
-
+    /*
     public void RemoveSkill(Skill skill) {
-        for (int i=0; i<slot.Count; i++) {
-            if (GetSkill(i).skillData == skill.skillData) {
-                RemoveSkill(i);
-                return;
-            }    
-        }
+        int index = skillSlot.IndexOf(skill);
+
+        if (index >= 0)
+            RemoveSkill(index);
     }
+    */
 
-    public void AddSkill(Skill skill) {
-        for (int i=0; i<slot.Count; i++) {
-            Skill temp = GetSkill(i);
-
-            if (temp == null) {
-                AddSkill(i, skill);
-                return;
-            }
-        }
-
-        slot.Add(CreateSkillObject(slot.Count));
-        AddSkill(slot.Count - 1, skill);
-    }
-
-    public GameObject CreateSkillObject(int i) {
+    public SkillSlot CreateSkillSlot(int i) {
         GameObject skill = new GameObject();
 
         skill.transform.parent = gameObject.transform;
         skill.name = "Slot" + (i + 1);
-
-        return skill;
+        return skill.AddComponent<SkillSlot>();
     }
-
-    public void AddSkill(int i, Skill skill) {
-        if (skill is ActiveSkill) {
-            ActiveSkill activeSkill = skill as ActiveSkill;
-            ActiveSkill temp = slot[i].AddComponent<ActiveSkill>();
-
-            temp.SetData(activeSkill.activeSkillData);
-        } else {
-            PassiveSkill passiveSkill = skill as PassiveSkill;
-            PassiveSkill temp = slot[i].AddComponent<PassiveSkill>();
-
-            temp.SetData(passiveSkill.passiveSkillData);
-        }
-    }
-
-    //스킬 이동시
-    public void MoveSkill(Skill skill) {
-        AddSkill(skill);
-        Destroy(skill);
-    }
-
+    
     void Awake()
     {
         if (instance == null) {
@@ -114,6 +93,8 @@ public class SkillInventory : MonoBehaviour
         } else {
             Destroy(gameObject);
         }
+
+        skillSlot = new List<SkillSlot>();
     }
 
     // Start is called before the first frame update
@@ -127,5 +108,4 @@ public class SkillInventory : MonoBehaviour
     {
         
     }
-    */
 }

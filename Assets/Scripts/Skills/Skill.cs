@@ -32,8 +32,8 @@ public class Skill : ScriptableObject
     }
 
     [SerializeField]
-    private Image icon;
-    public Image Icon {
+    private Sprite icon;
+    public Sprite Icon {
         get { return icon; }
     }
 }

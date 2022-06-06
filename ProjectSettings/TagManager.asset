@@ -8,6 +8,8 @@ TagManager:
   - EnemySkill
   - Character
   - Enemy
+  - EquipSkills
+  - SkillInventory
   layers:
   - Default
   - TransparentFX
