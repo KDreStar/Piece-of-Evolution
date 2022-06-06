@@ -342,6 +342,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac29720614d742b49871b79eba047ecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentSkillCost: {fileID: 1337610112}
+  equipSkills: {fileID: 378088335}
 --- !u!4 &266269366
 Transform:
   m_ObjectHideFlags: 0
@@ -357,6 +359,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &378088335 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5878399450957542954, guid: 4d823d43613162c439248849f5061903, type: 3}
+  m_PrefabInstance: {fileID: 2121967797655271940}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121967797655271950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b40fbaf3fc530c44b3c884cd41aefae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &615998806 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1428123937182009669, guid: da54874d63324f845b2117486f5833b3, type: 3}
@@ -737,8 +750,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -481.8, y: 233.3}
-  m_SizeDelta: {x: 112.9906, y: 19.3074}
+  m_AnchoredPosition: {x: -440.72943, y: 224.7801}
+  m_SizeDelta: {x: 195.1311, y: 36.347}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &676845569
 MonoBehaviour:
@@ -787,8 +800,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1059,8 +1072,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -366.3, y: 233.3}
-  m_SizeDelta: {x: 112.9906, y: 19.3074}
+  m_AnchoredPosition: {x: -241.1641, y: 224.78}
+  m_SizeDelta: {x: 119.6624, y: 36.347}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1337610112
 MonoBehaviour:
@@ -1109,8 +1122,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 35
+  m_fontSizeBase: 35
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1145,7 +1158,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -37.528748, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
