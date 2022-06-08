@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09ee3bad37ff11541b17a3561f59b40c, type: 3}
   m_Name: HPUPI
   m_EditorClassIdentifier: 
-  no: 11
+  no: 21
   name: "HP \uC99D\uAC00 I"
   description: "\uCE90\uB9AD\uD130\uC758 \uCD5C\uB300 HP + 50"
   skillCost: 1
   icon: {fileID: 0}
-  statFormula: HP + 50
+  statFormula: HP = HP + 50

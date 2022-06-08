@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09ee3bad37ff11541b17a3561f59b40c, type: 3}
+  m_Name: Warrior
+  m_EditorClassIdentifier: 
+  no: 6
+  name: "\uAD11\uC804\uC0AC"
+  description: "\uCE90\uB9AD\uD130\uC758 ATK * 2\n\uCE90\uB9AD\uD130\uC758 \uBC29\uC5B4\uB825
+    - 10"
+  skillCost: 1
+  icon: {fileID: 6853643782822115200, guid: 3c112a44cc7dc7a468f4d132c2e7611c, type: 3}
+  statFormula: ATK = ATK * 2, DEF = DEF - 10

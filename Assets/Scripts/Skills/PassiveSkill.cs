@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "PassiveSkill")]
@@ -10,10 +11,5 @@ public class PassiveSkill : Skill
     private string statFormula;
     public string StatFormula {
         get { return statFormula; }
-    }
-
-    public void Calculate()
-    {
-        Debug.Log(statFormula);
     }
 }
