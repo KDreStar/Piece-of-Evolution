@@ -168,14 +168,15 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ml-agents": {
-      "version": "file:C:/Users/DreStar/ml-agents/com.unity.ml-agents",
+      "version": "git+https://github.com/Unity-Technologies/ml-agents.git?path=com.unity.ml-agents#release_19",
       "depth": 0,
-      "source": "local",
+      "source": "git",
       "dependencies": {
         "com.unity.barracuda": "2.3.1-preview",
         "com.unity.modules.imageconversion": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0"
-      }
+      },
+      "hash": "68474b92978ac4c6f26a4e170d257c6d8de72025"
     },
     "com.unity.nuget.newtonsoft-json": {
       "version": "3.0.2",
