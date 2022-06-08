@@ -26,6 +26,7 @@ public class SkillDatabase : MonoBehaviour
 
     void Awake()
     {
+        //Resources/Skills/* 모든 스킬 가져옴
         skillList = Resources.LoadAll<Skill>("Skills");
 
         if (instance == null) {

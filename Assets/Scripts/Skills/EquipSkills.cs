@@ -29,6 +29,7 @@ public class EquipSkills : MonoBehaviour
         return true;
     }
 
+    //가능시 true 불가능시 false
     private bool checkSkillCost(int i, Skill skill) {
         if (skillSlot[i].IsEmpty()) {
             //cost 확인
@@ -94,7 +95,25 @@ public class EquipSkills : MonoBehaviour
 
     void Start()
     {
+        //인스펙터 창에서 미리 지정해놨음
         //skillSlot = equipSkills.GetComponentsInChildren<SkillSlot>();
+
+        //Character/Enemy Data에서 스킬을 불러와서 장착함
+        bool isCharacter = this.CompareTag("Character");
+        bool isEnemy     = this.CompareTag("Enemy");
+
+        for (int i=0; i<maxSlot; i++) {
+            Skill skill = null;
+
+            if (isCharacter)
+                skill = CharacterData.Instance.GetSkill(i);
+            
+            if (isEnemy)
+                skill = EnemyData.Instance.GetSkill(i);
+            
+            if (checkSkillCost(i, skill))
+                AddSkill(i, skill);
+        }
     }
 
     // Update is called once per frame

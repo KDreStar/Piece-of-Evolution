@@ -13,6 +13,7 @@ public class SkillPool : MonoBehaviour
 
     public int count = 0;
 
+    //<스킬번호, 스킬이펙트 큐>로 저장
     private Dictionary<int, Queue<SkillEffect>> skillEffectTable = new Dictionary<int, Queue<SkillEffect>>();
 
     void Awake() {
@@ -24,6 +25,7 @@ public class SkillPool : MonoBehaviour
         }
     }
 
+    //큐에 스킬 이펙트가 없으면 생성
     private SkillEffect CreateSkillEffect(GameObject skillPrefab) {
         SkillEffect skillEffect = Instantiate(skillPrefab).GetComponent<SkillEffect>();
 
@@ -35,6 +37,7 @@ public class SkillPool : MonoBehaviour
         return skillEffect;
     }
 
+    //큐에 있는 스킬 이펙트를 빌려줌
     public SkillEffect GetSkillEffect(GameObject skillPrefab) {
         int no = skillPrefab.GetComponent<SkillEffect>().GetSkillNo();
 
@@ -55,6 +58,7 @@ public class SkillPool : MonoBehaviour
         return skillEffect;
     }
 
+    //스킬 이펙트를 반환함
     public void ReturnSkillEffect(SkillEffect skillEffect) {
         int no = skillEffect.GetSkillNo();
 
