@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//스킬 이펙트를 미리 생성하여 빌려주는 방식
+//메모리 효율을 높임 
 public class SkillPool : MonoBehaviour
 {
     private static SkillPool instance = null;

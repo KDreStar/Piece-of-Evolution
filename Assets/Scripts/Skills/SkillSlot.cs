@@ -22,6 +22,8 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
 
     public void AddSkill(Skill skill) {
+        Debug.Log("스킬" + skill);
+
         this.skill = skill;
     }
 
@@ -112,7 +114,9 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     void Start()
     {
         image = GetComponent<Image>();
-        image.sprite = skill.Icon;
+
+        if (skill != null)
+            image.sprite = skill.Icon;
     }
 
     // Update is called once per frame

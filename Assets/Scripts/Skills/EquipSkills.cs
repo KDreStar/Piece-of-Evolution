@@ -67,6 +67,8 @@ public class EquipSkills : MonoBehaviour
 
     //스킬 추가만
     public void AddSkill(int i, Skill skill) {
+        Debug.Log("스킬1" + skill);
+
         skillSlot[i].AddSkill(skill);
     }
 
@@ -92,7 +94,7 @@ public class EquipSkills : MonoBehaviour
 
     void Start()
     {
-        skillSlot = equipSkills.GetComponentsInChildren<SkillSlot>();
+        //skillSlot = equipSkills.GetComponentsInChildren<SkillSlot>();
     }
 
     // Update is called once per frame

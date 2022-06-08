@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 6208371192244505298}
   - component: {fileID: 6258700981411670717}
   - component: {fileID: 7084700102089517494}
-  - component: {fileID: 5878399450957542954}
   m_Layer: 5
   m_Name: EquipSkills
   m_TagString: Untagged
@@ -110,20 +109,6 @@ MonoBehaviour:
   m_Spacing: {x: 10, y: 10}
   m_Constraint: 1
   m_ConstraintCount: 4
---- !u!114 &5878399450957542954
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4838004759278318950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b40fbaf3fc530c44b3c884cd41aefae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  equipSkills: {fileID: 0}
-  maxSkillCost: 20
 --- !u!1001 &598185754768143138
 PrefabInstance:
   m_ObjectHideFlags: 0
