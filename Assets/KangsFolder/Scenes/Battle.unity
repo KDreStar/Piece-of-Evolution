@@ -2394,7 +2394,7 @@ PrefabInstance:
       objectReference: {fileID: 422478706}
     - target: {fileID: 3999909076433884057, guid: cdb93df3f8ac0c2498f40363b61e3d54, type: 3}
       propertyPath: m_BehaviorType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3999909076433884057, guid: cdb93df3f8ac0c2498f40363b61e3d54, type: 3}
       propertyPath: m_UseChildSensors
@@ -3424,7 +3424,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5160429233030696625, guid: e293e443505690a46902dd5dbc03eace, type: 3}
       propertyPath: baseHP
-      value: 1
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 5160429233030696625, guid: e293e443505690a46902dd5dbc03eace, type: 3}
       propertyPath: sprite

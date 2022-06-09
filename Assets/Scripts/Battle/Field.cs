@@ -19,11 +19,10 @@ public class Field : MonoBehaviour
     }
 
     public void ClearEffects() {
-        for (int i=0; i<skillEffects.Count; i++) {
-            skillEffects[i].DestroySkillEffect();
+        Debug.Log("전체 사라짐" + skillEffects.Count);
+        while (skillEffects.Count > 0) { 
+            skillEffects[0].DestroySkillEffect();
         }
-
-        skillEffects.Clear();
     }
 
     void Awake() {

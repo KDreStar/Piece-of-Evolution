@@ -64,6 +64,7 @@ public class SkillPool : MonoBehaviour
 
         skillEffect.CancelInvoke();
         skillEffect.gameObject.SetActive(false);
+        Debug.Log("사라짐");
         skillEffect.transform.parent = this.transform;
         skillEffectTable[no].Enqueue(skillEffect);
     }

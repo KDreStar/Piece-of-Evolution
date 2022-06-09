@@ -77,6 +77,8 @@ public class BattleEnvController : MonoBehaviour
     {
 		timer = 0;
 
+        field.ClearEffects();
+
         int random = Random.Range(0, 2) * 2 - 1;
 
         character.transform.position = field.transform.position + new Vector3(-5 * random, Random.Range(-2.0f, 2.0f), 0);
@@ -92,7 +94,7 @@ public class BattleEnvController : MonoBehaviour
             enemy.GetComponent<EquipSkills>().GetSkillSlot(i).ResetCooltime();
         }
 
-        field.ClearEffects();
+        
         //characterEquipSkills.GetSkillSlot(0).ResetCooltime();
     }
 }
