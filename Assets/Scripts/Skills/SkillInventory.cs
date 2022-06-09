@@ -10,6 +10,7 @@ public class SkillInventory : MonoBehaviour
         get { return instance; }
     }
 
+    public GameObject skillInventory;
     public List<SkillSlot> skillSlot;
 
     private int page = 1;
@@ -80,7 +81,7 @@ public class SkillInventory : MonoBehaviour
     public SkillSlot CreateSkillSlot(int i) {
         GameObject skill = new GameObject();
 
-        skill.transform.parent = gameObject.transform;
+        skill.transform.parent = skillInventory.transform;
         skill.name = "Slot" + (i + 1);
         return skill.AddComponent<SkillSlot>();
     }

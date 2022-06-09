@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9065742834548992606}
   - component: {fileID: 9065742834548992607}
-  - component: {fileID: 9065742834548992577}
   - component: {fileID: 9065742834548992579}
   - component: {fileID: 9065742834548992585}
   - component: {fileID: 9065742834548992578}
@@ -92,18 +91,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &9065742834548992577
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9065742834548992605}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0015034326cb0245a05402eee3c0246, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &9065742834548992579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,6 +107,10 @@ MonoBehaviour:
   baseATK: 0
   baseDEF: 0
   baseSPD: 0
+  textHP: {fileID: 0}
+  textATK: {fileID: 0}
+  textDEF: {fileID: 0}
+  textSPD: {fileID: 0}
 --- !u!50 &9065742834548992585
 Rigidbody2D:
   serializedVersion: 4
@@ -243,6 +234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b40fbaf3fc530c44b3c884cd41aefae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  equipSkills: {fileID: 0}
   skillSlot:
   - {fileID: 0}
   - {fileID: 0}

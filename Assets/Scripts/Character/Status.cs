@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Data;
 using System;
-using TMPro;
-
 
 public class Status : MonoBehaviour
 {
-    string name; //이름
+    public string name;
 
     float currentHP;
     public float CurrentHP {
@@ -39,11 +37,6 @@ public class Status : MonoBehaviour
     public float CurrentSPD {
         get { return currentSPD; }
     }
-
-    public TextMeshProUGUI textHP;
-    public TextMeshProUGUI textATK;
-    public TextMeshProUGUI textDEF;
-    public TextMeshProUGUI textSPD;
 
     //버프
     //스킬
@@ -134,13 +127,35 @@ public class Status : MonoBehaviour
         return float.Parse(row["Result"].ToString());
     }
 
+    //태그가 있는 경우 Data에서 가져옴
+    //태그가 없는 경우 인스펙터창의 것을 적용
+    private void InitStatus() {
+        bool isCharacter = this.CompareTag("Character");
+        bool isEnemy     = this.CompareTag("Enemy");
+
+        if (isCharacter) {
+            name    = CharacterData.Instance.name;
+            baseATK = CharacterData.Instance.baseATK;
+            baseDEF = CharacterData.Instance.baseDEF;
+            baseSPD = CharacterData.Instance.baseSPD;
+            baseHP  = CharacterData.Instance.baseHP;
+        }
+
+        if (isEnemy) {
+            name    = EnemyData.Instance.name;
+            baseATK = EnemyData.Instance.baseATK;
+            baseDEF = EnemyData.Instance.baseDEF;
+            baseSPD = EnemyData.Instance.baseSPD;
+            baseHP  = EnemyData.Instance.baseHP;
+
+            SpriteRenderer sr = GetComponent<SpriteRenderer>();
+            sr.sprite = EnemyData.Instance.sprite;
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
-        baseATK = 20;
-        baseDEF = 10;
-        baseHP = 500;
-        baseSPD = 10;
+        InitStatus();
 
         maxHP = baseHP;
 
@@ -155,19 +170,12 @@ public class Status : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (textHP != null) {
-            textHP.text = maxHP.ToString();
-            textATK.text = currentATK.ToString();
-            textDEF.text = currentDEF.ToString();
-            textSPD.text = currentSPD.ToString();
-        }
-
         CalculateStat();
     }
 
     //Temp
-    public void SetHP(float hp) {
-        currentHP = hp;
+    public void SetDefaultHP() {
+        currentHP = maxHP;
     }
 
     public void TakeDamage(float damage) {

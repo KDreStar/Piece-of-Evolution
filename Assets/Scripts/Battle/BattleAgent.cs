@@ -48,6 +48,7 @@ public class BattleAgent : Agent
 
     = 542
 
+    추가로 추가할 거 배틀 시간
     */
 
     private float[] GetBinaryEncoding(int n) {
@@ -185,6 +186,7 @@ public class BattleAgent : Agent
             lastDirection = direction;
     }
 
+    //인스펙터에서 Heuristic Only를 하거나 모델이 없는 경우 직접 조작할 수 있음
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         var discreteActionsOut = actionsOut.DiscreteActions;

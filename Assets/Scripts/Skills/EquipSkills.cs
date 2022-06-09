@@ -7,7 +7,10 @@ public class EquipSkills : MonoBehaviour
 {
     public const int maxSlot = 8;
     public GameObject equipSkills;
-    public SkillSlot[] skillSlot = new SkillSlot[maxSlot];
+    private SkillSlot[] skillSlot = new SkillSlot[maxSlot];
+
+    //인스펙터 적용
+    public Skill[] skillList = new Skill[maxSlot];
 
     //최대 스킬 코스트 (인스펙터에서 설정) 기본 20
     [SerializeField]
@@ -85,6 +88,10 @@ public class EquipSkills : MonoBehaviour
         return skillSlot[i].skill;
     }
 
+    public Skill[] GetSkillList() {
+        return skillList;
+    }
+
     public ActiveSkill GetActiveSkill(int i) {
         return skillSlot[i].GetActiveSkill();
     }
@@ -93,17 +100,23 @@ public class EquipSkills : MonoBehaviour
         return skillSlot[i].GetPassiveSkill();
     }
 
+    private void SetSkillList() {
+        for (int i=0; i<maxSlot; i++)
+            skillList[i] = GetSkill(i);
+    }
+
+    void Awake() {
+        skillSlot = equipSkills.GetComponentsInChildren<SkillSlot>();
+    }
+
     void Start()
     {
-        //인스펙터 창에서 미리 지정해놨음
-        //skillSlot = equipSkills.GetComponentsInChildren<SkillSlot>();
-
         //Character/Enemy Data에서 스킬을 불러와서 장착함
         bool isCharacter = this.CompareTag("Character");
         bool isEnemy     = this.CompareTag("Enemy");
 
         for (int i=0; i<maxSlot; i++) {
-            Skill skill = null;
+            Skill skill = skillList[i];
 
             if (isCharacter)
                 skill = CharacterData.Instance.GetSkill(i);
@@ -111,6 +124,9 @@ public class EquipSkills : MonoBehaviour
             if (isEnemy)
                 skill = EnemyData.Instance.GetSkill(i);
             
+            if (skill == null)
+                continue;
+
             if (checkSkillCost(i, skill))
                 AddSkill(i, skill);
         }
@@ -120,5 +136,6 @@ public class EquipSkills : MonoBehaviour
     void Update()
     {
         CalculateCost();
+        SetSkillList();
     }
 }

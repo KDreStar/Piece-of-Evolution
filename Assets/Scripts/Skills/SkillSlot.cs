@@ -14,6 +14,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public Image image;
 
+    public bool dragable;
     public bool isEquipSkill;
     public int equipIndex;
 
@@ -29,6 +30,10 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void RemoveSkill() {
         skill = null;
+    }
+
+    public Skill GetSkill() {
+        return skill;
     }
 
     public ActiveSkill GetActiveSkill() {
@@ -67,9 +72,6 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     IEnumerator ApplyCooltime() {
         while (currentCooltime > 0) {
             currentCooltime -= Time.deltaTime;
-            if (skill.No == 16)
-                Debug.Log("슬래시쿨" + currentCooltime);
-
             yield return null;
         }
 
@@ -79,6 +81,9 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnBeginDrag(PointerEventData eventData){
         if (IsEmpty())
+            return;
+
+        if (dragable == false)
             return;
         
         DragSkillSlot.Instance.SetSkillSlot(this);
@@ -90,6 +95,9 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         if (IsEmpty())
             return;
+
+        if (dragable == false)
+            return;
         
         DragSkillSlot.Instance.transform.position = eventData.position;
     }
@@ -97,11 +105,17 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     // 마우스 드래그가 끝났을 때 발생하는 이벤트
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (dragable == false)
+            return;
+
         DragSkillSlot.Instance.Clear();
     }
 
     // 드롭 했을때
     public void OnDrop(PointerEventData eventData) {
+        if (dragable == false)
+            return;
+
         SkillSlot dragSkillSlot = DragSkillSlot.Instance.skillSlot;
 
         if (dragSkillSlot == null)

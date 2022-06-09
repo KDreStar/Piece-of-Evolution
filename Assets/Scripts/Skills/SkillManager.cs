@@ -10,8 +10,7 @@ public class SkillManager : MonoBehaviour
         get { return instance; }
     }
 
-    public TextMeshProUGUI currentSkillCost;
-    public EquipSkills equipSkills;
+    private EquipSkills equipSkills;
     private SkillSlot dragSkillSlot;
     private SkillSlot dropSkillSlot;
 
@@ -25,7 +24,8 @@ public class SkillManager : MonoBehaviour
         dragSkillSlot = DragSkillSlot.Instance.skillSlot;
         this.dropSkillSlot = dropSkillSlot;
 
-        EquipSkills equipSkills = GameObject.FindWithTag("Character").GetComponent<EquipSkills>();
+        if (equipSkills == null)
+            equipSkills = GameObject.FindWithTag("Character").GetComponent<EquipSkills>();
         SkillInventory SkillInventory = SkillInventory.Instance;
 
         //? -> 장착스킬
@@ -73,6 +73,8 @@ public class SkillManager : MonoBehaviour
         newSlot.AddSkill(temp);
 
         dropSkillSlot = null;
+
+        CharacterData.Instance.UpdateSkills(equipSkills);
     }
 
     void Awake()
@@ -94,6 +96,6 @@ public class SkillManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        currentSkillCost.text = equipSkills.CurrentSkillCost.ToString();
+        //currentSkillCost.text = equipSkills.CurrentSkillCost.ToString();
     }
 }

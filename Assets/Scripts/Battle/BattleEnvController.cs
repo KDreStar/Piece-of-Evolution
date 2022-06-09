@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BattleEnvController : MonoBehaviour
 {
-    [Tooltip("Max Environment Steps")] public int MaxEnvironmentSteps = 5000;
+    [Tooltip("Max Battle Time (sec)")] public int MaxBattleTime = 120;
 
     public GameObject character;
     public GameObject enemy;
@@ -17,7 +17,7 @@ public class BattleEnvController : MonoBehaviour
 
     private Field field;
 
-    private int m_ResetTimer;
+    public float timer = 0;
 
     void Start()
     {
@@ -32,10 +32,11 @@ public class BattleEnvController : MonoBehaviour
         //ResetScene();
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        m_ResetTimer += 1;
-        if (m_ResetTimer >= MaxEnvironmentSteps && MaxEnvironmentSteps > 0) {
+        timer += Time.deltaTime;
+
+        if (timer >= MaxBattleTime && MaxBattleTime > 0) {
             EndEpisode();
         }
 
@@ -51,7 +52,7 @@ public class BattleEnvController : MonoBehaviour
     public void EndEpisode() {
         float characterHPRate = characterStatus.CurrentHP / characterStatus.MaxHP;
         float enemyHPRate = enemyStatus.CurrentHP / enemyStatus.MaxHP;
-        float timeBonus = 2 - m_ResetTimer / MaxEnvironmentSteps; //2~1
+        float timeBonus = 2 - timer / MaxBattleTime; //2~1
 
         float differentHPRate;
         float rewardBonus = 2.5f;
@@ -74,7 +75,7 @@ public class BattleEnvController : MonoBehaviour
 	
     public void ResetScene()
     {
-		m_ResetTimer = 0;
+		timer = 0;
 
         int random = Random.Range(0, 2) * 2 - 1;
 
@@ -83,8 +84,8 @@ public class BattleEnvController : MonoBehaviour
 
         Debug.Log("Reset Position " + character.transform.position);
 
-        character.GetComponent<Status>().SetHP(500);
-        enemy.GetComponent<Status>().SetHP(500);
+        character.GetComponent<Status>().SetDefaultHP();
+        enemy.GetComponent<Status>().SetDefaultHP();
 
         for (int i=0; i<EquipSkills.maxSlot; i++) {
 			character.GetComponent<EquipSkills>().GetSkillSlot(i).ResetCooltime();

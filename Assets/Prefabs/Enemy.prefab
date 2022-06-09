@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1589529876771655430}
   - component: {fileID: 1589529876771655441}
-  - component: {fileID: 1589529876771655454}
   - component: {fileID: 1589529876771655455}
   - component: {fileID: 1589529876771655452}
   - component: {fileID: 1589529876771655453}
@@ -34,7 +33,7 @@ Transform:
   m_GameObject: {fileID: 1589529876771655431}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 4.07, y: -0.15, z: -0.012093563}
-  m_LocalScale: {x: 0.5495843, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -81,8 +80,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
-  m_Color: {r: 0.53306335, g: 0.60334694, b: 0.9339623, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 5c8b2ada1a819a54e8c051165c738f18, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -92,18 +91,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1589529876771655454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1589529876771655431}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0015034326cb0245a05402eee3c0246, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1589529876771655455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,6 +103,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e34804f9a3152643a166c8cbbf03941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  name: 
   baseHP: 0
   baseATK: 0
   baseDEF: 0
@@ -158,14 +146,14 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 0.32, y: 0.32}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.32, y: 0.32}
   m_EdgeRadius: 0
 --- !u!114 &1589529876771655450
 MonoBehaviour:
@@ -179,7 +167,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b40fbaf3fc530c44b3c884cd41aefae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillSlot: []
+  equipSkills: {fileID: 0}
+  skillList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   maxSkillCost: 20
 --- !u!114 &1589529876771655451
 MonoBehaviour:

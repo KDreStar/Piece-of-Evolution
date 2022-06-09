@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,5 +19,9 @@ public class GameManager : MonoBehaviour
         } else {
             Destroy(gameObject);
         }
+    }
+
+    public void ChangeScene(string name) {
+        SceneManager.LoadScene(name);
     }
 }
