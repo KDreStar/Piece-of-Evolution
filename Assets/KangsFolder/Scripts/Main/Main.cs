@@ -40,7 +40,7 @@ public class Main : MonoBehaviour
     public void Exit()
     {
         Debug.Log("실행됨?");
-        UnityEditor.EditorApplication.isPlaying = false;
+        //UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }
 

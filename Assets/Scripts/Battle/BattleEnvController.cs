@@ -65,11 +65,21 @@ public class BattleEnvController : MonoBehaviour
         differentHPRate = characterHPRate - enemyHPRate;
         finalReward = rewardBonus * timeBonus * differentHPRate;
 
-        characterAgent.AddReward(finalReward);
-        enemyAgent.AddReward(-finalReward);
+        if (characterAgent != null)
+            characterAgent.AddReward(finalReward);
+
+        //적이 완성된 모델을 가지고 있는 경우
+        if (enemyAgent != null)
+            enemyAgent.AddReward(-finalReward);
 
         characterAgent.EndEpisode();
         enemyAgent.EndEpisode();
+
+        //전투면 바로 종료
+        if (BattleManager.Instance.isLearning == false) {
+            BattleManager.Instance.EndBattle();
+        }
+
         ResetScene();
     }
 	

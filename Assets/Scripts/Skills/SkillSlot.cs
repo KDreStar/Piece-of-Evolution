@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public Skill skill = null;
     private float currentCooltime;
@@ -122,6 +122,19 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             return;
 
         SkillManager.Instance.MoveSkill(this);
+    }
+
+    //마우스 오버시
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (skill != null)
+            SkillTooltip.Instance.Show(skill, transform.position);
+    }
+
+    //마우스 오버 종료
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        SkillTooltip.Instance.Hide();
     }
 
     // Start is called before the first frame update
