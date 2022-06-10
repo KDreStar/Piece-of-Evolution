@@ -13,16 +13,14 @@ public class StatusUI : MonoBehaviour
     public Status status;
 
     public TextMeshProUGUI textName;
-    public TextMeshProUGUI textCurrentHP;
-    public TextMeshProUGUI textMaxHP;
+    public TextMeshProUGUI textHP;
     public TextMeshProUGUI textATK;
     public TextMeshProUGUI textDEF;
     public TextMeshProUGUI textSPD;
     public TextMeshProUGUI textCost;
+    public TextMeshProUGUI textHPBar;
 
     public Image HPBar;
-
-    public string textHPFormat;
 
     // Start is called before the first frame update
     void Start()
@@ -36,11 +34,8 @@ public class StatusUI : MonoBehaviour
         if (textName != null)
             textName.text = status.name.ToString();
 
-        if (textMaxHP != null)
-            textMaxHP.text = status.MaxHP.ToString();
-
-        if (textCurrentHP != null)
-            textCurrentHP.text = status.CurrentHP.ToString();
+        if (textHP != null)
+            textHP.text = status.MaxHP.ToString();
         
         if (textATK != null)
             textATK.text = status.CurrentATK.ToString();
@@ -56,5 +51,8 @@ public class StatusUI : MonoBehaviour
 
         if (HPBar != null)
             HPBar.fillAmount = (status.CurrentHP / status.MaxHP);
+
+        if (textHPBar != null)
+            textHPBar.text = string.Format("{0}/{1}", status.CurrentHP, status.MaxHP);
     }
 }

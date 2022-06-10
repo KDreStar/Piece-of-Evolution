@@ -12,13 +12,18 @@ public class SkillTooltip : MonoBehaviour
         get { return instance; }
     }
 
+    private RectTransform rectTransform;
+
     public TextMeshProUGUI textNo;
     public TextMeshProUGUI textCost;
     public TextMeshProUGUI textName;
     public TextMeshProUGUI textDescription;
     public TextMeshProUGUI textBaseCooltime;
 
-    public void Show(Skill skill, Vector2 pos) {
+    public void Show(Skill skill, Vector2 pos, Vector2 pivot) {
+        transform.position = pos;
+        rectTransform.pivot = pivot;
+
         gameObject.SetActive(true);
 
         textNo.text = "No." + skill.No.ToString();
@@ -30,9 +35,9 @@ public class SkillTooltip : MonoBehaviour
             ActiveSkill activeSkill = skill as ActiveSkill;
 
             //textBaseCooltime.SetActive(true);
-            textBaseCooltime.text = "쿨타임: " + activeSkill.BaseCooltime.ToString();
+            textBaseCooltime.text = string.Format("쿨타임 {0}s", activeSkill.BaseCooltime);
         } else {
-            //textBaseCooltime.SetActive(false);
+            textBaseCooltime.text = "패시브 스킬";
         }
     }
 
@@ -44,6 +49,8 @@ public class SkillTooltip : MonoBehaviour
     void Start()
     {
         instance = this;
+
+        rectTransform = GetComponent<RectTransform>();
 
         gameObject.SetActive(false);
     }

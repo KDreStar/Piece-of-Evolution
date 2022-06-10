@@ -12,6 +12,8 @@ public class EquipSkills : MonoBehaviour
     //인스펙터 적용
     public Skill[] skillList = new Skill[maxSlot];
 
+    public Vector2 tooltipPivot;
+
     //최대 스킬 코스트 (인스펙터에서 설정) 기본 20
     [SerializeField]
     private int maxSkillCost = 20;
@@ -107,6 +109,9 @@ public class EquipSkills : MonoBehaviour
 
     void Awake() {
         skillSlot = equipSkills.GetComponentsInChildren<SkillSlot>();
+
+        for (int i=0; i<maxSlot; i++)
+            skillSlot[i].tooltipPivot = tooltipPivot;
     }
 
     void Start()

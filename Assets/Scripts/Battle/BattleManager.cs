@@ -12,6 +12,8 @@ public class BattleManager : MonoBehaviour
         get { return instance; }
     }
 
+    public float startCounter;
+
     void Awake()
     {
         if (instance == null) {
@@ -31,11 +33,41 @@ public class BattleManager : MonoBehaviour
         }
 
         this.isLearning = isLearning;
-
+        
         EnemyData.Instance.Set(enemy);
 
         //오래걸리므로 나중에 로딩씬 추가
+        //처음 실행시 mlagents-learn 켜진지를 확인해서 오래걸림
+        Time.timeScale = 0;
         GameManager.Instance.ChangeScene("Battle");
+        //LoadingSceneManager.LoadScene("Battle");
+    }
+
+    public void StartBattle() {
+        if (isLearning == false) {
+            Time.timeScale = 0;
+            startCounter = 4.0f;
+            StartCoroutine(DecreaseCount());
+        } else {
+            Time.timeScale = 1.0f;
+        }
+    }
+
+    IEnumerator DecreaseCount() {
+        while (startCounter > 1) {
+            startCounter -= Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        //움직일 수 있음
+        Time.timeScale = 1.0f;
+
+        while (startCounter > 0) {
+            startCounter -= Time.unscaledDeltaTime;
+            yield return null;
+        }
+
+        //끝
     }
 
     public void EndBattle() {
@@ -43,7 +75,7 @@ public class BattleManager : MonoBehaviour
             //mlagents-learn 종료
         }
 
-        //GameManager.Instance.ChangeScene("Result");        
+        GameManager.Instance.ChangeScene("Result");        
     }
 
     // Start is called before the first frame update

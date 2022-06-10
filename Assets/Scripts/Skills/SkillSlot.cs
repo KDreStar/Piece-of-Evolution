@@ -13,10 +13,12 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
 
     public Image image;
+    public Image cooltimeImage;
 
     public bool dragable;
     public bool isEquipSkill;
     public int equipIndex;
+    public Vector2 tooltipPivot;
 
     public bool IsEmpty() {
         return skill == null ? true : false;
@@ -127,8 +129,10 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     //마우스 오버시
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (skill != null)
-            SkillTooltip.Instance.Show(skill, transform.position);
+        if (skill != null) {
+            SkillTooltip.Instance.Show(skill, transform.position, tooltipPivot);
+        }
+            
     }
 
     //마우스 오버 종료
@@ -153,5 +157,12 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             image.sprite = skill.Icon;
         else
             image.sprite = null;
+
+        ActiveSkill temp = GetActiveSkill();
+
+        if (temp == null)
+            cooltimeImage.fillAmount = 0;
+        else
+            cooltimeImage.fillAmount = currentCooltime / temp.BaseCooltime;
     }
 }
