@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 476d5d6f112f5674797fd7c421c9a64b, type: 3}
+  m_Name: FireBall
+  m_EditorClassIdentifier: 
+  no: 17
+  name: FrieBall
+  description: dd
+  skillCost: 1
+  icon: {fileID: 21300000, guid: 2f8fb29a5a0584140b1c4f3fc5a19f73, type: 3}
+  baseCooltime: 0.5
+  damageFormula: ATK * 1.5
+  baseSpeed: 5
+  baseDestroyTime: 2.5
+  effect: {fileID: 3783807867837414284, guid: 19da612c3b4845b4a80ea292f641e32c, type: 3}
