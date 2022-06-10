@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 476d5d6f112f5674797fd7c421c9a64b, type: 3}
+  m_Name: FA
+  m_EditorClassIdentifier: 
+  no: 17
+  name: FA
+  description: dd
+  skillCost: 1
+  icon: {fileID: 21300000, guid: 23f68bf28dd290e41ab0de54457e92cd, type: 3}
+  baseCooltime: 0.1
+  damageFormula: ATK * 1.5
+  baseSpeed: 5
+  baseDestroyTime: 2.5
+  effect: {fileID: 3783807867837414284, guid: 3300af96ea3d858429aa2e272e39e0d6, type: 3}
