@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Barracuda;
 using System.IO;
+using UnityEngine.UI;
 
 //Scene 전환시 캐릭터의 정보를 저장하는 용도
 public class CharacterData : MonoBehaviour
