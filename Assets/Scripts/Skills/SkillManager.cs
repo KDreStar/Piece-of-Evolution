@@ -10,6 +10,7 @@ public class SkillManager : MonoBehaviour
         get { return instance; }
     }
 
+    private SkillInventory skillInventory;
     private EquipSkills equipSkills;
     private SkillSlot dragSkillSlot;
     private SkillSlot dropSkillSlot;
@@ -26,7 +27,7 @@ public class SkillManager : MonoBehaviour
 
         if (equipSkills == null)
             equipSkills = GameObject.FindWithTag("Character").GetComponent<EquipSkills>();
-        SkillInventory SkillInventory = SkillInventory.Instance;
+        //skillInventory = SkillInventory.Instance;
 
         //? -> 장착스킬
         //장착스킬 -> ?
@@ -75,16 +76,12 @@ public class SkillManager : MonoBehaviour
         dropSkillSlot = null;
 
         CharacterData.Instance.UpdateSkills(equipSkills);
+        SkillInventoryData.Instance.UpdateSkills(SkillInventory.Instance);
     }
 
     void Awake()
     {
-        if (instance == null) {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        } else {
-            Destroy(gameObject);
-        }
+        instance = this;
     }
 
     // Start is called before the first frame update

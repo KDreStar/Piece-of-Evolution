@@ -24,6 +24,27 @@ public class SkillDatabase : MonoBehaviour
         return null;
     }
 
+    public Skill GetRandomSkill() {
+        return skillList[Random.Range(0, skillList.Length)];
+    }
+
+    private List<Skill> GetSkillList(int cost) {
+        List<Skill> temp = new List<Skill>();
+
+        for (int i=0; i<skillList.Length; i++) {
+            if (skillList[i].SkillCost == cost)
+                temp.Add(skillList[i]);
+        }
+
+        return temp;
+    }
+
+    public Skill GetRandomSkill(int cost) {
+        List<Skill> temp = GetSkillList(cost);
+
+        return temp[Random.Range(0, temp.Count)];
+    }
+
     void Awake()
     {
         //Resources/Skills/* 모든 스킬 가져옴

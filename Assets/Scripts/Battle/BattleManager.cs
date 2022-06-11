@@ -15,6 +15,9 @@ public class BattleManager : MonoBehaviour
     public float startCounter;
     public string result;
 
+    public string judgeMessage;
+    public Skill getSkill;
+
     void Awake()
     {
         if (instance == null) {
@@ -77,6 +80,16 @@ public class BattleManager : MonoBehaviour
     public void EndBattle() {
         if (isLearning) {
             //mlagents-learn 종료
+        }
+
+        getSkill = null;
+        getSkill = GameManager.Instance.JudgeGetSkill();
+
+        if (getSkill != null) {
+            judgeMessage = "스킬 획득!";
+            SkillInventoryData.Instance.AddSkill(getSkill);
+        } else {
+            judgeMessage = "스킬 획득 실패...";
         }
 
         GameManager.Instance.ChangeScene("Result");        

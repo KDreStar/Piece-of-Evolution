@@ -60,6 +60,7 @@ MonoBehaviour:
   baseDEF: 0
   baseSPD: 0
   sprite: {fileID: 0}
+  filePath: 
 --- !u!1 &2170328972528070556
 GameObject:
   m_ObjectHideFlags: 0
@@ -120,6 +121,7 @@ MonoBehaviour:
   baseDEF: 0
   baseSPD: 0
   sprite: {fileID: 0}
+  filePath: 
 --- !u!1 &5853421979298276076
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,9 +226,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5853421980385989180}
-  - component: {fileID: 5853421980385989187}
+  - component: {fileID: 7667980162589936488}
   m_Layer: 0
-  m_Name: SkillInventory
+  m_Name: SkillInventoryData
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -247,7 +249,7 @@ Transform:
   m_Father: {fileID: 5853421979298276078}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5853421980385989187
+--- !u!114 &7667980162589936488
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -256,11 +258,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5853421980385989186}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cb7f10317ca2754298f6263fcead7b7, type: 3}
+  m_Script: {fileID: 11500000, guid: a4a8140a3cbd4f44191a771e91ae672f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillInventory: {fileID: 0}
-  skillSlot: []
+  Count: 20
+  skillList: []
 --- !u!1 &5853421981333228466
 GameObject:
   m_ObjectHideFlags: 0
@@ -351,3 +353,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLearning: 0
+  startCounter: 0
+  result: 

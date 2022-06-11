@@ -10,8 +10,8 @@ public class SkillInventory : MonoBehaviour
         get { return instance; }
     }
 
-    public GameObject skillInventory;
     public List<SkillSlot> skillSlot;
+    public GameObject skillSlotPrefab;
 
     private int page = 1;
     public int Page {
@@ -24,20 +24,6 @@ public class SkillInventory : MonoBehaviour
 
     public void AddSkill(int i, Skill skill) {
         skillSlot[i].AddSkill(skill);
-    }
-
-    public void AddSkill(Skill skill) {
-        for (int i=0; i<skillSlot.Count; i++) {
-            Skill temp = GetSkill(i);
-
-            if (temp == null) {
-                AddSkill(i, skill);
-                return;
-            }
-        }
-
-        skillSlot.Add(CreateSkillSlot(skillSlot.Count));
-        AddSkill(skillSlot.Count - 1, skill);
     }
 
     public Skill GetSkill(int i) {
@@ -78,30 +64,36 @@ public class SkillInventory : MonoBehaviour
     }
     */
 
-    public SkillSlot CreateSkillSlot(int i) {
-        GameObject skill = new GameObject();
+    public void CreateSkillSlot(int i) {
+        GameObject skill = Instantiate(skillSlotPrefab);
 
-        skill.transform.parent = skillInventory.transform;
+        skill.transform.parent = transform;
         skill.name = "Slot" + (i + 1);
-        return skill.AddComponent<SkillSlot>();
+
+        SkillSlot sl = skill.GetComponent<SkillSlot>();
+        sl.dragable = true;
+        sl.tooltipPivot = new Vector2(1, 1);
+        sl.transform.localScale = new Vector3(1, 1, 1);
+
+        skillSlot.Add(sl);
     }
     
     void Awake()
     {
-        if (instance == null) {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        } else {
-            Destroy(gameObject);
-        }
 
-        skillSlot = new List<SkillSlot>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        skillSlot = new List<SkillSlot>();
+
+        for (int i=0; i<SkillInventoryData.Instance.Count; i++) {
+            CreateSkillSlot(i);
+            AddSkill(i, SkillInventoryData.Instance.GetSkill(i));
+        }
+
+        instance = this;
     }
 
     // Update is called once per frame
