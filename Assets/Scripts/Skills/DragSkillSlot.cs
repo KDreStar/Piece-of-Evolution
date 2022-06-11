@@ -10,7 +10,6 @@ public class DragSkillSlot : MonoBehaviour
         get { return instance; }
     }
     public SkillSlot skillSlot;
-    public Image cooltimeImage;
 
     public Image image;
 

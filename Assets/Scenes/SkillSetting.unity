@@ -426,7 +426,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillSlot: {fileID: 0}
-  cooltimeImage: {fileID: 0}
   image: {fileID: 0}
 --- !u!1001 &617016196
 PrefabInstance:
@@ -1185,8 +1184,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 353, y: -2.11e-10}
-  m_SizeDelta: {x: 553, y: 505}
+  m_AnchoredPosition: {x: 746, y: -0.010935}
+  m_SizeDelta: {x: 960, y: 1079.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1276239777
 MonoBehaviour:
@@ -1208,7 +1207,7 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 80, y: 80}
+  m_CellSize: {x: 160, y: 160}
   m_Spacing: {x: 10, y: 10}
   m_Constraint: 1
   m_ConstraintCount: 4
@@ -1408,14 +1407,13 @@ MonoBehaviour:
   equipSkills: {fileID: 667976511}
   status: {fileID: 667976514}
   textName: {fileID: 613768548}
-  textCurrentHP: {fileID: 0}
-  textMaxHP: {fileID: 1425235711}
+  textHP: {fileID: 1425235711}
   textATK: {fileID: 2028317908}
   textDEF: {fileID: 1854992609}
   textSPD: {fileID: 533786078}
   textCost: {fileID: 1234096210}
+  textHPBar: {fileID: 0}
   HPBar: {fileID: 0}
-  textHPFormat: 
 --- !u!4 &1414612352
 Transform:
   m_ObjectHideFlags: 0
@@ -2321,7 +2319,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5438130063767358423, guid: 381c270fdaa44f44988c54e6fa7050f9, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -173
+      value: -42
       objectReference: {fileID: 0}
     - target: {fileID: 5438130063767358423, guid: 381c270fdaa44f44988c54e6fa7050f9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

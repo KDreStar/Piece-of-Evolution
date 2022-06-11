@@ -28,19 +28,21 @@ public class BattleManager : MonoBehaviour
     //학습 버튼을 클릭한 경우 mlagents-learn.exe 매개변수 관리후 실행
     //없는 경우 실행 불가
     public void BattleSetting(bool isLearning, GameObject enemy) {
-        if (isLearning) {
-
-        }
-
         this.isLearning = isLearning;
         
         EnemyData.Instance.Set(enemy);
 
-        //오래걸리므로 나중에 로딩씬 추가
-        //처음 실행시 mlagents-learn 켜진지를 확인해서 오래걸림
-        Time.timeScale = 0;
-        GameManager.Instance.ChangeScene("Battle");
-        //LoadingSceneManager.LoadScene("Battle");
+        if (isLearning) {
+            CharacterData.Instance.Save();
+            EnemyData.Instance.Save();
+
+            //string path = Application.persistentDataPath + "/Learning";
+            //Process.Start("mlagents-learn", "--")
+        } else {
+
+            Time.timeScale = 0;
+            GameManager.Instance.ChangeScene("Battle");
+        }
     }
 
     public void StartBattle() {
@@ -49,7 +51,7 @@ public class BattleManager : MonoBehaviour
             startCounter = 4.0f;
             StartCoroutine(DecreaseCount());
         } else {
-            Time.timeScale = 1.0f;
+            //Time.timeScale = 1.0f;
         }
     }
 

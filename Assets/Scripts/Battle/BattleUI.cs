@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using TMPro;
+using Unity.MLAgents;
 
 public class BattleUI : MonoBehaviour
 {
@@ -34,6 +35,12 @@ public class BattleUI : MonoBehaviour
             }
         } else {
             textMessage.text = "";
+        }
+
+        if (BattleManager.Instance.isLearning) {
+            if (Academy.Instance != null) {
+                textMessage.text = Academy.Instance.EpisodeCount.ToString();
+            }
         }
     }
 }

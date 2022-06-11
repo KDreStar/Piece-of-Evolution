@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Barracuda;
 using UnityEngine.UI;
+using System.IO;
 
 //Scene 전환시 적의 정보를 저장하는 용도
 public class EnemyData : MonoBehaviour
@@ -23,6 +24,8 @@ public class EnemyData : MonoBehaviour
 
     public Sprite sprite;
 
+    public string filePath;
+
     //싱글톤
     void Awake()
     {
@@ -31,6 +34,68 @@ public class EnemyData : MonoBehaviour
             DontDestroyOnLoad(gameObject);
         } else {
             Destroy(gameObject);
+        }
+    }
+
+    void Start() {
+        if (BattleManager.Instance.isLearning)
+            LoadWithLearning();
+    }
+
+    public void Save() {
+        CharacterJSONData data = new CharacterJSONData();
+
+        data.name = name;
+        data.baseHP = baseHP;
+        data.baseATK = baseATK;
+        data.baseDEF = baseDEF;
+        data.baseSPD = baseSPD;
+        data.skillNoList = new int[EquipSkills.maxSlot];
+
+        for (int i=0; i<EquipSkills.maxSlot; i++)
+            data.skillNoList[i] = skillList[i] != null ? skillList[i].No : 0;
+        
+        string json = JsonUtility.ToJson(data);
+
+        string fileName = "EnemyJSONData";
+        filePath = Application.persistentDataPath + "/" + fileName + ".json";
+
+        File.WriteAllText(filePath, json);
+    }
+
+    public void Load() {
+        string json = File.ReadAllText(filePath);
+        CharacterJSONData data = JsonUtility.FromJson<CharacterJSONData>(json);
+
+        name = data.name;
+        baseHP = data.baseHP;
+        baseATK = data.baseATK;
+        baseDEF = data.baseDEF;
+        baseSPD = data.baseSPD;
+
+        for (int i=0; i<EquipSkills.maxSlot; i++) {
+            int no = data.skillNoList[i];
+
+            if (no != 0)
+                skillList[i] = SkillDatabase.Instance.GetSkill(no);
+        }
+    }
+
+    public void LoadWithLearning() {
+        string json = File.ReadAllText("EnemyJSONData.json");
+        CharacterJSONData data = JsonUtility.FromJson<CharacterJSONData>(json);
+
+        name = data.name;
+        baseHP = data.baseHP;
+        baseATK = data.baseATK;
+        baseDEF = data.baseDEF;
+        baseSPD = data.baseSPD;
+
+        for (int i=0; i<EquipSkills.maxSlot; i++) {
+            int no = data.skillNoList[i];
+
+            if (no != 0)
+                skillList[i] = SkillDatabase.Instance.GetSkill(no);
         }
     }
 
