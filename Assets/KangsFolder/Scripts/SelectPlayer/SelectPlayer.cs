@@ -234,6 +234,8 @@ public class SelectPlayer : MonoBehaviour
         switch (selected)
         {
             case 1: // 게임 접속
+                SceneManager.LoadScene("GameMain");
+                /* 캐릭터 선택해야 진입하는 부분
                 Debug.Log("mouseSelect: " + mouseSelect);
                 if (mouseSelect == -1)
                 {
@@ -247,7 +249,7 @@ public class SelectPlayer : MonoBehaviour
                     SceneManager.LoadScene("GameMain");
                     Debug.Log("선택된 숫자(selected): " + selected);
                 }
-
+                */
                 break;
             case 2: // 이전 화면
                 SceneManager.LoadScene("Main");
@@ -271,7 +273,7 @@ public class SelectPlayer : MonoBehaviour
         mouseSelect = -1;
         Debug.Log("첫시작 mouseSelect: " + mouseSelect);
         
-        InputPname(Pname, 0);
+        //InputPname(Pname, 0);
 
         //현재 플레이어 수 구하기
 

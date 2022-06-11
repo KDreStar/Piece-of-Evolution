@@ -33,22 +33,23 @@ public class Login : MonoBehaviour {
 
     public void LoginButtonClick()
     {
-        StartCoroutine(LoginToDB(InputFieldID.text, InputFieldPW.text));
+		SceneManager.LoadScene("SelectCharacter");
+	/* 일단 그냥 넘어가도록
+		/StartCoroutine(LoginToDB(InputFieldID.text, InputFieldPW.text));
 
 		SessionID = InputFieldID.text;
 
 		Debug.Log( "Login_Test"+ SessionID);
+	*/
     }
 
 	public void LoadGame(string LoginCorrect)
     {
-    //   if(LoginCorrect == "login success")
-	   //{
-		  // SceneManager.LoadScene("Fight");
-	   //}
+        if (LoginCorrect == "login success")
+        {
+            SceneManager.LoadScene("Fight");
+        }
 
-		//테스트를 위해 그냥 넘어가도록
-		SceneManager.LoadScene("SelectPlayer");
 	}
 
 	IEnumerator LoginToDB(string ID, string password)

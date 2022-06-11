@@ -23,7 +23,7 @@ public class Main : MonoBehaviour
     }
     public void StartGame()
     {
-        SceneManager.LoadScene("SelectPlayer");
+        SceneManager.LoadScene("SelectCharacter");
     }
     public void HowToPlay()
     {
@@ -39,9 +39,14 @@ public class Main : MonoBehaviour
     }
     public void Exit()
     {
-        Debug.Log("실행됨?");
-        //UnityEditor.EditorApplication.isPlaying = false;
+        Debug.Log("Exit1");
+
+        Debug.Log("Exit2");
+        UnityEditor.EditorApplication.isPlaying = false;
+        
+        Debug.Log("Exit3");
         Application.Quit();
+            
     }
 
     // Start is called before the first frame update
