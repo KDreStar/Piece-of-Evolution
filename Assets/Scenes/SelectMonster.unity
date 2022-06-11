@@ -568,6 +568,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2083037287222367175, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 259e84267ecb8df4b9ccfc77f645aa59, type: 2}
     - target: {fileID: 2769543326446909338, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -824,6 +828,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyUI
       objectReference: {fileID: 0}
+    - target: {fileID: 5410003177406915573, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: name
+      value: Mushroom
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410003177406915573, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: baseHP
+      value: 300
+      objectReference: {fileID: 0}
     - target: {fileID: 5755034478870808230, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -918,6 +930,42 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6233740980261150288, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598139448129122804, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598139448129122804, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 4723107735738678597, guid: f8b30c2afe165d645b54d500a9c30862, type: 3}
+    - target: {fileID: 6598139448129122804, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598139448129122804, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598139448129122804, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598139448129122804, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598139448129122804, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: m_FillMethod
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598139448129122804, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: m_UseSpriteMesh
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6598139448129122804, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: m_PreserveAspect
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6642597486766371832, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}

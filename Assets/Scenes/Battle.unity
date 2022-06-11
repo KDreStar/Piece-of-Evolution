@@ -706,6 +706,10 @@ PrefabInstance:
       propertyPath: tooltipPivot.x
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3999909076433884057, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: m_BehaviorType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4515736757712133374, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: equipSkills
       value: 

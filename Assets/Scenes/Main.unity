@@ -3932,7 +3932,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uBA54\uC778 \uD654\uBA74\uC73C\uB85C \uB3CC\uC544\uAC00\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
+  m_text: "\uAC8C\uC784\uC744 \uC885\uB8CC\uD558\uACA0\uC2B5\uB2C8\uAE4C?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 227b8647a8b32b74c85775d24f838282, type: 2}
   m_sharedMaterial: {fileID: 4965409651649984711, guid: 227b8647a8b32b74c85775d24f838282, type: 2}
@@ -4216,6 +4216,10 @@ PrefabInstance:
       propertyPath: skillList.Array.data[2]
       value: 
       objectReference: {fileID: 11400000, guid: 240063ed07ab8764f8c9c1499dad3ea5, type: 2}
+    - target: {fileID: 4305563439045339711, guid: e293e443505690a46902dd5dbc03eace, type: 3}
+      propertyPath: skillList.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 56512c3777323f64eb97364048f6eaa3, type: 2}
     - target: {fileID: 5853421979298276076, guid: e293e443505690a46902dd5dbc03eace, type: 3}
       propertyPath: m_Name
       value: GameManager
