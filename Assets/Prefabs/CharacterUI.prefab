@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5410003177406915573}
   - component: {fileID: 2753025887299622550}
   - component: {fileID: 4577267906620484006}
+  - component: {fileID: 277880014}
   m_Layer: 5
   m_Name: CharacterUI
   m_TagString: Untagged
@@ -144,6 +145,26 @@ MonoBehaviour:
   - {fileID: 0}
   tooltipPivot: {x: 0, y: 0}
   maxSkillCost: 20
+--- !u!95 &277880014
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5386776209032058430}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: fe99e984f074fc5429fa44096b986a33, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &513679116090062321
 PrefabInstance:
   m_ObjectHideFlags: 0
