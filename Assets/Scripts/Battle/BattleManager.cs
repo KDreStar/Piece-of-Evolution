@@ -39,6 +39,7 @@ public class BattleManager : MonoBehaviour
 
             //string path = Application.persistentDataPath + "/Learning";
             //Process.Start("mlagents-learn", "--")
+            GameManager.Instance.ChangeScene("Learning");
         } else {
 
             Time.timeScale = 0;

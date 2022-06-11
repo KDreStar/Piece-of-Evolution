@@ -1,1 +1,1 @@
-mlagents-learn CharacterVSEnemy.yaml --run-id=CharacterVSEnemy --resume
+mlagents-learn CharacterVSEnemy.yaml --run-id=LearningTest --force

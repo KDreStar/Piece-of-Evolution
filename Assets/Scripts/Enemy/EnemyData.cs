@@ -39,7 +39,7 @@ public class EnemyData : MonoBehaviour
 
     void Start() {
         if (BattleManager.Instance.isLearning)
-            LoadWithLearning();
+            Load();
     }
 
     public void Save() {
@@ -58,31 +58,13 @@ public class EnemyData : MonoBehaviour
         string json = JsonUtility.ToJson(data);
 
         string fileName = "EnemyJSONData";
-        filePath = Application.persistentDataPath + "/" + fileName + ".json";
+        filePath = Application.dataPath + "/" + fileName + ".json";
 
         File.WriteAllText(filePath, json);
     }
 
     public void Load() {
         string json = File.ReadAllText(filePath);
-        CharacterJSONData data = JsonUtility.FromJson<CharacterJSONData>(json);
-
-        name = data.name;
-        baseHP = data.baseHP;
-        baseATK = data.baseATK;
-        baseDEF = data.baseDEF;
-        baseSPD = data.baseSPD;
-
-        for (int i=0; i<EquipSkills.maxSlot; i++) {
-            int no = data.skillNoList[i];
-
-            if (no != 0)
-                skillList[i] = SkillDatabase.Instance.GetSkill(no);
-        }
-    }
-
-    public void LoadWithLearning() {
-        string json = File.ReadAllText("EnemyJSONData.json");
         CharacterJSONData data = JsonUtility.FromJson<CharacterJSONData>(json);
 
         name = data.name;
