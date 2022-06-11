@@ -13,6 +13,7 @@ public class BattleManager : MonoBehaviour
     }
 
     public float startCounter;
+    public string result;
 
     void Awake()
     {
