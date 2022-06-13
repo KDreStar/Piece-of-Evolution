@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   no: 22
   name: "HP \uC99D\uAC00 II"
-  description: "\uCE90\uB9AD\uD130\uC758 \uCD5C\uB300 HP + 100"
-  skillCost: 1
-  icon: {fileID: 0}
+  description: "\uCE90\uB9AD\uD130\uC758 \uCD5C\uB300 HP 100 \uC99D\uAC00"
+  skillCost: 2
+  icon: {fileID: 21300000, guid: 833b8eac96f5f0c4f80d49f64e248e4d, type: 3}
   statFormula: HP = HP + 100

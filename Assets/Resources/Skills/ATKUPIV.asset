@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09ee3bad37ff11541b17a3561f59b40c, type: 3}
-  m_Name: HPUPI
+  m_Name: ATKUPIV
   m_EditorClassIdentifier: 
-  no: 21
-  name: "HP \uC99D\uAC00 I"
-  description: "\uCE90\uB9AD\uD130\uC758 \uCD5C\uB300 HP 50 \uC99D\uAC00"
-  skillCost: 1
-  icon: {fileID: 21300000, guid: 3b2cb6f486a17b24b830267b9d2a2035, type: 3}
-  statFormula: HP = HP + 50
+  no: 29
+  name: "\uACF5\uACA9\uB825 \uC99D\uAC00 IV"
+  description: "\uCE90\uB9AD\uD130\uC758 ATK 20 \uC99D\uAC00"
+  skillCost: 4
+  icon: {fileID: 21300000, guid: 767e208491db79b43b8461c8d5dda43d, type: 3}
+  statFormula: ATK = ATK + 20

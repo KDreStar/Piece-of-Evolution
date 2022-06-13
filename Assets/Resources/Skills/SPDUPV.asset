@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09ee3bad37ff11541b17a3561f59b40c, type: 3}
-  m_Name: HPUPI
+  m_Name: SPDUPV
   m_EditorClassIdentifier: 
-  no: 21
-  name: "HP \uC99D\uAC00 I"
-  description: "\uCE90\uB9AD\uD130\uC758 \uCD5C\uB300 HP 50 \uC99D\uAC00"
-  skillCost: 1
-  icon: {fileID: 21300000, guid: 3b2cb6f486a17b24b830267b9d2a2035, type: 3}
-  statFormula: HP = HP + 50
+  no: 40
+  name: "\uC774\uB3D9\uC18D\uB3C4 \uC99D\uAC00 V"
+  description: "\uCE90\uB9AD\uD130\uC758 SPD 25 \uC99D\uAC00"
+  skillCost: 5
+  icon: {fileID: 21300000, guid: 10ede1c0af10b1a44b34e86cb10bb510, type: 3}
+  statFormula: SPD = SPD + 25

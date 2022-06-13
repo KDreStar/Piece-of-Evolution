@@ -339,11 +339,15 @@ PrefabInstance:
     - target: {fileID: 4305563439045339711, guid: e293e443505690a46902dd5dbc03eace, type: 3}
       propertyPath: skillList.Array.data[3]
       value: 
-      objectReference: {fileID: 11400000, guid: ba62f88bd85c32a48aa6d2b8fe857ac0, type: 2}
+      objectReference: {fileID: 11400000, guid: 1c00cbd950112214a855c90fe31eda97, type: 2}
     - target: {fileID: 4305563439045339711, guid: e293e443505690a46902dd5dbc03eace, type: 3}
       propertyPath: skillList.Array.data[4]
       value: 
-      objectReference: {fileID: 11400000, guid: 14a7fa92c75780d41b62a7ec29de025e, type: 2}
+      objectReference: {fileID: 11400000, guid: 35e491cf34ba3e84cb56d1960d8fff67, type: 2}
+    - target: {fileID: 4305563439045339711, guid: e293e443505690a46902dd5dbc03eace, type: 3}
+      propertyPath: skillList.Array.data[5]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0abad9350da58aa42bd63ac5e40bf3da, type: 2}
     - target: {fileID: 5853421979298276076, guid: e293e443505690a46902dd5dbc03eace, type: 3}
       propertyPath: m_Name
       value: GameManager

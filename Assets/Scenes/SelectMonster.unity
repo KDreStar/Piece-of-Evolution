@@ -992,6 +992,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6745810295122884128, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6745810295122884128, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6745810295122884128, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: m_UseSpriteMesh
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6745810295122884128, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7330531980989143963, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
