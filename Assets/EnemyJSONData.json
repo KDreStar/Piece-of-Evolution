@@ -1,1 +1,1 @@
-{"name":"Ninja","baseHP":200.0,"baseATK":15.0,"baseDEF":5.0,"baseSPD":25.0,"skillNoList":[13,13,13,0,0,0,0,0]}
+{"name":"Enemy","baseHP":500.0,"baseATK":50.0,"baseDEF":40.0,"baseSPD":10.0,"skillNoList":[16,16,28,31,31,37,0,0]}

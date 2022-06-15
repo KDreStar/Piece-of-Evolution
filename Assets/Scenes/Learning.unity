@@ -3930,6 +3930,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleField
       objectReference: {fileID: 0}
+    - target: {fileID: 3999909075562294524, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: m_Model
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 3999909075562294525, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: equipSkills
       value: 
@@ -6125,7 +6129,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5803160672272168146, guid: 381c270fdaa44f44988c54e6fa7050f9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 246.8628
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5803160672272168146, guid: 381c270fdaa44f44988c54e6fa7050f9, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -9338,7 +9342,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5803160672272168146, guid: 381c270fdaa44f44988c54e6fa7050f9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 246.8628
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5803160672272168146, guid: 381c270fdaa44f44988c54e6fa7050f9, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -12967,6 +12971,10 @@ PrefabInstance:
       value: Character
       objectReference: {fileID: 0}
     - target: {fileID: 4305563439045339711, guid: e293e443505690a46902dd5dbc03eace, type: 3}
+      propertyPath: model
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4305563439045339711, guid: e293e443505690a46902dd5dbc03eace, type: 3}
       propertyPath: baseHP
       value: 500
       objectReference: {fileID: 0}
@@ -12994,9 +13002,21 @@ PrefabInstance:
       propertyPath: skillList.Array.data[2]
       value: 
       objectReference: {fileID: 11400000, guid: 240063ed07ab8764f8c9c1499dad3ea5, type: 2}
+    - target: {fileID: 4305563439045339711, guid: e293e443505690a46902dd5dbc03eace, type: 3}
+      propertyPath: skillList.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0abad9350da58aa42bd63ac5e40bf3da, type: 2}
+    - target: {fileID: 4305563439045339711, guid: e293e443505690a46902dd5dbc03eace, type: 3}
+      propertyPath: skillList.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 607645f127f85e9419bcb52ea827b890, type: 2}
     - target: {fileID: 5160429233030696625, guid: e293e443505690a46902dd5dbc03eace, type: 3}
       propertyPath: name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160429233030696625, guid: e293e443505690a46902dd5dbc03eace, type: 3}
+      propertyPath: model
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5160429233030696625, guid: e293e443505690a46902dd5dbc03eace, type: 3}
       propertyPath: baseHP
@@ -13016,12 +13036,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5160429233030696625, guid: e293e443505690a46902dd5dbc03eace, type: 3}
       propertyPath: baseSPD
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5160429233030696625, guid: e293e443505690a46902dd5dbc03eace, type: 3}
       propertyPath: skillList.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 97986aedaef23f54b96ff7bde5d91b89, type: 2}
+    - target: {fileID: 5160429233030696625, guid: e293e443505690a46902dd5dbc03eace, type: 3}
+      propertyPath: skillList.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 97986aedaef23f54b96ff7bde5d91b89, type: 2}
+    - target: {fileID: 5160429233030696625, guid: e293e443505690a46902dd5dbc03eace, type: 3}
+      propertyPath: skillList.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5160429233030696625, guid: e293e443505690a46902dd5dbc03eace, type: 3}
+      propertyPath: skillList.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0abad9350da58aa42bd63ac5e40bf3da, type: 2}
+    - target: {fileID: 5160429233030696625, guid: e293e443505690a46902dd5dbc03eace, type: 3}
+      propertyPath: skillList.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 607645f127f85e9419bcb52ea827b890, type: 2}
+    - target: {fileID: 5160429233030696625, guid: e293e443505690a46902dd5dbc03eace, type: 3}
+      propertyPath: skillList.Array.data[5]
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5853421979298276076, guid: e293e443505690a46902dd5dbc03eace, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -13117,7 +13157,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3203394341147440995, guid: 80c9fb6450e99444badca0e46d757298, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 191.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3203394341147440995, guid: 80c9fb6450e99444badca0e46d757298, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -13141,7 +13181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4287660366977638493, guid: 80c9fb6450e99444badca0e46d757298, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 191.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4287660366977638493, guid: 80c9fb6450e99444badca0e46d757298, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -13213,7 +13253,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7858100228945182571, guid: 80c9fb6450e99444badca0e46d757298, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 61.413902
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7858100228945182571, guid: 80c9fb6450e99444badca0e46d757298, type: 3}
       propertyPath: m_AnchoredPosition.y

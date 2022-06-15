@@ -41,8 +41,10 @@ public class Main : MonoBehaviour
     {
         Debug.Log("Exit1");
 
+        #if (UNITY_EDITOR)
         Debug.Log("Exit2");
         UnityEditor.EditorApplication.isPlaying = false;
+        #endif
         
         Debug.Log("Exit3");
         Application.Quit();

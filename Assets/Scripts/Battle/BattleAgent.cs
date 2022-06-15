@@ -17,6 +17,8 @@ public class BattleAgent : Agent
     private int lastDirection = 3;
     EnvironmentParameters m_ResetParams;
     public Field field;
+    public BattleEnvController battleEnvController;
+
 
     ///////
 
@@ -36,17 +38,20 @@ public class BattleAgent : Agent
     공격자 139
     - 위치 3
     - 스킬 정보 (스킬 번호 / 쿨타임) 17 * 8
-    - 스탯 (HP 비율, ATK, DEF, SPD) 4
+    - 스탯 (HP 비율, MaxHP, ATK, DEF, SPD) 5
     
     방어자 139
     - 위치 3
     - 스킬 정보 (스킬 번호 / 쿨타임) 17 * 8
-    - 스탯 (HP 비율, ATK, DEF, SPD) 4
+    - 스탯 (HP 비율, MaxHP, ATK, DEF, SPD) 5
 
     스킬 이펙트 [생성 시간 기준 8개를 가져옴] 256
     - 스킬 번호 / 시전자 / 위치 x, y / 크기 x, y, z / 진행방향 direction 8 * 8
 
-    = 542
+    남은 배틀 시간 1
+    벽 거리 4
+
+    = 549
 
     추가로 추가할 거 배틀 시간
     */
@@ -96,6 +101,7 @@ public class BattleAgent : Agent
         }
 
         sensor.AddObservation(attackerStatus.CurrentHP / attackerStatus.MaxHP);
+        sensor.AddObservation(attackerStatus.MaxHP);
         sensor.AddObservation(attackerStatus.CurrentATK);
         sensor.AddObservation(attackerStatus.CurrentDEF);
         sensor.AddObservation(attackerStatus.CurrentSPD);
@@ -121,6 +127,7 @@ public class BattleAgent : Agent
         }
 
         sensor.AddObservation(defenderStatus.CurrentHP / defenderStatus.MaxHP);
+        sensor.AddObservation(defenderStatus.MaxHP);
         sensor.AddObservation(defenderStatus.CurrentATK);
         sensor.AddObservation(defenderStatus.CurrentDEF);
         sensor.AddObservation(defenderStatus.CurrentSPD);
@@ -141,7 +148,7 @@ public class BattleAgent : Agent
                 sensor.AddObservation(GetBinaryEncoding(effect.GetSkillNo()));
                 //{1, 0} 내 스킬
                 //{0, 1} 상대 스킬
-                if (effect.GetAttackerTag() == gameObject.tag)
+                if (gameObject.CompareTag(effect.GetAttackerTag()) == true)
                     sensor.AddObservation(new float[] {1, 0});
                 else
                     sensor.AddObservation(new float[] {0, 1});
@@ -153,6 +160,17 @@ public class BattleAgent : Agent
                 sensor.AddObservation(new float[32]);
             }
         }
+
+        sensor.AddObservation(battleEnvController.timer / battleEnvController.MaxBattleTime);
+
+        float x = attacker.transform.localPosition.x;
+        float y = attacker.transform.localPosition.y;
+
+        //상하좌우
+        sensor.AddObservation(4 - y); //0~8
+        sensor.AddObservation(y - (-4)); //0~8
+        sensor.AddObservation(x + 7); //0~14
+        sensor.AddObservation(7 - x); //0~14
     }
 
     //액션 처리
@@ -161,7 +179,7 @@ public class BattleAgent : Agent
         var direction = actionBuffers.DiscreteActions[0];
         var skillIndex = actionBuffers.DiscreteActions[1];
 
-        Debug.Log("Action " + direction + " " + skillIndex);
+        Debug.Log(attacker.tag + " Action " + direction + " " + skillIndex);
 
         //                         x   ↑  ↗   →  ↘   ↓  ↙   ←   ↖
         float[] dx = new float[] { 0,  0,  1,  1,  1,  0, -1, -1, -1};

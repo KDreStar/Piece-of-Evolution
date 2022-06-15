@@ -2043,6 +2043,26 @@ PrefabInstance:
       propertyPath: tooltipPivot.x
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4577267906620484006, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: skillList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: f16126d946390ae46a8dda48d4df221b, type: 2}
+    - target: {fileID: 4577267906620484006, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: skillList.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: f8ae0439baeda5044a035c410237869b, type: 2}
+    - target: {fileID: 4577267906620484006, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: skillList.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 240063ed07ab8764f8c9c1499dad3ea5, type: 2}
+    - target: {fileID: 4577267906620484006, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: skillList.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0abad9350da58aa42bd63ac5e40bf3da, type: 2}
+    - target: {fileID: 4577267906620484006, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: skillList.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1c00cbd950112214a855c90fe31eda97, type: 2}
     - target: {fileID: 4666539418374462982, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2077,19 +2097,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5410003177406915573, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
       propertyPath: baseHP
-      value: 5000
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 5410003177406915573, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
       propertyPath: baseATK
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5410003177406915573, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
-      propertyPath: baseDEF
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5410003177406915573, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: baseDEF
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410003177406915573, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
       propertyPath: baseSPD
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5755034478870808230, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
       propertyPath: m_AnchorMax.y
@@ -3002,6 +3022,26 @@ PrefabInstance:
       propertyPath: tooltipPivot.x
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4577267906620484006, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: skillList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 97986aedaef23f54b96ff7bde5d91b89, type: 2}
+    - target: {fileID: 4577267906620484006, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: skillList.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 97986aedaef23f54b96ff7bde5d91b89, type: 2}
+    - target: {fileID: 4577267906620484006, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: skillList.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 0abad9350da58aa42bd63ac5e40bf3da, type: 2}
+    - target: {fileID: 4577267906620484006, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: skillList.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 9ea9b2c740dad7b47a724f9c6b548d4b, type: 2}
+    - target: {fileID: 4577267906620484006, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: skillList.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: ee1c41c96fcf2674b92b0ac8597e5002, type: 2}
     - target: {fileID: 4666539418374462982, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3041,6 +3081,22 @@ PrefabInstance:
     - target: {fileID: 5386776209032058430, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
       propertyPath: m_Name
       value: EnemyUI3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410003177406915573, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: baseHP
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410003177406915573, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: baseATK
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410003177406915573, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: baseDEF
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410003177406915573, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: baseSPD
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5755034478870808230, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
       propertyPath: m_AnchorMax.y

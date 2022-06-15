@@ -20,6 +20,9 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public int equipIndex;
     public Vector2 tooltipPivot;
 
+    private IEnumerator cooltimeCoroutine;
+    private bool isUse = true;
+
     public bool IsEmpty() {
         return skill == null ? true : false;
     }
@@ -57,18 +60,24 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (activeSkill == null)
             return false;
         
-        if (currentCooltime > 0)
+        //코루틴 종료 직전 -> UseSkill 실행 -> 쿨타임 다시 0 초과됨 -> 코루틴 2개 돌아감
+        //이 현상 방지
+        if (isUse == false)
             return false;
 
         activeSkill.Use(gameObject, direction);
+        isUse = false;
         currentCooltime = activeSkill.BaseCooltime;
-        StartCoroutine(ApplyCooltime());
+        cooltimeCoroutine = ApplyCooltime();
+        StartCoroutine(cooltimeCoroutine);
 
         return true;
     }
 
     public void ResetCooltime() {
+        isUse = true;
         currentCooltime = 0;
+        StopCoroutine(cooltimeCoroutine);
     }
 
     IEnumerator ApplyCooltime() {
@@ -78,6 +87,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
 
         ResetCooltime();
+        
         Debug.Log("재사용 가능");
     }
 
@@ -144,6 +154,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     // Start is called before the first frame update
     void Start()
     {
+        cooltimeCoroutine = ApplyCooltime();
         image = GetComponent<Image>();
 
         if (skill != null)

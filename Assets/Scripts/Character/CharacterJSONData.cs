@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Data;
 using System;
+using Unity.MLAgents.Policies;
 
 [Serializable]
 public class CharacterJSONData
@@ -14,4 +15,5 @@ public class CharacterJSONData
     public float baseSPD;
 
     public int[] skillNoList;
+    public BehaviorType type;
 }

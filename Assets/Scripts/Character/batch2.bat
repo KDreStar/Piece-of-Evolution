@@ -1,0 +1,1 @@
+mlagents-learn CharacterVSEnemy2.yaml --run-id=Version5 --env C:\Users\DreStar\Documents\Learning\Learning --num-envs 4 --width 160 --height 90 --force

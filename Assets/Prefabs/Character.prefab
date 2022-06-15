@@ -103,14 +103,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e34804f9a3152643a166c8cbbf03941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  name: 
   baseHP: 0
   baseATK: 0
   baseDEF: 0
   baseSPD: 0
-  textHP: {fileID: 0}
-  textATK: {fileID: 0}
-  textDEF: {fileID: 0}
-  textSPD: {fileID: 0}
 --- !u!50 &9065742834548992585
 Rigidbody2D:
   serializedVersion: 4
@@ -208,6 +205,7 @@ MonoBehaviour:
   attacker: {fileID: 9065742834548992605}
   defender: {fileID: 0}
   field: {fileID: 0}
+  battleEnvController: {fileID: 0}
 --- !u!114 &9065742834548992580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,7 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipSkills: {fileID: 0}
-  skillSlot:
+  skillList:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -244,4 +242,5 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  tooltipPivot: {x: 0, y: 0}
   maxSkillCost: 20

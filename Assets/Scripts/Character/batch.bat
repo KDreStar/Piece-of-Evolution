@@ -1,1 +1,1 @@
-mlagents-learn CharacterVSEnemy.yaml --run-id=LearningTest --force
+mlagents-learn CharacterVSEnemy.yaml --run-id=Version3 --force

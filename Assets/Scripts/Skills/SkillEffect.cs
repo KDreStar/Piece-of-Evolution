@@ -98,7 +98,11 @@ public class SkillEffect : MonoBehaviour
     }
 
     public virtual void CalculateDamage() {
-		float damage = 100;
+		float atk = attackerStatus.Calculate(activeSkill.DamageFormula);
+        float def = defenderStatus.CurrentDEF;
+        float damage = atk - def;
+
+        damage = damage <= 0 ? 1 : damage;
 
 		defenderStatus.TakeDamage(damage);
     }

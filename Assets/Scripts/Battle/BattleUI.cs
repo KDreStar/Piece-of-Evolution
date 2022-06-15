@@ -39,7 +39,7 @@ public class BattleUI : MonoBehaviour
 
         if (BattleManager.Instance.isLearning) {
             if (Academy.Instance != null) {
-                textMessage.text = Academy.Instance.EpisodeCount.ToString();
+                textMessage.text = Academy.Instance.StepCount.ToString();
             }
         }
     }

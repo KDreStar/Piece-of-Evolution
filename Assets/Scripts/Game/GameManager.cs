@@ -2,6 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
+using Random = UnityEngine.Random;
+
+using System.Text; 
+using System.IO; 
+using System.Runtime.InteropServices; 
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +15,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance {
         get { return instance; }
     }
+
+    private string learningPath;
 
     //싱글톤
     void Awake()
@@ -19,12 +27,32 @@ public class GameManager : MonoBehaviour
         } else {
             Destroy(gameObject);
         }
+
+        learningPath = Application.persistentDataPath + "/Learning";
+    }
+
+    void Start() {
+        if (File.Exists(learningPath)) {
+            BattleManager.Instance.StartLearning();
+        }
     }
 
     public void ChangeScene(string name) {
         SceneManager.LoadScene(name);
     }
 
+    public void CreateLearningFile() {
+        File.WriteAllText(learningPath, "");
+    }
+
+    public void DeleteLearningFile() {
+        if (File.Exists(learningPath))
+            File.Delete(learningPath);
+    }
+
+    void OnApplicationQuit() {
+        DeleteLearningFile();
+    }
     /*
     승리 => 기본 20%
     패배 => 기본 10%

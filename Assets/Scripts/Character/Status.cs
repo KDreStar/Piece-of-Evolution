@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Data;
 using System;
+using Unity.MLAgents.Policies;
 
 public class Status : MonoBehaviour
 {
@@ -99,7 +100,7 @@ public class Status : MonoBehaviour
         }
     }
 
-    private float Calculate(string formula) {
+    public float Calculate(string formula) {
         DataTable table = new DataTable();
         string[] statList = {"HP", "ATK", "DEF", "SPD"};
         float[] statValue = {maxHP, currentATK, currentDEF, currentSPD};
@@ -133,12 +134,19 @@ public class Status : MonoBehaviour
         bool isCharacter = this.CompareTag("Character");
         bool isEnemy     = this.CompareTag("Enemy");
 
+        BehaviorParameters bp = GetComponent<BehaviorParameters>();
+
         if (isCharacter) {
             name    = CharacterData.Instance.name;
             baseATK = CharacterData.Instance.baseATK;
             baseDEF = CharacterData.Instance.baseDEF;
             baseSPD = CharacterData.Instance.baseSPD;
             baseHP  = CharacterData.Instance.baseHP;
+
+            if (bp != null && CharacterData.Instance.model != null) {
+                bp.Model = CharacterData.Instance.model;
+                bp.BehaviorType = CharacterData.Instance.type;
+            }
         }
 
         if (isEnemy) {
@@ -148,10 +156,18 @@ public class Status : MonoBehaviour
             baseSPD = EnemyData.Instance.baseSPD;
             baseHP  = EnemyData.Instance.baseHP;
 
+            if (bp != null && EnemyData.Instance.model != null) {
+                bp.Model = EnemyData.Instance.model;
+                bp.BehaviorType = EnemyData.Instance.type;
+            }
+
             SpriteRenderer sr = GetComponent<SpriteRenderer>();
             sr.sprite = EnemyData.Instance.sprite;
         }
     }
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -175,6 +191,8 @@ public class Status : MonoBehaviour
 
     //Temp
     public void SetDefaultHP() {
+        CalculateStat();
+
         currentHP = maxHP;
     }
 

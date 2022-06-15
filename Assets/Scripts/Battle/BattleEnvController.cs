@@ -29,7 +29,7 @@ public class BattleEnvController : MonoBehaviour
 
         field = GetComponent<Field>();
 
-        //ResetScene();
+        ResetScene();
     }
 
     void Update()
@@ -49,13 +49,14 @@ public class BattleEnvController : MonoBehaviour
         }
     }
 
+    //상대 HP를 0으로 만드는 경우 추가 보상 1
     public void EndEpisode() {
         float characterHPRate = characterStatus.CurrentHP / characterStatus.MaxHP;
         float enemyHPRate = enemyStatus.CurrentHP / enemyStatus.MaxHP;
-        float timeBonus = 2 - timer / MaxBattleTime; //2~1
+        float timeBonus = 1.5f - timer / MaxBattleTime; //1.5~0.5
 
         float differentHPRate;
-        float rewardBonus = 2.5f;
+        float rewardBonus = 5.0f;
         float finalReward;
 
         characterHPRate = characterHPRate < 0 ? 0 : characterHPRate;
@@ -65,12 +66,25 @@ public class BattleEnvController : MonoBehaviour
         differentHPRate = characterHPRate - enemyHPRate;
         finalReward = rewardBonus * timeBonus * differentHPRate;
 
-        if (characterAgent != null)
+        if (characterAgent != null) {
             characterAgent.AddReward(finalReward);
+            if (timer < MaxBattleTime)
+                characterAgent.AddReward(finalReward > 0 ? 1.0f : -1.0f);
+            
+            if (timer >= MaxBattleTime)
+                characterAgent.AddReward(-5.0f);
+        }
 
         //적이 완성된 모델을 가지고 있는 경우
-        if (enemyAgent != null)
+        if (enemyAgent != null) {
             enemyAgent.AddReward(-finalReward);
+
+            if (timer < MaxBattleTime)
+                enemyAgent.AddReward(finalReward < 0 ? 1.0f : -1.0f);
+            
+            if (timer >= MaxBattleTime)
+                enemyAgent.AddReward(-5.0f);
+        }
 
         characterAgent.EndEpisode();
         enemyAgent.EndEpisode();

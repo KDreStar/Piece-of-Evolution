@@ -1,38 +1,66 @@
 {
-    "metadata": {
-        "stats_format_version": "0.3.0",
-        "mlagents_version": "0.28.0",
-        "torch_version": "1.11.0+cu113"
-    },
     "Character": {
+        "elo": 1000.0271149168435,
         "checkpoints": [
             {
-                "steps": 0,
-                "file_path": "results\\Character2\\Character\\Character-0.onnx",
+                "steps": 3499813,
+                "file_path": "results\\Character\\Character\\Character-3499813.onnx",
                 "reward": null,
-                "creation_time": 1652869837.0084949,
+                "creation_time": 1655253878.6787238,
                 "auxillary_file_paths": [
-                    "results\\Character2\\Character\\Character-0.pt"
+                    "results\\Character\\Character\\Character-3499813.pt"
                 ]
             },
             {
-                "steps": 634,
-                "file_path": "results\\Character2\\Character\\Character-634.onnx",
-                "reward": -3.1060001850128174,
-                "creation_time": 1652869883.2509441,
+                "steps": 3999603,
+                "file_path": "results\\Character\\Character\\Character-3999603.onnx",
+                "reward": null,
+                "creation_time": 1655254624.521908,
                 "auxillary_file_paths": [
-                    "results\\Character2\\Character\\Character-634.pt"
+                    "results\\Character\\Character\\Character-3999603.pt"
+                ]
+            },
+            {
+                "steps": 4499316,
+                "file_path": "results\\Character\\Character\\Character-4499316.onnx",
+                "reward": 2.2570992410182953,
+                "creation_time": 1655255381.0491514,
+                "auxillary_file_paths": [
+                    "results\\Character\\Character\\Character-4499316.pt"
+                ]
+            },
+            {
+                "steps": 4999667,
+                "file_path": "results\\Character\\Character\\Character-4999667.onnx",
+                "reward": -1.8607591390609741,
+                "creation_time": 1655256119.6087081,
+                "auxillary_file_paths": [
+                    "results\\Character\\Character\\Character-4999667.pt"
+                ]
+            },
+            {
+                "steps": 5478153,
+                "file_path": "results\\Character\\Character\\Character-5478153.onnx",
+                "reward": 0.5267190933227539,
+                "creation_time": 1655256843.47196,
+                "auxillary_file_paths": [
+                    "results\\Character\\Character\\Character-5478153.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 634,
-            "file_path": "results\\Character2\\Character.onnx",
-            "reward": -3.1060001850128174,
-            "creation_time": 1652869883.2509441,
+            "steps": 5478153,
+            "file_path": "results\\Character\\Character.onnx",
+            "reward": 0.5267190933227539,
+            "creation_time": 1655256843.47196,
             "auxillary_file_paths": [
-                "results\\Character2\\Character\\Character-634.pt"
+                "results\\Character\\Character\\Character-5478153.pt"
             ]
         }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.28.0",
+        "torch_version": "1.11.0+cu113"
     }
 }

@@ -8,22 +8,22 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleSquareMove.unity
     guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
-    path: Assets/Scenes/SelectCharacter.unity
-    guid: 5c867202aa6c0c74bb041ad70fb0fce5
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: Assets/KangsFolder/Scenes/SkillSetting2.unity
     guid: 2569c316b1cd02448ba713f7a288d662
   - enabled: 1
-    path: Assets/Scenes/SelectMonster.unity
-    guid: 0ee5dcc9dab73894ba036f0b40410bc4
-  - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 489d940c93341574fb48f01f368ff1cd
   - enabled: 1
+    path: Assets/Scenes/SelectMonster.unity
+    guid: 0ee5dcc9dab73894ba036f0b40410bc4
+  - enabled: 0
     path: Assets/KangsFolder/Scenes/Login.unity
     guid: 7e6502a0f280e1b41a951aa253e21b85
-  - enabled: 1
+  - enabled: 0
     path: Assets/KangsFolder/Scenes/Join.unity
     guid: 62e4445206416f8499cd54fadb49c2fb
   - enabled: 1
@@ -38,7 +38,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Learning.unity
     guid: 48b4f9702d5b5264991c8bccd71ba8f8
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Loading.unity
     guid: b074cc25aea15154fb0490670e2e0522
   - enabled: 1
@@ -47,4 +47,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Battle.unity
     guid: 7fd7463564f56e24284439d76327dc80
+  - enabled: 1
+    path: Assets/Scenes/SelectCharacter.unity
+    guid: 7b68c3341aa269a439b760f134b70e85
   m_configObjects: {}

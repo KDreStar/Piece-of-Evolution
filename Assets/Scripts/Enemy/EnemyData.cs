@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Barracuda;
+using Unity.Barracuda.ONNX;
+using Unity.MLAgents.Policies;
 using UnityEngine.UI;
 using System.IO;
 
@@ -22,11 +24,14 @@ public class EnemyData : MonoBehaviour
     public float baseDEF;
     public float baseSPD;
 
+    public BehaviorType type;
+
     public Sprite sprite;
     //public Animator animator;
     //public RuntimeAnimatorController ani;
 
-    public string filePath;
+    private string dataFilePath;
+    private string modelFilePath;
 
     //싱글톤
     void Awake()
@@ -37,11 +42,13 @@ public class EnemyData : MonoBehaviour
         } else {
             Destroy(gameObject);
         }
+
+        dataFilePath = Application.persistentDataPath + "/EnemyJSONData.json";
+        modelFilePath = Application.persistentDataPath + "/EnemyModel.onnx";
     }
 
     void Start() {
-        if (BattleManager.Instance.isLearning)
-            Load();
+        
     }
 
     public void Save() {
@@ -59,14 +66,11 @@ public class EnemyData : MonoBehaviour
         
         string json = JsonUtility.ToJson(data);
 
-        string fileName = "EnemyJSONData";
-        filePath = Application.dataPath + "/" + fileName + ".json";
-
-        File.WriteAllText(filePath, json);
+        File.WriteAllText(dataFilePath, json);
     }
 
     public void Load() {
-        string json = File.ReadAllText(filePath);
+        string json = File.ReadAllText(dataFilePath);
         CharacterJSONData data = JsonUtility.FromJson<CharacterJSONData>(json);
 
         name = data.name;
@@ -81,6 +85,28 @@ public class EnemyData : MonoBehaviour
             if (no != 0)
                 skillList[i] = SkillDatabase.Instance.GetSkill(no);
         }
+
+        type = data.type;
+        
+        ONNXModelConverter converter = new ONNXModelConverter(true);
+        Model temp = converter.Convert(modelFilePath);
+
+        model = ScriptableObject.CreateInstance<NNModel>();
+        NNModelData modelData = ScriptableObject.CreateInstance<NNModelData>();
+
+        
+        using (var memoryStream = new MemoryStream())
+        using (var writer = new BinaryWriter(memoryStream))
+        {
+            ModelWriter.Save(writer, temp);
+            modelData.Value = memoryStream.ToArray();
+        }
+        
+        modelData.name = "Data";
+        modelData.hideFlags = HideFlags.HideInHierarchy;
+
+        model.modelData = modelData;
+        model.name = "Model";
     }
 
     public void Set(GameObject character) {

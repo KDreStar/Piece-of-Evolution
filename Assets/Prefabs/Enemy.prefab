@@ -202,7 +202,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 66b073a6c08c32344a42896ee5f2d1b2, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: Character
@@ -230,6 +230,7 @@ MonoBehaviour:
   attacker: {fileID: 1589529876771655431}
   defender: {fileID: 0}
   field: {fileID: 0}
+  battleEnvController: {fileID: 0}
 --- !u!114 &1589529876771655449
 MonoBehaviour:
   m_ObjectHideFlags: 0

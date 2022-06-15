@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Diagnostics;
+using System.IO;
 
 public class BattleManager : MonoBehaviour
 {
@@ -36,14 +37,33 @@ public class BattleManager : MonoBehaviour
         
         EnemyData.Instance.Set(enemy);
 
-        if (isLearning) {
-            CharacterData.Instance.Save();
-            EnemyData.Instance.Save();
+        CharacterData.Instance.Save();
+        EnemyData.Instance.Save();
 
-            //string path = Application.persistentDataPath + "/Learning";
-            //Process.Start("mlagents-learn", "--")
-            GameManager.Instance.ChangeScene("Learning");
+        if (isLearning) {
+
+
+            //빈 파일을 생성함
+            //열때 빈파일이 있으면 바로 러닝씬으로감
+            //유니티 종료시 빈 파일 삭제
+            GameManager.Instance.CreateLearningFile();
+
+            string path = Application.persistentDataPath + "/";
+            string arg = path + "Character.yaml "
+                       + "--run-id=" + "Character "
+                       + "--env=Piece-of-Evolution "
+                       + "--num-envs=4 "
+                       + "--width=480 "
+                       + "--height=270 ";
+
+            if (Directory.Exists("results/Character") == true)
+                arg += "--resume ";
+
+            Process.Start("mlagents-learn", arg);
+            //GameManager.Instance.ChangeScene("Learning");
         } else {
+            CharacterData.Instance.Load();
+            EnemyData.Instance.Load();
 
             Time.timeScale = 0;
             GameManager.Instance.ChangeScene("Battle");
@@ -58,6 +78,14 @@ public class BattleManager : MonoBehaviour
         } else {
             //Time.timeScale = 1.0f;
         }
+    }
+
+    public void StartLearning() {
+        isLearning = true;
+        CharacterData.Instance.Load();
+        EnemyData.Instance.Load();
+
+        GameManager.Instance.ChangeScene("Learning");
     }
 
     IEnumerator DecreaseCount() {
