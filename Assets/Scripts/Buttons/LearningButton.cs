@@ -9,7 +9,7 @@ public class LearningButton : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<Button>().onClick.AddListener(() => BattleManager.Instance.BattleSetting(true, character));
+        GetComponent<Button>().onClick.AddListener(() => Managers.Battle.BattleSetting(true, character));
     }
 
     // Update is called once per frame

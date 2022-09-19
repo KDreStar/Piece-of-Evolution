@@ -4,14 +4,9 @@ using UnityEngine;
 using System.Diagnostics;
 using System.IO;
 
-public class BattleManager : MonoBehaviour
+public class BattleManager
 {
     public bool isLearning; //true면 학습용도 전투 false면 1번 전투후 결과
-
-    private static BattleManager instance = null;
-    public static BattleManager Instance {
-        get { return instance; }
-    }
 
     public float startCounter;
     public string result;
@@ -19,26 +14,17 @@ public class BattleManager : MonoBehaviour
     public string judgeMessage;
     public Skill getSkill;
 
-    void Awake()
-    {
-        if (instance == null) {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        } else {
-            Destroy(gameObject);
-        }
-    }
-
     //적의 정보를 세팅
     //학습 버튼을 클릭한 경우 mlagents-learn.exe 매개변수 관리후 실행
     //없는 경우 실행 불가
     public void BattleSetting(bool isLearning, GameObject enemy) {
         this.isLearning = isLearning;
         
-        EnemyData.Instance.Set(enemy);
+        Managers.Data.enemyData.Set(enemy);
 
-        CharacterData.Instance.Save();
-        EnemyData.Instance.Save();
+        //저장하는 이유 = 학습시 유니티 게임을 다시 실행해서 공유해야됨
+        Managers.Data.SaveCharacterData();
+        Managers.Data.SaveEnemyData();
 
         if (isLearning) {
 
@@ -62,8 +48,8 @@ public class BattleManager : MonoBehaviour
             Process.Start("mlagents-learn", arg);
             //GameManager.Instance.ChangeScene("Learning");
         } else {
-            CharacterData.Instance.Load();
-            EnemyData.Instance.Load();
+            Managers.Data.LoadCharacterData();
+            Managers.Data.LoadEnemyData();
 
             Time.timeScale = 0;
             GameManager.Instance.ChangeScene("Battle");
@@ -74,7 +60,7 @@ public class BattleManager : MonoBehaviour
         if (isLearning == false) {
             Time.timeScale = 0;
             startCounter = 4.0f;
-            StartCoroutine(DecreaseCount());
+            Managers.Instance.StartCoroutine(DecreaseCount());
         } else {
             //Time.timeScale = 1.0f;
         }
@@ -82,8 +68,9 @@ public class BattleManager : MonoBehaviour
 
     public void StartLearning() {
         isLearning = true;
-        CharacterData.Instance.Load();
-        EnemyData.Instance.Load();
+
+        Managers.Data.LoadCharacterData();
+        Managers.Data.LoadEnemyData();
 
         GameManager.Instance.ChangeScene("Learning");
     }
@@ -115,7 +102,7 @@ public class BattleManager : MonoBehaviour
 
         if (getSkill != null) {
             judgeMessage = "스킬 획득!";
-            SkillInventoryData.Instance.AddSkill(getSkill);
+            Managers.Data.skillInventoryData.AddSkill(getSkill);
         } else {
             judgeMessage = "스킬 획득 실패...";
         }

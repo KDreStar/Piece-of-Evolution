@@ -32,7 +32,7 @@ public class SkillDatabase : MonoBehaviour
         List<Skill> temp = new List<Skill>();
 
         for (int i=0; i<skillList.Length; i++) {
-            if (skillList[i].SkillCost == cost)
+            if (skillList[i].Cost == cost)
                 temp.Add(skillList[i]);
         }
 

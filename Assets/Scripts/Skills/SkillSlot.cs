@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+//스킬 슬롯
 public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public Skill skill = null;
@@ -12,12 +13,21 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         get { return currentCooltime; }
     }
 
+    //스킬 이미지, 쿨타임 확인 이미지
     public Image image;
     public Image cooltimeImage;
 
+    //true = 드래그 가능 false = 드래그 불가능
     public bool dragable;
+
+    //true 장착중인 스킬
+    //false 인벤토리에 있는 스킬
     public bool isEquipSkill;
+
+    //0~7
     public int equipIndex;
+
+    //스킬 툴팁 시작점을 알려줌
     public Vector2 tooltipPivot;
 
     private IEnumerator cooltimeCoroutine;
@@ -53,8 +63,10 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         return skill as PassiveSkill;
     }
 
-    /////
-    public bool UseSkill(GameObject gameObject, int direction=3) {
+    //스킬을 사용하면 프리펩을 생성하면 됨
+    //프리펩에는 이펙트랑 스크립트를 가지고 있음
+    //각 스킬 마다 구현되어 있음
+    public bool UseSkill(GameObject attacker, int direction=3) {
         ActiveSkill activeSkill = GetActiveSkill();
 
         if (activeSkill == null)
@@ -65,9 +77,25 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (isUse == false)
             return false;
 
-        activeSkill.Use(gameObject, direction);
+        //바라보는 방향으로 스킬 생성
+        // 1 = ↑ //
+        Vector3 angle = new Vector3(0, 0, 135 - direction * 45);
+  
+        //스킬 관리 인스턴스에서 이펙트 빌림
+        //그후 위치 세팅
+        SkillEffect skillEffect = Managers.Pool.GetSkillEffect(activeSkill.Effect);
+        skillEffect.gameObject.tag = attacker.tag + "Skill";
+
+        skillEffect.transform.position = attacker.transform.position;
+        skillEffect.transform.rotation = activeSkill.Effect.transform.rotation * Quaternion.Euler(angle);
+        skillEffect.transform.parent = attacker.transform.parent.transform;
+
+        skillEffect.Initialize();
+
+        Debug.Log(name + "사용");
+
         isUse = false;
-        currentCooltime = activeSkill.BaseCooltime;
+        currentCooltime = activeSkill.Cooltime;
         cooltimeCoroutine = ApplyCooltime();
         StartCoroutine(cooltimeCoroutine);
 
@@ -133,7 +161,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (dragSkillSlot == null)
             return;
 
-        SkillManager.Instance.MoveSkill(this);
+        SkillController.Instance.MoveSkill(this);
     }
 
     //마우스 오버시
@@ -169,11 +197,11 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         else
             image.sprite = null;
 
-        ActiveSkill temp = GetActiveSkill();
+        ActiveSkill activeSkill = GetActiveSkill();
 
-        if (temp == null)
+        if (activeSkill == null || activeSkill.Cooltime == 0)
             cooltimeImage.fillAmount = 0;
         else
-            cooltimeImage.fillAmount = currentCooltime / temp.BaseCooltime;
+            cooltimeImage.fillAmount = currentCooltime / activeSkill.Cooltime;
     }
 }

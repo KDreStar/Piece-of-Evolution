@@ -47,7 +47,7 @@ public class StatusUI : MonoBehaviour
             textSPD.text = status.CurrentSPD.ToString();
 
         if (textCost != null)
-            textCost.text = equipSkills.CurrentSkillCost.ToString();
+            textCost.text = equipSkills.CurrentCost.ToString();
 
         if (HPBar != null)
             HPBar.fillAmount = (status.CurrentHP / status.MaxHP);

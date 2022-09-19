@@ -5,18 +5,14 @@ using UnityEngine;
 //수량 없이 ㄱ 
 public class SkillInventory : MonoBehaviour
 {
-    private static SkillInventory instance = null;
-    public static SkillInventory Instance {
-        get { return instance; }
-    }
-
     public List<SkillSlot> skillSlot;
     public GameObject skillSlotPrefab;
 
-    private int page = 1;
-    public int Page {
-        get { return page; }
-    }
+    public List<Skill> skillList;
+
+    public int pageMaxSlot = 20;
+    public int page = 1;
+    public int maxPage = 5;
 
     public SkillSlot GetSkillSlot(int i) {
         return skillSlot[i];
@@ -27,7 +23,7 @@ public class SkillInventory : MonoBehaviour
     }
 
     public Skill GetSkill(int i) {
-        if (i >= skillSlot.Count)
+        if (i >= skillList.Count)
             return null;
 
         return skillSlot[i].skill;
@@ -55,6 +51,12 @@ public class SkillInventory : MonoBehaviour
         skillSlot[i].skill = null;
     }
 
+    public void UpdateSkillList() {
+        int k = (page - 1) * pageMaxSlot;
+
+        for (int i=0; i<pageMaxSlot; i++)
+            skillList[i + k] = GetSkill(i);
+    }
     /*
     public void RemoveSkill(Skill skill) {
         int index = skillSlot.IndexOf(skill);
@@ -87,13 +89,14 @@ public class SkillInventory : MonoBehaviour
     void Start()
     {
         skillSlot = new List<SkillSlot>();
+        skillList = Managers.Data.skillInventoryData.GetSkillList();
 
-        for (int i=0; i<SkillInventoryData.Instance.Count; i++) {
+        int k = (page - 1) * pageMaxSlot; 
+
+        for (int i=0; i<pageMaxSlot; i++) {
             CreateSkillSlot(i);
-            AddSkill(i, SkillInventoryData.Instance.GetSkill(i));
+            AddSkill(i, skillList[i + k]);
         }
-
-        instance = this;
     }
 
     // Update is called once per frame

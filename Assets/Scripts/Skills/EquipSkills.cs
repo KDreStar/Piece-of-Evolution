@@ -16,58 +16,61 @@ public class EquipSkills : MonoBehaviour
 
     //최대 스킬 코스트 (인스펙터에서 설정) 기본 20
     [SerializeField]
-    private int maxSkillCost = 20;
+    private int maxCost = 20;
 
-    private int currentSkillCost = 0;
-    public int CurrentSkillCost {
-        get { return currentSkillCost; }
+    private int currentCost = 0;
+    public int CurrentCost {
+        get { return currentCost; }
     }
 
-
+    //코스트 체크후 i번째 슬롯에 스킬을 장착함
     public bool EquipSkill(int i, SkillSlot newSlot) {
-        if (checkSkillCost(i, newSlot.skill) == false)
+        if (checkCost(i, newSlot.skill) == false)
             return false;
 
-        SkillManager.Instance.SwapSkillSlot(skillSlot[i], newSlot);
+        SkillController.Instance.SwapSkillSlot(skillSlot[i], newSlot);
         CalculateCost();
 
         return true;
     }
 
     //가능시 true 불가능시 false
-    private bool checkSkillCost(int i, Skill skill) {
+    private bool checkCost(int i, Skill skill) {
         if (skillSlot[i].IsEmpty()) {
             //cost 확인
-            if (currentSkillCost + skill.SkillCost > maxSkillCost)
+            if (currentCost + skill.Cost > maxCost)
                 return false;
 
         } else {
             Skill oldSkill = GetSkill(i);
 
             //기존 스킬을 빼고 장착하는 것
-            if (currentSkillCost + skill.SkillCost - oldSkill.SkillCost > maxSkillCost)
+            if (currentCost + skill.Cost - oldSkill.Cost > maxCost)
                 return false;
         }
 
         return true;
     }
 
+    //스킬 제거
     public void RemoveSkill(int i) {
         skillSlot[i].RemoveSkill();
     }
 
+    //i번째 스킬 슬롯 얻기
     public SkillSlot GetSkillSlot(int i) {
         return skillSlot[i];
     }
 
+    //코스트 적용
     public void CalculateCost() {
-        currentSkillCost = 0;
+        currentCost = 0;
 
         for (int i=0; i<maxSlot; i++) {
             Skill skill = GetSkill(i);
 
             if (skill != null)
-                currentSkillCost += skill.SkillCost;
+                currentCost += skill.Cost;
         }
     }
 
@@ -78,7 +81,7 @@ public class EquipSkills : MonoBehaviour
         skillSlot[i].AddSkill(skill);
     }
 
-    public bool UseSkill(int i){
+    public bool UseSkill(int i) {
         return skillSlot[i].UseSkill(gameObject);
     }
 
@@ -102,11 +105,13 @@ public class EquipSkills : MonoBehaviour
         return skillSlot[i].GetPassiveSkill();
     }
 
-    private void SetSkillList() {
+    public void UpdateSkillList() {
         for (int i=0; i<maxSlot; i++)
             skillList[i] = GetSkill(i);
     }
 
+    //이 오브젝트 밑에 달린 스킬 슬롯들을 가져옴
+    //그 후 마우스 오버시 나오는 툴팁의 시작위치를 적용
     void Awake() {
         skillSlot = equipSkills.GetComponentsInChildren<SkillSlot>();
 
@@ -116,23 +121,24 @@ public class EquipSkills : MonoBehaviour
 
     void Start()
     {
-        //Character/Enemy Data에서 스킬을 불러와서 장착함
+        //DataManager에서 데이터를 가져옴
+        //없는 경우 인스펙터
         bool isCharacter = this.CompareTag("Character");
         bool isEnemy     = this.CompareTag("Enemy");
 
+        if (isCharacter)
+            skillList = Managers.Data.characterData.GetSkillList();
+
+        if (isEnemy)
+            skillList = Managers.Data.enemyData.GetSkillList();
+        
         for (int i=0; i<maxSlot; i++) {
             Skill skill = skillList[i];
 
-            if (isCharacter)
-                skill = CharacterData.Instance.GetSkill(i);
-            
-            if (isEnemy)
-                skill = EnemyData.Instance.GetSkill(i);
-            
             if (skill == null)
                 continue;
 
-            if (checkSkillCost(i, skill))
+            if (checkCost(i, skill))
                 AddSkill(i, skill);
         }
     }
@@ -141,6 +147,6 @@ public class EquipSkills : MonoBehaviour
     void Update()
     {
         CalculateCost();
-        SetSkillList();
+        UpdateSkillList();
     }
 }

@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 266269366}
   - component: {fileID: 266269365}
   m_Layer: 0
-  m_Name: SkillManager
+  m_Name: SkillController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -843,6 +843,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit
@@ -1007,6 +1008,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillSlot: []
   skillSlotPrefab: {fileID: 1428123937182009669, guid: da54874d63324f845b2117486f5833b3, type: 3}
+  skillList: []
+  pageMaxSlot: 20
+  page: 1
+  maxPage: 5
 --- !u!1 &1414612350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1384,7 +1389,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3203394341147440995, guid: 80c9fb6450e99444badca0e46d757298, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 191.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3203394341147440995, guid: 80c9fb6450e99444badca0e46d757298, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1404,7 +1409,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4287660366977638493, guid: 80c9fb6450e99444badca0e46d757298, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 191.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4287660366977638493, guid: 80c9fb6450e99444badca0e46d757298, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1472,7 +1477,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7858100228945182571, guid: 80c9fb6450e99444badca0e46d757298, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 61.413902
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7858100228945182571, guid: 80c9fb6450e99444badca0e46d757298, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1873,7 +1878,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5803160672272168146, guid: 381c270fdaa44f44988c54e6fa7050f9, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 246.8628
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5803160672272168146, guid: 381c270fdaa44f44988c54e6fa7050f9, type: 3}
       propertyPath: m_AnchoredPosition.y

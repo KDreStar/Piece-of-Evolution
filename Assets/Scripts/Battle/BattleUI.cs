@@ -16,7 +16,7 @@ public class BattleUI : MonoBehaviour
     void Start()
     {
         Debug.Log("배틀 시작");
-        BattleManager.Instance.StartBattle();
+        Managers.Battle.StartBattle();
     }
 
     // Update is called once per frame
@@ -25,7 +25,7 @@ public class BattleUI : MonoBehaviour
         if (textTime != null)
             textTime.text = Mathf.Ceil(battleEnvController.MaxBattleTime - battleEnvController.timer).ToString();
 
-        float counter = BattleManager.Instance.startCounter;
+        float counter = Managers.Battle.startCounter;
 
         if (counter > 0) {
             if (counter >= 1) {
@@ -37,7 +37,7 @@ public class BattleUI : MonoBehaviour
             textMessage.text = "";
         }
 
-        if (BattleManager.Instance.isLearning) {
+        if (Managers.Battle.isLearning) {
             if (Academy.Instance != null) {
                 textMessage.text = Academy.Instance.StepCount.ToString();
             }

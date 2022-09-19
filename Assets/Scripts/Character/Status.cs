@@ -137,32 +137,32 @@ public class Status : MonoBehaviour
         BehaviorParameters bp = GetComponent<BehaviorParameters>();
 
         if (isCharacter) {
-            name    = CharacterData.Instance.name;
-            baseATK = CharacterData.Instance.baseATK;
-            baseDEF = CharacterData.Instance.baseDEF;
-            baseSPD = CharacterData.Instance.baseSPD;
-            baseHP  = CharacterData.Instance.baseHP;
+            name    = Managers.Data.characterData.name;
+            baseATK = Managers.Data.characterData.baseATK;
+            baseDEF = Managers.Data.characterData.baseDEF;
+            baseSPD = Managers.Data.characterData.baseSPD;
+            baseHP  = Managers.Data.characterData.baseHP;
 
-            if (bp != null && CharacterData.Instance.model != null) {
-                bp.Model = CharacterData.Instance.model;
-                bp.BehaviorType = CharacterData.Instance.type;
+            if (bp != null && Managers.Data.characterData.model != null) {
+                bp.Model = Managers.Data.characterData.model;
+                bp.BehaviorType = Managers.Data.characterData.type;
             }
         }
 
         if (isEnemy) {
-            name    = EnemyData.Instance.name;
-            baseATK = EnemyData.Instance.baseATK;
-            baseDEF = EnemyData.Instance.baseDEF;
-            baseSPD = EnemyData.Instance.baseSPD;
-            baseHP  = EnemyData.Instance.baseHP;
+            name    = Managers.Data.enemyData.name;
+            baseATK = Managers.Data.enemyData.baseATK;
+            baseDEF = Managers.Data.enemyData.baseDEF;
+            baseSPD = Managers.Data.enemyData.baseSPD;
+            baseHP  = Managers.Data.enemyData.baseHP;
 
-            if (bp != null && EnemyData.Instance.model != null) {
-                bp.Model = EnemyData.Instance.model;
-                bp.BehaviorType = EnemyData.Instance.type;
+            if (bp != null && Managers.Data.enemyData.model != null) {
+                bp.Model = Managers.Data.enemyData.model;
+                bp.BehaviorType = Managers.Data.enemyData.type;
             }
 
             SpriteRenderer sr = GetComponent<SpriteRenderer>();
-            sr.sprite = EnemyData.Instance.sprite;
+            sr.sprite = Managers.Data.enemyData.sprite;
         }
     }
 

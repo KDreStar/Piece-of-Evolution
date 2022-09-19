@@ -26,9 +26,9 @@ public class Skill : ScriptableObject
     }
 
     [SerializeField]
-    private int skillCost;
-    public int SkillCost {
-        get { return skillCost; }
+    private int cost;
+    public int Cost {
+        get { return cost; }
     }
 
     [SerializeField]

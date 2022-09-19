@@ -14,13 +14,13 @@ public class ResultUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        textMessage.text = BattleManager.Instance.result;
+        textMessage.text = Managers.Battle.result;
 
-        if (BattleManager.Instance.getSkill == null) {
+        if (Managers.Battle.getSkill == null) {
             skillSlot.gameObject.SetActive(false);
         } else {
-            skillSlot.AddSkill(BattleManager.Instance.getSkill);
-            textSkillMessage.text = BattleManager.Instance.judgeMessage;
+            skillSlot.AddSkill(Managers.Battle.getSkill);
+            textSkillMessage.text = Managers.Battle.judgeMessage;
         }
     }
 

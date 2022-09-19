@@ -90,7 +90,7 @@ public class BattleEnvController : MonoBehaviour
         enemyAgent.EndEpisode();
 
         //전투면 바로 종료
-        if (BattleManager.Instance.isLearning == false) {
+        if (Managers.Battle.isLearning == false) {
             string result = "무승부";
 
             if (differentHPRate > 0)
@@ -98,8 +98,8 @@ public class BattleEnvController : MonoBehaviour
             if (differentHPRate < 0)
                 result = "패배";
 
-            BattleManager.Instance.result = result;
-            BattleManager.Instance.EndBattle();
+            Managers.Battle.result = result;
+            Managers.Battle.EndBattle();
         }
 
         ResetScene();

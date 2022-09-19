@@ -48,7 +48,8 @@ public class SkillEffect : MonoBehaviour
         Debug.Log("부모 Start 실행" + attacker.tag + " " + defender.tag);
         direction = (int)((135 - transform.rotation.z) / 45);
 
-        Invoke("DestroySkillEffect", activeSkill.BaseDestroyTime);
+        //거리로 해야됨 임시로 1
+        Invoke("DestroySkillEffect", 1);
 
         field.Add(this);
     }
@@ -71,7 +72,7 @@ public class SkillEffect : MonoBehaviour
         Debug.Log("Destroyed");
 
         field.Remove(this);
-        SkillPool.Instance.ReturnSkillEffect(this);
+        Managers.Pool.ReturnSkillEffect(this);
     }
 
     public void OnTriggerStay2D(Collider2D col) {
@@ -98,7 +99,7 @@ public class SkillEffect : MonoBehaviour
     }
 
     public virtual void CalculateDamage() {
-		float atk = attackerStatus.Calculate(activeSkill.DamageFormula);
+		float atk = attackerStatus.Calculate(activeSkill.Damage);
         float def = defenderStatus.CurrentDEF;
         float damage = atk - def;
 

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class SkillManager : MonoBehaviour
+public class SkillController : MonoBehaviour
 {
-    private static SkillManager instance = null;
-    public static SkillManager Instance {
+    private static SkillController instance = null;
+    public static SkillController Instance {
         get { return instance; }
     }
 
@@ -61,6 +61,8 @@ public class SkillManager : MonoBehaviour
         SwapSkillSlot();
     }
 
+    //스킬 스왑
+    //스킬 스왑후 데이터매니저에 저장
     public void SwapSkillSlot(SkillSlot oldSlot = null, SkillSlot newSlot = null) {
         if (oldSlot == null)
             oldSlot = dragSkillSlot;
@@ -75,8 +77,9 @@ public class SkillManager : MonoBehaviour
 
         dropSkillSlot = null;
 
-        CharacterData.Instance.UpdateSkills(equipSkills);
-        SkillInventoryData.Instance.UpdateSkills(SkillInventory.Instance);
+        //캐릭터 스킬, 스킬 인벤토리 세이브
+        //UnityEditor.U2D.Animation.CharacterData.Instance.UpdateSkills(equipSkills);
+        //SkillInventoryData.Instance.UpdateSkills(SkillInventory.Instance);
     }
 
     void Awake()

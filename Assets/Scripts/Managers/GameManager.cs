@@ -27,13 +27,13 @@ public class GameManager : MonoBehaviour
         } else {
             Destroy(gameObject);
         }
-
+  
         learningPath = Application.persistentDataPath + "/Learning";
     }
 
     void Start() {
         if (File.Exists(learningPath)) {
-            BattleManager.Instance.StartLearning();
+            Managers.Battle.StartLearning();
         }
     }
 
@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
     5성 2%
     */
     public Skill JudgeGetSkill() {
-        string result = BattleManager.Instance.result;
+        string result = Managers.Battle.result;
         int percent = 15;
         int first = Random.Range(0, 100);
 

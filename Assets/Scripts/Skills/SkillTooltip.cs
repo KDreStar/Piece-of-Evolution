@@ -27,7 +27,7 @@ public class SkillTooltip : MonoBehaviour
         gameObject.SetActive(true);
 
         textNo.text = "No." + skill.No.ToString();
-        textCost.text = skill.SkillCost.ToString();
+        textCost.text = skill.Cost.ToString();
         textName.text = skill.Name;
         textDescription.text = skill.Description;
 
@@ -35,7 +35,7 @@ public class SkillTooltip : MonoBehaviour
             ActiveSkill activeSkill = skill as ActiveSkill;
 
             //textBaseCooltime.SetActive(true);
-            textBaseCooltime.text = string.Format("쿨타임 {0}s", activeSkill.BaseCooltime);
+            textBaseCooltime.text = string.Format("쿨타임 {0}s", activeSkill.Cooltime);
         } else {
             textBaseCooltime.text = "패시브 스킬";
         }

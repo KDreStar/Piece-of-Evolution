@@ -8,6 +8,6 @@ public class FA : SkillEffect
     public override void Update()
     {
         Vector2 vector = new Vector2(1, 0);
-        transform.Translate(vector * activeSkill.BaseSpeed * Time.deltaTime);
+        transform.Translate(vector * activeSkill.Speed * Time.deltaTime);
     }
 }

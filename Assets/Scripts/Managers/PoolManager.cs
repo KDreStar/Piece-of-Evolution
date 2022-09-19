@@ -4,33 +4,18 @@ using UnityEngine;
 
 //스킬 이펙트를 미리 생성하여 빌려주는 방식
 //메모리 효율을 높임 
-public class SkillPool : MonoBehaviour
+public class PoolManager
 {
-    private static SkillPool instance = null;
-    public static SkillPool Instance {
-        get { return instance; }
-    }
-
     public int count = 0;
-
     //<스킬번호, 스킬이펙트 큐>로 저장
     private Dictionary<int, Queue<SkillEffect>> skillEffectTable = new Dictionary<int, Queue<SkillEffect>>();
 
-    void Awake() {
-        if (instance == null) {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        } else {
-            Destroy(gameObject);
-        }
-    }
-
     //큐에 스킬 이펙트가 없으면 생성
     private SkillEffect CreateSkillEffect(GameObject skillPrefab) {
-        SkillEffect skillEffect = Instantiate(skillPrefab).GetComponent<SkillEffect>();
+        SkillEffect skillEffect = Managers.Instantiate(skillPrefab).GetComponent<SkillEffect>();
 
         skillEffect.gameObject.SetActive(false);
-        skillEffect.transform.parent = this.transform;
+        skillEffect.transform.parent = Managers.Instance.transform;
 
         Debug.Log("Count: " + count++);
 
@@ -65,7 +50,7 @@ public class SkillPool : MonoBehaviour
         skillEffect.CancelInvoke();
         skillEffect.gameObject.SetActive(false);
         Debug.Log("사라짐");
-        skillEffect.transform.parent = this.transform;
+        skillEffect.transform.parent = Managers.Instance.transform;
         skillEffectTable[no].Enqueue(skillEffect);
     }
 }
