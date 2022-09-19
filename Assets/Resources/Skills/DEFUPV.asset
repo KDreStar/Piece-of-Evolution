@@ -15,6 +15,6 @@ MonoBehaviour:
   no: 35
   name: "\uBC29\uC5B4\uB825 \uC99D\uAC00 V"
   description: "\uCE90\uB9AD\uD130\uC758 DEF 25 \uC99D\uAC00"
-  skillCost: 5
+  cost: 5
   icon: {fileID: 21300000, guid: 598e70294dc9ea345b61f0585c4e79bb, type: 3}
   statFormula: DEF = DEF + 25

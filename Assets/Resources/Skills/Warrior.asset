@@ -16,6 +16,6 @@ MonoBehaviour:
   name: "\uAD11\uC804\uC0AC"
   description: "\uCE90\uB9AD\uD130\uC758 ATK * 2\n\uCE90\uB9AD\uD130\uC758 \uBC29\uC5B4\uB825
     - 10"
-  skillCost: 1
+  cost: 3
   icon: {fileID: 6853643782822115200, guid: 3c112a44cc7dc7a468f4d132c2e7611c, type: 3}
   statFormula: ATK = ATK * 2, DEF = DEF - 10

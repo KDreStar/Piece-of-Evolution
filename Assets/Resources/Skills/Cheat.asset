@@ -16,6 +16,6 @@ MonoBehaviour:
   name: Cheat
   description: "\uCE90\uB9AD\uD130\uC758 \uACF5\uACA9\uB825\uC744 HP / (ATK + DEF
     - SPD) \uC99D\uAC00\n\uCE90\uB9AD\uD130\uC758 \uBC29\uC5B4\uB825\uC744 100 \uC99D\uAC00"
-  skillCost: 1
+  cost: 5
   icon: {fileID: 3854939560234354291, guid: 27a107940057e8743a507269b18a691a, type: 3}
   statFormula: ATK =ATK +  HP / (ATK + DEF - SPD), DEF = DEF + 100

@@ -15,6 +15,6 @@ MonoBehaviour:
   no: 40
   name: "\uC774\uB3D9\uC18D\uB3C4 \uC99D\uAC00 V"
   description: "\uCE90\uB9AD\uD130\uC758 SPD 25 \uC99D\uAC00"
-  skillCost: 5
+  cost: 5
   icon: {fileID: 21300000, guid: 10ede1c0af10b1a44b34e86cb10bb510, type: 3}
   statFormula: SPD = SPD + 25

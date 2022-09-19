@@ -110,6 +110,20 @@ public class EquipSkills : MonoBehaviour
             skillList[i] = GetSkill(i);
     }
 
+    public void Init() {
+        for (int i=0; i<maxSlot; i++) {
+            Skill skill = skillList[i];
+
+            if (skill == null)
+                continue;
+
+            Debug.Log("스킬 Init" + checkCost(i, skill));
+
+            if (checkCost(i, skill))
+                AddSkill(i, skill);
+        }
+    }
+
     //이 오브젝트 밑에 달린 스킬 슬롯들을 가져옴
     //그 후 마우스 오버시 나오는 툴팁의 시작위치를 적용
     void Awake() {
@@ -119,34 +133,15 @@ public class EquipSkills : MonoBehaviour
             skillSlot[i].tooltipPivot = tooltipPivot;
     }
 
+    //Character.cs 에서 다 불러옴
     void Start()
     {
-        //DataManager에서 데이터를 가져옴
-        //없는 경우 인스펙터
-        bool isCharacter = this.CompareTag("Character");
-        bool isEnemy     = this.CompareTag("Enemy");
 
-        if (isCharacter)
-            skillList = Managers.Data.characterData.GetSkillList();
-
-        if (isEnemy)
-            skillList = Managers.Data.enemyData.GetSkillList();
-        
-        for (int i=0; i<maxSlot; i++) {
-            Skill skill = skillList[i];
-
-            if (skill == null)
-                continue;
-
-            if (checkCost(i, skill))
-                AddSkill(i, skill);
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
         CalculateCost();
-        UpdateSkillList();
     }
 }

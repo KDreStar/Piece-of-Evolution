@@ -15,6 +15,6 @@ MonoBehaviour:
   no: 24
   name: "HP \uC99D\uAC00 IV"
   description: "\uCE90\uB9AD\uD130\uC758 \uCD5C\uB300 HP 200 \uC99D\uAC00"
-  skillCost: 4
+  cost: 4
   icon: {fileID: 21300000, guid: f95275ba741101949ae32bd7a621b02f, type: 3}
   statFormula: HP = HP + 200

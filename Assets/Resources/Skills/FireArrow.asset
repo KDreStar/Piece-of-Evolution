@@ -16,10 +16,10 @@ MonoBehaviour:
   name: "\uD30C\uC774\uC5B4 \uC560\uB85C\uC6B0"
   description: "\uBD88\uC758 \uD654\uC0B4\uC744 \uBC1C\uC0AC\uD558\uC5EC ATK * 1.5\uC758
     \uB370\uBBF8\uC9C0\uB97C \uC900\uB2E4."
-  skillCost: 1
+  cost: 1
   icon: {fileID: 21300000, guid: e0b16a377f17da741be514a884ceeca3, type: 3}
-  baseCooltime: 2
-  damageFormula: ATK * 1.5
-  baseSpeed: 5
-  baseDestroyTime: 2.5
+  cooltime: 1
+  damage: ATK * 1.5
+  speed: 1
+  range: 1
   effect: {fileID: 1327035046624340984, guid: 24496fe04e1d163469b25cc203f35fb2, type: 3}

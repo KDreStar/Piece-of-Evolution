@@ -130,57 +130,23 @@ public class Status : MonoBehaviour
 
     //태그가 있는 경우 Data에서 가져옴
     //태그가 없는 경우 인스펙터창의 것을 적용
-    private void InitStatus() {
-        bool isCharacter = this.CompareTag("Character");
-        bool isEnemy     = this.CompareTag("Enemy");
-
-        BehaviorParameters bp = GetComponent<BehaviorParameters>();
-
-        if (isCharacter) {
-            name    = Managers.Data.characterData.name;
-            baseATK = Managers.Data.characterData.baseATK;
-            baseDEF = Managers.Data.characterData.baseDEF;
-            baseSPD = Managers.Data.characterData.baseSPD;
-            baseHP  = Managers.Data.characterData.baseHP;
-
-            if (bp != null && Managers.Data.characterData.model != null) {
-                bp.Model = Managers.Data.characterData.model;
-                bp.BehaviorType = Managers.Data.characterData.type;
-            }
-        }
-
-        if (isEnemy) {
-            name    = Managers.Data.enemyData.name;
-            baseATK = Managers.Data.enemyData.baseATK;
-            baseDEF = Managers.Data.enemyData.baseDEF;
-            baseSPD = Managers.Data.enemyData.baseSPD;
-            baseHP  = Managers.Data.enemyData.baseHP;
-
-            if (bp != null && Managers.Data.enemyData.model != null) {
-                bp.Model = Managers.Data.enemyData.model;
-                bp.BehaviorType = Managers.Data.enemyData.type;
-            }
-
-            SpriteRenderer sr = GetComponent<SpriteRenderer>();
-            sr.sprite = Managers.Data.enemyData.sprite;
-        }
-    }
-
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        InitStatus();
-
-        maxHP = baseHP;
-
+    public void Init() {
         currentHP  = baseHP;
         currentATK = baseATK;
         currentDEF = baseDEF;
         currentSPD = baseSPD;
 
+        SetDefaultHP();
+    }
+
+    // Start is called before the first frame update
+    void Awake()
+    {
         equipSkills = GetComponent<EquipSkills>();
+    }
+
+    void Start() {
+        
     }
 
     // Update is called once per frame

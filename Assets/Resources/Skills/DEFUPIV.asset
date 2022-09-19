@@ -15,6 +15,6 @@ MonoBehaviour:
   no: 34
   name: "\uBC29\uC5B4\uB825 \uC99D\uAC00 IV"
   description: "\uCE90\uB9AD\uD130\uC758 DEF 20 \uC99D\uAC00"
-  skillCost: 4
+  cost: 4
   icon: {fileID: 21300000, guid: 319ebe0e2790db04caf3a1db34ac266d, type: 3}
   statFormula: DEF = DEF + 20

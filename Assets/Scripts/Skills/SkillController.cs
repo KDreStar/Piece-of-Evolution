@@ -10,8 +10,8 @@ public class SkillController : MonoBehaviour
         get { return instance; }
     }
 
-    private SkillInventory skillInventory;
-    private EquipSkills equipSkills;
+    public SkillInventory skillInventory;
+    public EquipSkills equipSkills;
     private SkillSlot dragSkillSlot;
     private SkillSlot dropSkillSlot;
 
@@ -78,7 +78,12 @@ public class SkillController : MonoBehaviour
         dropSkillSlot = null;
 
         //캐릭터 스킬, 스킬 인벤토리 세이브
-        //UnityEditor.U2D.Animation.CharacterData.Instance.UpdateSkills(equipSkills);
+        //각각 Data의 SkillList를 참조하고 있으므로 우선 업데이트
+
+        skillInventory.UpdateSkillList();
+        equipSkills.UpdateSkillList();
+
+        Managers.Data.SaveGameData();
         //SkillInventoryData.Instance.UpdateSkills(SkillInventory.Instance);
     }
 

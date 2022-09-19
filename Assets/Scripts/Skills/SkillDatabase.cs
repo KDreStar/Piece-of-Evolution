@@ -9,6 +9,7 @@ public class SkillDatabase : MonoBehaviour
     변하는 정보는 슬롯에 저장함
     */
     public Skill[] skillList;
+    public Dictionary<int, Skill> skillTable = new Dictionary<int, Skill>();
 
     private static SkillDatabase instance = null;
     public static SkillDatabase Instance {
@@ -47,11 +48,15 @@ public class SkillDatabase : MonoBehaviour
 
     void Awake()
     {
-        //Resources/Skills/* 모든 스킬 가져옴
-        skillList = Resources.LoadAll<Skill>("Skills");
-
         if (instance == null) {
             instance = this;
+
+            //Resources/Skills/* 모든 스킬 가져옴
+            skillList = Resources.LoadAll<Skill>("Skills");
+
+            for (int i=0; i<skillList.Length; i++)
+                skillTable.Add(skillList[i].No, skillList[i]);
+            
             DontDestroyOnLoad(gameObject);
         } else {
             Destroy(gameObject);

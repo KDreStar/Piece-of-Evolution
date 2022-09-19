@@ -23,8 +23,8 @@ public class BattleManager
         Managers.Data.enemyData.Set(enemy);
 
         //저장하는 이유 = 학습시 유니티 게임을 다시 실행해서 공유해야됨
-        Managers.Data.SaveCharacterData();
-        Managers.Data.SaveEnemyData();
+        //적 AI 가지고 와야함 우선 파일로 대체
+        Managers.Data.SaveBattleData();
 
         if (isLearning) {
 
@@ -48,15 +48,15 @@ public class BattleManager
             Process.Start("mlagents-learn", arg);
             //GameManager.Instance.ChangeScene("Learning");
         } else {
-            Managers.Data.LoadCharacterData();
-            Managers.Data.LoadEnemyData();
-
             Time.timeScale = 0;
+            Managers.Data.LoadBattleData();
             GameManager.Instance.ChangeScene("Battle");
         }
     }
 
     public void StartBattle() {
+        UnityEngine.Debug.Log("배틀 시작?");
+
         if (isLearning == false) {
             Time.timeScale = 0;
             startCounter = 4.0f;
@@ -69,8 +69,7 @@ public class BattleManager
     public void StartLearning() {
         isLearning = true;
 
-        Managers.Data.LoadCharacterData();
-        Managers.Data.LoadEnemyData();
+        Managers.Data.LoadBattleData();
 
         GameManager.Instance.ChangeScene("Learning");
     }
