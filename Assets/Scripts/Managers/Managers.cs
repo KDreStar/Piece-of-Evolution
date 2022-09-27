@@ -32,10 +32,14 @@ public class Managers : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
 
-            Data.Init();
+            Init();
         } else {
             Destroy(gameObject);
         }
+    }
+
+    void Init() {
+        Data.Init();
     }
 
     // Start is called before the first frame update

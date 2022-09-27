@@ -17,27 +17,28 @@ public class Character : MonoBehaviour
         LoadData();
     }
 
+    //배틀시 불러오는 용도
     public void LoadData() {
         bool isCharacter = this.CompareTag("Character");
         bool isEnemy     = this.CompareTag("Enemy");
-        bool isCharacterList = this.CompareTag("CharacterList");
 
         if (isCharacter) {
-            Managers.Data.GetCharacterData(gameObject);
+            Managers.Data.LoadCharacterData(gameObject);
             equipSkills.skillList = Managers.Data.characterData.skillList;
         }
 
         if (isEnemy)
-            Managers.Data.GetEnemyData(gameObject);
+            Managers.Data.LoadEnemyData(gameObject);
 
-        if (isCharacterList) {
-            CharacterSlot slot = transform.GetComponentInParent<CharacterSlot>();
-    
-            int slotIndex = slot.slotIndex;
+        Init();
+    }
 
-            Managers.Data.GetCharacterData(slotIndex, gameObject);
-        }
+    public void LoadData(CharacterData characterData) {
+        characterData.Load(gameObject);
+        Init();
+    }
 
+    void Init() {
         equipSkills.Init();
         status.Init();
     }

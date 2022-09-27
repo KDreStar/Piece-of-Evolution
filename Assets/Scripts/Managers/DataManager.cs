@@ -7,8 +7,18 @@ using Unity.MLAgents.Policies;
 using System.IO;
 using UnityEngine.UI;
 using System;
+using UnityEngine.Networking;
 
-//데이터
+
+
+//게임 저장 데이터 관련
+
+/*
+파일 <-> 메모리 <-> 오브젝트
+
+
+*/
+
 public class DataManager
 {
     public List<CharacterData> characterDataList;
@@ -16,6 +26,7 @@ public class DataManager
     public int currentCharacterIndex = 0;
 
     public GameData gameData;
+    
     //배틀용
     public CharacterData characterData;
     public CharacterData enemyData;
@@ -56,11 +67,12 @@ public class DataManager
         return true;
     }
 
-    public bool SelectCharacter() {
-        if (currentCharacterIndex >= characterDataList.Count)
+    public bool SelectCharacter(int i) {
+        if (i >= characterDataList.Count)
             return false;
 
-        characterData = characterDataList[currentCharacterIndex];
+        characterData = characterDataList[i];
+        currentCharacterIndex = i;
 
         return true;
     }
@@ -71,7 +83,7 @@ public class DataManager
         string path = Application.persistentDataPath + "/Game.json";
 
         gameData.playerName = "Temp";
-        gameData.lastCharacterIndex = 0;
+        gameData.lastCharacterIndex = currentCharacterIndex;
 
         for (int i=0; i<characterDataList.Count; i++) {
             CharacterData data = characterDataList[i];
@@ -107,6 +119,10 @@ public class DataManager
         File.WriteAllText(path, json);
     }
 
+    //public void LoadPvPCharacters(string json) {
+    //    pvpData = JsonUtility.FromJson<PvPData>(json);
+    //}
+
     public void LoadGameData() {
         string path = Application.persistentDataPath + "/Game.json";
         string json = File.ReadAllText(path);
@@ -115,7 +131,9 @@ public class DataManager
 
         Debug.Log(gameData);
 
-        characterDataList = new List<CharacterData>();
+        currentCharacterIndex = gameData.lastCharacterIndex;
+
+        characterDataList.Clear();
         for (int i=0; i<gameData.characterList.Count; i++) {
             CharacterJSONData characterJSONData = gameData.characterList[i];
 
@@ -138,6 +156,8 @@ public class DataManager
             Debug.Log(SkillDatabase.Instance.GetSkill(skillNo));
             skillList[i] = skillNo == 0 ? null : SkillDatabase.Instance.GetSkill(skillNo);
         }
+
+        characterData = characterDataList[currentCharacterIndex];
     }
 
     public void LoadBattleData() {
@@ -153,34 +173,77 @@ public class DataManager
         enemyData.LoadModel(battleData.enemyModel);
     }
 
-    public bool IsCharacter(int i) {
-        if (i >= characterDataList.Count)
-            return false;
- 
-        return true;
-        //return characterDataList[i] != null ? true : false;
+    public void LoadCharacterData(GameObject character) {
+        characterData.Load(character);
     }
 
-    public void GetCharacterData(GameObject character) {
-        characterData.Get(character);
-    }
-
-    public void GetCharacterData(int i, GameObject character) {
+    public void LoadCharacterData(int i, GameObject character) {
         if (i >= characterDataList.Count)
             return;
 
-        characterDataList[i].Get(character);
+        characterDataList[i].Load(character);
     }
 
-    public void GetEnemyData(GameObject character) {
-        enemyData.Get(character);
+    public void LoadEnemyData(GameObject character) {
+        enemyData.Load(character);
     }
 
-    public void SetCharacterData(GameObject character) {
-        characterData.Set(character);
+    public void SaveCharacterData(GameObject character) {
+        characterData.Save(character);
     }
 
-    public void SetEnemyData(GameObject character) {
-        enemyData.Set(character);
+    public void SaveEnemyData(GameObject character) {
+        enemyData.Save(character);
+    }
+
+    public void ChangePvPList(List<CharacterData> datas) {
+        GameManager.Instance.StartCoroutine(DownloadPvPCharacters(datas));
+    }
+
+    IEnumerator DownloadPvPCharacters(List<CharacterData> datas) {
+        string pvpURL = "http://localhost:8080/getPvPCharacters.jsp";
+        WWWForm form = new WWWForm();
+        /*
+        string id = "아이디";
+        string pw = "비밀번호";
+        form.AddField("Username", id);
+        form.AddField("Password", pw);
+        */
+
+        form.AddField("count", 8);
+        UnityWebRequest www = UnityWebRequest.Get(pvpURL);  // 보낼 주소와 데이터 입력
+
+        yield return www.SendWebRequest();  // 응답 대기
+
+        if (www.error == null) {
+            Debug.Log("다운로드 완료");
+            Debug.Log(www.downloadHandler.text);    // 데이터 출력
+            Debug.Log(www.downloadHandler.data);    // 데이터 출력
+
+            Managers.Data.LoadPvPCharacters(datas, www.downloadHandler.text);
+        } else {
+            Debug.Log("error");
+        }
+    }
+
+    public void LoadPvPCharacters(List<CharacterData> datas, string json) {
+        PvPData pvpData = new PvPData();
+
+        pvpData = JsonUtility.FromJson<PvPData>(json);
+
+        datas.Clear();
+        for (int i=0; i<pvpData.characterList.Count; i++) {
+            CharacterJSONData characterJSONData = pvpData.characterList[i];
+
+            CharacterData temp = new CharacterData();
+            temp.SetJSONData(characterJSONData);
+
+            //임시 이거는 배틀 들어갈때 다운로드 하게 ㄱㄱ
+            //temp.LoadModel("Enemy.onnx");
+
+            datas.Add(temp);
+        }
+
+        //Debug.Log("datas" + pvpDataList + " " + pvpDataList.Count);
     }
 }

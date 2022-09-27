@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class CharacterSlot : MonoBehaviour
 {
-    public int slotIndex;
+    public Character character;
 
-    public void SelectCharacter() {
-        Managers.Data.currentCharacterIndex = slotIndex;
+    public void UpdateSlot(CharacterData characterData) {
+        character.LoadData(characterData);
     }
 
     // Start is called before the first frame update

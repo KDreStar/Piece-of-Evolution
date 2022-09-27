@@ -17,8 +17,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 489d940c93341574fb48f01f368ff1cd
-  - enabled: 1
-    path: Assets/Scenes/SelectMonster.unity
+  - enabled: 0
+    path: Assets/Scenes/SelectPvP.unity
     guid: 0ee5dcc9dab73894ba036f0b40410bc4
   - enabled: 0
     path: Assets/KangsFolder/Scenes/Login.unity
@@ -50,4 +50,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/SelectCharacter.unity
     guid: 7b68c3341aa269a439b760f134b70e85
+  - enabled: 1
+    path: Assets/Scenes/SelectMonster.unity
+    guid: a9eea6d3fe12e7c499b5f5e71798530d
+  - enabled: 1
+    path: Assets/Scenes/PvP.unity
+    guid: 1c03ab6a6d1b5f144b442e1a8e77be6f
   m_configObjects: {}

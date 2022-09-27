@@ -20,7 +20,7 @@ public class BattleManager
     public void BattleSetting(bool isLearning, GameObject enemy) {
         this.isLearning = isLearning;
         
-        Managers.Data.enemyData.Set(enemy);
+        Managers.Data.enemyData.Save(enemy);
 
         //저장하는 이유 = 학습시 유니티 게임을 다시 실행해서 공유해야됨
         //적 AI 가지고 와야함 우선 파일로 대체
@@ -34,13 +34,16 @@ public class BattleManager
             //유니티 종료시 빈 파일 삭제
             GameManager.Instance.CreateLearningFile();
 
+            int currentCharacterIndex = Managers.Data.currentCharacterIndex; 
+
             string path = Application.persistentDataPath + "/";
             string arg = path + "Character.yaml "
-                       + "--run-id=" + "Character "
+                       + "--run-id=" + currentCharacterIndex + " "
                        + "--env=Piece-of-Evolution "
-                       + "--num-envs=4 "
+                       + "--num-envs=4 " //나중에 전역 수정가능하게
                        + "--width=480 "
-                       + "--height=270 ";
+                       + "--height=270 "
+                       + "--results-dir=" + (path + "models");
 
             if (Directory.Exists("results/Character") == true)
                 arg += "--resume ";

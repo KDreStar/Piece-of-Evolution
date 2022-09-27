@@ -698,6 +698,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleField
       objectReference: {fileID: 0}
+    - target: {fileID: 3999909075562294524, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: TeamId
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999909075562294524, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: m_BehaviorName
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 3999909075562294525, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: equipSkills
       value: 
@@ -705,6 +713,10 @@ PrefabInstance:
     - target: {fileID: 3999909075562294525, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: tooltipPivot.x
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999909076433884057, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: TeamId
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3999909076433884057, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: m_BehaviorType
@@ -3544,6 +3556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit

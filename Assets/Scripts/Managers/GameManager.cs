@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 using System.Text; 
 using System.IO; 
 using System.Runtime.InteropServices; 
+using UnityEngine.Networking;
 
 public class GameManager : MonoBehaviour
 {
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour
     void OnApplicationQuit() {
         DeleteLearningFile();
     }
+
     /*
     승리 => 기본 20%
     패배 => 기본 10%

@@ -28,7 +28,7 @@ public class CharacterData
 
     public Sprite sprite;
 
-    public void Set(GameObject character) {
+    public void Save(GameObject character) {
         Status status = character.GetComponent<Status>();
         Image image = character.GetComponent<Image>();
         EquipSkills equipSkills = character.GetComponent<EquipSkills>();
@@ -39,7 +39,7 @@ public class CharacterData
         baseDEF = status.baseDEF;
         baseSPD = status.baseSPD;
 
-        sprite = image.sprite;
+        //sprite = image.sprite;
 
         /*
         for (int i=0; i<EquipSkills.maxSlot; i++) {
@@ -50,7 +50,7 @@ public class CharacterData
         skillList = equipSkills.GetSkillList();
     }
 
-    public void Get(GameObject character) {
+    public void Load(GameObject character) {
         Status status = character.GetComponent<Status>();
         Image image = character.GetComponent<Image>();
         EquipSkills equipSkills = character.GetComponent<EquipSkills>();
@@ -72,7 +72,9 @@ public class CharacterData
         */
         equipSkills.skillList = skillList;
 
-        Debug.Log(skillList);
+        for (int i=0; i<8; i++) {
+            Debug.Log("스킬 인수인계" + skillList[i] + " " +equipSkills.skillList[i]);
+        }
 
         if (bp != null && model != null) {
             bp.Model = model;

@@ -181,7 +181,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Prev
+  m_text: "\uC774\uC804"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 227b8647a8b32b74c85775d24f838282, type: 2}
   m_sharedMaterial: {fileID: 4965409651649984711, guid: 227b8647a8b32b74c85775d24f838282, type: 2}
@@ -800,6 +800,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4577267906620484006, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: skillList.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4577267906620484006, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: skillList.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4577267906620484006, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: skillList.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4577267906620484006, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: skillList.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 97986aedaef23f54b96ff7bde5d91b89, type: 2}
     - target: {fileID: 4666539418374462982, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -834,7 +850,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5410003177406915573, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
       propertyPath: baseHP
-      value: 300
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 5410003177406915573, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
+      propertyPath: baseSPD
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5755034478870808230, guid: a816cf59a13c921419da0ac0fbf332ef, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2573,6 +2593,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SendPointerHoverToParent: 1
   m_HorizontalAxis: Horizontal
   m_VerticalAxis: Vertical
   m_SubmitButton: Submit

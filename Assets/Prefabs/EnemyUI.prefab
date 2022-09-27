@@ -692,7 +692,6 @@ GameObject:
   - component: {fileID: 2753025887299622550}
   - component: {fileID: 4577267906620484006}
   - component: {fileID: 2083037287222367175}
-  - component: {fileID: 723139257056074885}
   - component: {fileID: 4244452379243902728}
   m_Layer: 5
   m_Name: EnemyUI
@@ -850,24 +849,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &723139257056074885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5386776209032058430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09a9f0765c478f34fb33998ba4b10caa, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activeSkill: {fileID: 0}
-  attacker: {fileID: 0}
-  defender: {fileID: 0}
-  attackerStatus: {fileID: 0}
-  defenderStatus: {fileID: 0}
-  direction: 0
 --- !u!114 &4244452379243902728
 MonoBehaviour:
   m_ObjectHideFlags: 0

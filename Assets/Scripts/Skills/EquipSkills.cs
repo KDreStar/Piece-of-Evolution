@@ -114,8 +114,12 @@ public class EquipSkills : MonoBehaviour
         for (int i=0; i<maxSlot; i++) {
             Skill skill = skillList[i];
 
-            if (skill == null)
+            if (skill == null) {
+                RemoveSkill(i);
+                CalculateCost();
                 continue;
+            }
+
 
             Debug.Log("스킬 Init" + checkCost(i, skill));
 
