@@ -158,7 +158,7 @@ public class DataManager
             skillList[i] = skillNo == 0 ? null : SkillDatabase.Instance.GetSkill(skillNo);
         }
 
-        SelectCharacter(lastCharacterIndex);
+        SelectCharacter(gameData.lastCharacterIndex);
     }
 
     public void LoadBattleData() {
