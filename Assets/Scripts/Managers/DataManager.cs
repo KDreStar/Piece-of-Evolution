@@ -134,8 +134,6 @@ public class DataManager
 
         Debug.Log(gameData);
 
-        currentCharacterIndex = gameData.lastCharacterIndex;
-
         characterDataList.Clear();
         for (int i=0; i<gameData.characterList.Count; i++) {
             CharacterJSONData characterJSONData = gameData.characterList[i];
@@ -160,7 +158,7 @@ public class DataManager
             skillList[i] = skillNo == 0 ? null : SkillDatabase.Instance.GetSkill(skillNo);
         }
 
-        characterData = characterDataList[currentCharacterIndex];
+        SelectCharacter(lastCharacterIndex);
     }
 
     public void LoadBattleData() {
