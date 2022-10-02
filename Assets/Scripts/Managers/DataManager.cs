@@ -41,6 +41,9 @@ public class DataManager
         skillInventoryData = new SkillInventoryData();
         skillInventoryData.Init();
 
+        if (File.Exists(Application.persistentDataPath + "/Game.json") == false)
+            SaveGameData();
+
         LoadGameData();
     }
 
