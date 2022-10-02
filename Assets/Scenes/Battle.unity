@@ -650,6 +650,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3179299576419644045, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: customSetting
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3999909075100648274, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -698,6 +702,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleField
       objectReference: {fileID: 0}
+    - target: {fileID: 3999909075562294520, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: name
+      value: 222
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999909075562294520, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: baseHP
+      value: 222
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999909075562294520, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: baseATK
+      value: 222
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999909075562294520, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: baseDEF
+      value: 222
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999909075562294520, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: baseSPD
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3999909075562294524, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: TeamId
       value: 1
@@ -714,6 +738,10 @@ PrefabInstance:
       propertyPath: tooltipPivot.x
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3999909075562294525, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: skillList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: f16126d946390ae46a8dda48d4df221b, type: 2}
     - target: {fileID: 3999909076433884057, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: TeamId
       value: 0
@@ -722,10 +750,38 @@ PrefabInstance:
       propertyPath: m_BehaviorType
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3999909076433884060, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: name
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999909076433884060, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: baseHP
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999909076433884060, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: baseATK
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999909076433884060, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: baseDEF
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999909076433884060, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: baseSPD
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 4515736757712133374, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: equipSkills
       value: 
       objectReference: {fileID: 1736758752}
+    - target: {fileID: 4515736757712133374, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: skillList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: ba62f88bd85c32a48aa6d2b8fe857ac0, type: 2}
+    - target: {fileID: 7344254361284796835, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: customSetting
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94083a97355f54749954464101c7fdd7, type: 3}
 --- !u!114 &696220927 stripped
@@ -3879,7 +3935,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4287660366977638493, guid: 80c9fb6450e99444badca0e46d757298, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 191.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4287660366977638493, guid: 80c9fb6450e99444badca0e46d757298, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -3911,6 +3967,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6874325676419143473, guid: 80c9fb6450e99444badca0e46d757298, type: 3}
       propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6874325676419143473, guid: 80c9fb6450e99444badca0e46d757298, type: 3}
+      propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6874325676419143473, guid: 80c9fb6450e99444badca0e46d757298, type: 3}

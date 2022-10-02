@@ -16,7 +16,7 @@ public class Character : MonoBehaviour
         status = GetComponent<Status>();
         equipSkills = GetComponent<EquipSkills>();
 
-        if (customSetting == true)
+        if (customSetting == false)
             LoadData();
         else
             Init();
