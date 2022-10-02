@@ -7,6 +7,8 @@ public class Character : MonoBehaviour
 {
     private Status status;
     private EquipSkills equipSkills;
+
+    public bool customSetting = false;
     
     // Start is called before the first frame update
     void Start()
@@ -14,7 +16,10 @@ public class Character : MonoBehaviour
         status = GetComponent<Status>();
         equipSkills = GetComponent<EquipSkills>();
 
-        LoadData();
+        if (customSetting == true)
+            LoadData();
+        else
+            Init();
     }
 
     //배틀시 불러오는 용도

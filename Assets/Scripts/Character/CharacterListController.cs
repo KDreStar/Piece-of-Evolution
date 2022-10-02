@@ -21,7 +21,10 @@ public class CharacterListController : MonoBehaviour
     }
 
     public void SelectCharacter() {
-        Managers.Data.SelectCharacter(characterList.GetCurrentIndex());
+        bool result = Managers.Data.SelectCharacter(characterList.GetCurrentIndex());
+
+        if (result == true)
+            GameManager.Instance.ChangeScene("GameMain");
     }
 
     void Start() {

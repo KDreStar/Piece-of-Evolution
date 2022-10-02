@@ -10,15 +10,15 @@ GameObject:
   m_Component:
   - component: {fileID: 1589529876771655430}
   - component: {fileID: 1589529876771655441}
+  - component: {fileID: 977994712672817514}
   - component: {fileID: 1589529876771655455}
+  - component: {fileID: 1589529876771655450}
   - component: {fileID: 1589529876771655452}
   - component: {fileID: 1589529876771655453}
-  - component: {fileID: 1589529876771655450}
   - component: {fileID: 1589529876771655451}
   - component: {fileID: 1589529876771655448}
   - component: {fileID: 1589529876771655449}
   - component: {fileID: 4709946176312357157}
-  - component: {fileID: 977994712672817514}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -93,6 +93,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &977994712672817514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1589529876771655431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88755b75d8359549a57dc7503620df3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  customSetting: 0
 --- !u!114 &1589529876771655455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,6 +123,30 @@ MonoBehaviour:
   baseATK: 0
   baseDEF: 0
   baseSPD: 0
+--- !u!114 &1589529876771655450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1589529876771655431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b40fbaf3fc530c44b3c884cd41aefae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  equipSkills: {fileID: 0}
+  skillList:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  tooltipPivot: {x: 0, y: 0}
+  maxCost: 20
 --- !u!50 &1589529876771655452
 Rigidbody2D:
   serializedVersion: 4
@@ -157,30 +194,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.32, y: 0.32}
   m_EdgeRadius: 0
---- !u!114 &1589529876771655450
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1589529876771655431}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b40fbaf3fc530c44b3c884cd41aefae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  equipSkills: {fileID: 0}
-  skillList:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  tooltipPivot: {x: 0, y: 0}
-  maxCost: 20
 --- !u!114 &1589529876771655451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -266,15 +279,3 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &977994712672817514
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1589529876771655431}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d88755b75d8359549a57dc7503620df3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
