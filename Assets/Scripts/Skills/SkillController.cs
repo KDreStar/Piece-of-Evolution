@@ -24,11 +24,9 @@ public class SkillController : MonoBehaviour
     public void MoveSkill(SkillSlot dropSkillSlot) {
         dragSkillSlot = DragSkillSlot.Instance.skillSlot;
         this.dropSkillSlot = dropSkillSlot;
-
-        if (equipSkills == null)
-            equipSkills = GameObject.FindWithTag("Character").GetComponent<EquipSkills>();
         //skillInventory = SkillInventory.Instance;
 
+        Debug.Log("이동");
         //? -> 장착스킬
         //장착스킬 -> ?
         if (dragSkillSlot.isEquipSkill || dropSkillSlot.isEquipSkill) {
@@ -40,19 +38,20 @@ public class SkillController : MonoBehaviour
 
             //장착스킬 -> 인벤토리
             //dropSkill을 장착해야함
+            //인벤토리가 비어있으면 장착 안함
             if (dragSkillSlot.isEquipSkill) {
-                //장착하려는 스킬(인벤토리)이 없는 경우
                 if (dropSkillSlot.skill == null)
                     SwapSkillSlot();
-                else
-                    equipSkills.EquipSkill(dragSkillSlot.equipIndex, dropSkillSlot);
+                else if (equipSkills.CheckCost(dragSkillSlot.equipIndex, dropSkillSlot.skill))
+                    SwapSkillSlot();
                 return;
             }
 
             //인벤토리 -> 장착스킬
             //dragSkill을 장착해야함
             if (dropSkillSlot.isEquipSkill) {
-                equipSkills.EquipSkill(dropSkillSlot.equipIndex, dragSkillSlot);
+                if (equipSkills.CheckCost(dragSkillSlot.equipIndex, dragSkillSlot.skill))
+                    SwapSkillSlot();
                 return;
             }
         }

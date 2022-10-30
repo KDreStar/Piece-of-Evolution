@@ -18,16 +18,16 @@ public class BattleTest : MonoBehaviour
             Debug.Log("생성" + i);
             EquipSkills equipSkills = characters[i].GetComponent<EquipSkills>();
 
-            equipSkills.AddSkill(0, SkillDatabase.Instance.GetSkill(13));
-            equipSkills.AddSkill(1, SkillDatabase.Instance.GetSkill(14));
-            equipSkills.AddSkill(2, SkillDatabase.Instance.GetSkill(15));
+            equipSkills.AddSkill(0, Managers.DB.SkillDB.GetSkill(13));
+            equipSkills.AddSkill(1, Managers.DB.SkillDB.GetSkill(14));
+            equipSkills.AddSkill(2, Managers.DB.SkillDB.GetSkill(15));
         }
 
         for (int i=0; i<enemys.Length; i++) {
             Debug.Log("생성" + i);
             EquipSkills equipSkills = enemys[i].GetComponent<EquipSkills>();
 
-            equipSkills.AddSkill(0, SkillDatabase.Instance.GetSkill(16));
+            equipSkills.AddSkill(0, Managers.DB.SkillDB.GetSkill(16));
         }
     }
 

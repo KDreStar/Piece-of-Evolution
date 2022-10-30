@@ -13,20 +13,78 @@ using System;
 //로드는 게임 시작시에만 함
 //메모리에 로드
 //메모리에 저장 로드는 Set Get이용
+public enum PathType {
+    Resources,
+    Local,
+    URL
+}
+
 public class CharacterData
 {
     public Skill[] skillList = new Skill[8];
     public NNModel model;
-
-    public string tag;
+    public EnemyAI enemyAI;
+    
     public string name;
     public float baseHP;
     public float baseATK;
     public float baseDEF;
     public float baseSPD;
-    public BehaviorType type;
+    public BehaviorType behaviorType;
+
+    public string aiName;
+    public string modelPath;
+    public PathType modelPathType;
+    
+    public string spritePath;
+    public PathType spritePathType;
 
     public Sprite sprite;
+
+    public void Save(Monster monster) {
+        name = monster.Name;
+        baseHP = monster.BaseHP;
+        baseATK = monster.BaseATK;
+        baseDEF = monster.BaseDEF;
+        baseSPD = monster.BaseSPD;
+
+        sprite = monster.Sprite;
+        spritePath = "Monsters/Images/" + monster.FileName;
+        spritePathType = PathType.Resources;
+
+        aiName = monster.FileName + "AI";
+        if (monster.IsOnnx == true) {
+            modelPath = "Monsters/Models/" + monster.FileName;
+            modelPathType = PathType.Resources;
+        } else {
+            behaviorType = BehaviorType.HeuristicOnly;
+        }
+
+        for (int i=0; i<monster.SkillList.Length; i++)
+            skillList[i] = monster.SkillList[i];
+    }
+
+    //Deep Copy
+    public void Save(CharacterData data) {
+        name = data.name;
+        baseHP = data.baseHP;
+        baseATK = data.baseATK;
+        baseDEF = data.baseDEF;
+        baseSPD = data.baseSPD;
+
+        sprite = data.sprite;
+        spritePath = data.spritePath;
+        spritePathType = data.spritePathType;
+
+        aiName = data.aiName;
+        modelPath = data.modelPath;
+        modelPathType = data.modelPathType;
+
+        behaviorType = data.behaviorType;
+
+        for (int i=0; i<data.skillList.Length; i++)
+            skillList[i] = data.skillList[i];
+    }
 
     public void Save(GameObject character) {
         Status status = character.GetComponent<Status>();
@@ -52,9 +110,11 @@ public class CharacterData
 
     public void Load(GameObject character) {
         Status status = character.GetComponent<Status>();
-        Image image = character.GetComponent<Image>();
+        Image image = character.GetComponent<Character>().image;
         EquipSkills equipSkills = character.GetComponent<EquipSkills>();
         BehaviorParameters bp = character.GetComponent<BehaviorParameters>();
+        BattleAgent agent = character.GetComponent<BattleAgent>();
+        SpriteRenderer sr = character.GetComponent<SpriteRenderer>();
 
         status.name = name;
         status.baseHP = baseHP;
@@ -62,6 +122,12 @@ public class CharacterData
         status.baseDEF = baseDEF;
         status.baseSPD = baseSPD;
 
+        LoadSprite();
+        if (image != null && sprite != null)
+            image.sprite = sprite;
+
+        if (sr != null && sprite != null)
+            sr.sprite = sprite;
         //image.sprite = sprite;
 
         /*
@@ -78,7 +144,12 @@ public class CharacterData
 
         if (bp != null && model != null) {
             bp.Model = model;
-            bp.BehaviorType = type;
+            bp.BehaviorType = behaviorType;
+        }
+
+        if (bp != null && model == null) {
+            agent.ai = Managers.Data.AIFactory.Create(aiName);
+            bp.BehaviorType = behaviorType;
         }
     }
 
@@ -95,6 +166,13 @@ public class CharacterData
         for (int i=0; i<EquipSkills.maxSlot; i++)
             data.skillNoList[i] = skillList[i] != null ? skillList[i].No : 0;
         
+        data.aiName = aiName;
+        data.modelPath = modelPath;
+        data.modelPathType = modelPathType;
+
+        data.spritePath = spritePath;
+        data.spritePathType = spritePathType;
+
         return data;
     }
 
@@ -105,18 +183,42 @@ public class CharacterData
         baseDEF = data.baseDEF;
         baseSPD = data.baseSPD;
 
-        Debug.Log(data.name);
-
         for (int i=0; i<EquipSkills.maxSlot; i++) {
             int no = data.skillNoList[i];
 
             if (no != 0)
-                skillList[i] = SkillDatabase.Instance.GetSkill(no);
+                skillList[i] = Managers.DB.SkillDB.GetSkill(no);
+        }
+
+        aiName = data.aiName;
+        modelPath = data.modelPath;
+        modelPathType = data.modelPathType;
+
+        spritePath = data.spritePath;
+        spritePathType = data.spritePathType;
+    }
+
+    public void LoadSprite() {
+        if (sprite != null)
+            return;
+
+        switch (spritePathType) {
+            case PathType.Resources:
+                sprite = Resources.Load<Sprite>(spritePath);
+                break;
         }
     }
 
-    public void LoadModel(string modelName) {
-        string path = Application.persistentDataPath + "/" + modelName;
+    public void LoadModel() {
+        if (modelPath == "" || modelPath == null)
+            return;
+        
+        string path;
+
+        if (modelPathType == PathType.Local)
+            path = Application.persistentDataPath + "/" + modelPath;
+        else
+            path = "";
 
         if (!File.Exists(path))
             return;
@@ -134,17 +236,17 @@ public class CharacterData
             modelData.Value = memoryStream.ToArray();
         }
         
-        modelData.name = "Data" + modelName;
+        modelData.name = "Data" + aiName;
         modelData.hideFlags = HideFlags.HideInHierarchy;
 
         model.modelData = modelData;
-        model.name = "Model" + modelName;
+        model.name = "Model" + aiName;
 
         Debug.Log("모델" + model.name);
     }
 
     public void SetSkill(int i, int no) {
-        skillList[i] = SkillDatabase.Instance.GetSkill(no);
+        skillList[i] = Managers.DB.SkillDB.GetSkill(no);
     }
 
     public void SetSkill(int i, Skill skill) {

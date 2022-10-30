@@ -10,10 +10,16 @@ public class Slash : SkillEffect
     float time = 1.0f;
     float speed = 80.0f;
 
+    public override void Initialize() {
+        base.Initialize();
+
+        //캐릭터 중심이 계속 기준
+        gameObject.transform.parent = attacker.transform;
+    }
+
     // Update is called once per frame
     public override void Update()
     {
-        Vector3 vector = new Vector3(0, 0, 1);
-        transform.Rotate(vector * speed * Time.deltaTime);
+
     }
 }

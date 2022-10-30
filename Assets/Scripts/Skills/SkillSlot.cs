@@ -14,8 +14,14 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
 
     //스킬 이미지, 쿨타임 확인 이미지
-    public Image image;
-    public Image cooltimeImage;
+    public GameObject skillObject;
+    public GameObject cooltimeObject;
+
+    private Image skillImage;
+    private Image cooltimeImage;
+
+    private RectTransform skillImageRT;
+    private RectTransform cooltimeImageRT;
 
     //true = 드래그 가능 false = 드래그 불가능
     public bool dragable;
@@ -28,7 +34,10 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public int equipIndex;
 
     //스킬 툴팁 시작점을 알려줌
+    [HideInInspector]
     public Vector2 tooltipPivot;
+
+    public GridLayoutGroup layout;
 
     private IEnumerator cooltimeCoroutine;
     private bool isUse = true;
@@ -66,7 +75,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     //스킬을 사용하면 프리펩을 생성하면 됨
     //프리펩에는 이펙트랑 스크립트를 가지고 있음
     //각 스킬 마다 구현되어 있음
-    public bool UseSkill(GameObject attacker, int direction=3) {
+    public bool UseSkill(GameObject attacker, int skillX, int skillY) {
         ActiveSkill activeSkill = GetActiveSkill();
 
         if (activeSkill == null)
@@ -76,6 +85,19 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         //이 현상 방지
         if (isUse == false)
             return false;
+
+        //                         x   ↑  ↗   →  ↘   ↓  ↙   ←   ↖
+        float[] dx = new float[] { 0,  0,  1,  1,  1,  0, -1, -1, -1};
+        float[] dy = new float[] { 0,  1,  1,  0, -1, -1, -1,  0,  1};
+
+        int direction = 3;
+
+        for (int i=1; i<9; i++) {
+            if (dx[i] == skillX && dy[i] == skillY) {
+                direction = i;
+                break;
+            }
+        }
 
         //바라보는 방향으로 스킬 생성
         // 1 = ↑ //
@@ -158,6 +180,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         SkillSlot dragSkillSlot = DragSkillSlot.Instance.skillSlot;
 
+        Debug.Log("드랍");
         if (dragSkillSlot == null)
             return;
 
@@ -168,9 +191,8 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (skill != null) {
-            SkillTooltip.Instance.Show(skill, transform.position, tooltipPivot);
+            SkillTooltip.Instance.Show(skill, transform.position, CalculatePivot(eventData));
         }
-            
     }
 
     //마우스 오버 종료
@@ -179,23 +201,55 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         SkillTooltip.Instance.Hide();
     }
 
+    //크기 조절
+    void Awake() {
+        //하드코딩된 size 나중에 수정할 것
+        skillImage = skillObject.GetComponent<Image>();
+        skillImageRT = skillObject.GetComponent<RectTransform>();
+
+        cooltimeImage = cooltimeObject.GetComponent<Image>();
+        cooltimeImageRT = cooltimeObject.GetComponent<RectTransform>();
+
+        skillImageRT.sizeDelta = layout.cellSize - new Vector2(1.5f, 1.5f);
+        cooltimeImageRT.sizeDelta = layout.cellSize - new Vector2(1.5f, 1.5f);
+
+        cooltimeCoroutine = ApplyCooltime();
+
+        
+    }
+
+    Vector2 CalculatePivot(PointerEventData eventData) {
+        int[] dx = new int[] {0, 1, 0, 1};
+        int[] dy = new int[] {0, 0, 1, 1};
+
+        Vector2 canvasSize = GameManager.Instance.GetCanvasSize();
+
+        int k1 = eventData.position.x < canvasSize.x / 2 ? 0 : 1;
+        int k2 = eventData.position.y < canvasSize.y / 2 ? 0 : 2;
+        int k = k1 + k2;
+
+        Debug.Log("위치: " + eventData.position);
+        return new Vector2(dx[k], dy[k]);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        cooltimeCoroutine = ApplyCooltime();
-        image = GetComponent<Image>();
+        
 
-        if (skill != null)
-            image.sprite = skill.Icon;
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (skill != null)
-            image.sprite = skill.Icon;
-        else
-            image.sprite = null;
+        if (skill != null) {
+            skillObject.SetActive(true);
+            skillImage.sprite = skill.Icon;
+        } else {
+            skillObject.SetActive(false);
+            skillImage.sprite = null;
+        }
 
         ActiveSkill activeSkill = GetActiveSkill();
 

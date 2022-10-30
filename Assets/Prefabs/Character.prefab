@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9065742834548992579}
   - component: {fileID: 8423538523725702433}
   - component: {fileID: 9065742834548992585}
-  - component: {fileID: 9065742834548992578}
+  - component: {fileID: 2597087820616932488}
   - component: {fileID: 9065742834548992582}
   - component: {fileID: 9065742834548992583}
   - component: {fileID: 9065742834548992580}
@@ -33,8 +33,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9065742834548992605}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.9565187, y: -0.101337984, z: -0.012093563}
-  m_LocalScale: {x: 0.5495843, y: 1, z: 1}
+  m_LocalPosition: {x: -5.913, y: -0.1691, z: -0.012093563}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 77c89e19611d5d743bf7310cf0a35960, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -104,6 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d88755b75d8359549a57dc7503620df3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  image: {fileID: 0}
   customSetting: 0
 --- !u!114 &9065742834548992579
 MonoBehaviour:
@@ -167,7 +168,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &9065742834548992578
+--- !u!61 &2597087820616932488
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -206,12 +207,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 534
+    VectorObservationSize: 189
     NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 0
-      BranchSizes: 0900000009000000
-    VectorActionSize: 0900000009000000
+      BranchSizes: 0300000003000000030000000300000009000000
+    VectorActionSize: 0300000003000000030000000300000009000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
     hasUpgradedBrainParametersWithActionSpec: 1
@@ -241,7 +242,12 @@ MonoBehaviour:
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
   attacker: {fileID: 9065742834548992605}
+  attackerStatus: {fileID: 0}
+  attackerEquipSkills: {fileID: 0}
   defender: {fileID: 0}
+  defenderEquipSkills: {fileID: 0}
+  defenderStatus: {fileID: 0}
+  lastDirection: 3
   field: {fileID: 0}
   battleEnvController: {fileID: 0}
 --- !u!114 &9065742834548992580

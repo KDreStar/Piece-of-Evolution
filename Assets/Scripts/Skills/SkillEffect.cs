@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SkillEffect : MonoBehaviour
 {
+    public SpriteRenderer sr;
     public ActiveSkill activeSkill;
 
     public GameObject attacker;
@@ -11,10 +12,16 @@ public class SkillEffect : MonoBehaviour
     public Status attackerStatus;
     public Status defenderStatus;
 
+    public Collider2D collider;
+
     public int direction;
     private bool isAttacked = false;
 
     Field field;
+
+    void Awake() {
+        sr = GetComponent<SpriteRenderer>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -22,7 +29,7 @@ public class SkillEffect : MonoBehaviour
 
     }
 
-    public void Initialize() {
+    public virtual void Initialize() {
         field = transform.GetComponentInParent<Field>();
 
         if (gameObject.tag == "CharacterSkill") {
@@ -36,7 +43,12 @@ public class SkillEffect : MonoBehaviour
         attackerStatus = attacker.GetComponent<Status>();
         defenderStatus = defender.GetComponent<Status>();
 
+        
+
         isAttacked = false;
+
+        if (collider != null)
+            EnableCollider();
         /*
         공식
         135 - 45 * direction = z
@@ -49,7 +61,7 @@ public class SkillEffect : MonoBehaviour
         direction = (int)((135 - transform.rotation.z) / 45);
 
         //거리로 해야됨 임시로 1
-        Invoke("DestroySkillEffect", 1);
+        Invoke("DestroySkillEffect", activeSkill.Range / activeSkill.Speed);
 
         field.Add(this);
     }
@@ -60,6 +72,16 @@ public class SkillEffect : MonoBehaviour
 
     public string GetAttackerTag() {
         return attacker.tag;
+    }
+
+    public void EnableCollider() {
+        if (collider != null)
+            collider.enabled = true;
+    }
+
+    public void DisableCollider() {
+        if (collider != null)
+            collider.enabled = false;
     }
 
     // Update is called once per frame

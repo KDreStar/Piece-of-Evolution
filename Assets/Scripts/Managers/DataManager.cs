@@ -27,19 +27,29 @@ public class DataManager
 
     public GameData gameData;
     
+    //UI 불러오기용도
+    public CharacterData currentCharacterData;
+
     //배틀용
     public CharacterData characterData;
     public CharacterData enemyData;
 
     public SkillInventoryData skillInventoryData;
 
+    public AIFactory AIFactory;
+
     public void Init() {
         characterDataList = new List<CharacterData>();
+
+        currentCharacterData = new CharacterData();
+
         characterData = new CharacterData();
         enemyData = new CharacterData();
 
         skillInventoryData = new SkillInventoryData();
         skillInventoryData.Init();
+
+        AIFactory = new AIFactory();
 
         if (File.Exists(Application.persistentDataPath + "/Game.json") == false)
             SaveGameData();
@@ -56,15 +66,24 @@ public class DataManager
         temp.baseDEF = 10;
         temp.baseSPD = 10;
 
+        temp.aiName = "" + characterDataList.Count;
+        temp.modelPath = "models/" + characterDataList.Count + "/Character.onnx";
+        temp.modelPathType = PathType.Local;
+
+        temp.spritePath = "Characters/Mask Dude/Fall (32x32)";
+        temp.spritePathType = PathType.Resources;
+        //temp.spritePath = "images/" + characterDataList.Count + ".png";
+        //temp.spritePathType = PathType.Local;
+
         characterDataList.Add(temp);
         SaveGameData();
     }
 
-    public bool DeleteCharacter() {
-        if (currentCharacterIndex >= characterDataList.Count)
+    public bool DeleteCharacter(int i) {
+        if (i >= characterDataList.Count)
             return false;
 
-        characterDataList.RemoveAt(currentCharacterIndex);
+        characterDataList.RemoveAt(i);
         SaveGameData();
 
         return true;
@@ -74,7 +93,7 @@ public class DataManager
         if (i >= characterDataList.Count)
             return false;
 
-        characterData = characterDataList[i];
+        currentCharacterData = characterDataList[i];
         currentCharacterIndex = i;
 
         return true;
@@ -114,9 +133,6 @@ public class DataManager
         battleData.character = characterData.CreateJSONData();
         battleData.enemy = enemyData.CreateJSONData();
         
-        battleData.characterModel = currentCharacterIndex + ".onnx";
-        battleData.enemyModel = "Enemy.onnx";
-
         string json = JsonUtility.ToJson(battleData);
 
         File.WriteAllText(path, json);
@@ -145,8 +161,8 @@ public class DataManager
 
             CharacterData temp = new CharacterData();
             temp.SetJSONData(characterJSONData);
-            temp.LoadModel(i + ".onnx");
-
+            //temp.LoadModel(i + ".onnx");
+            temp.LoadSprite();
             characterDataList.Add(temp);
         }
 
@@ -154,8 +170,8 @@ public class DataManager
         for (int i=0; i<gameData.skillInvNoList.Count; i++) {
             int skillNo = gameData.skillInvNoList[i];
 
-            Debug.Log(SkillDatabase.Instance.GetSkill(skillNo));
-            skillList[i] = skillNo == 0 ? null : SkillDatabase.Instance.GetSkill(skillNo);
+            Debug.Log(Managers.DB.SkillDB.GetSkill(skillNo));
+            skillList[i] = skillNo == 0 ? null : Managers.DB.SkillDB.GetSkill(skillNo);
         }
 
         SelectCharacter(gameData.lastCharacterIndex);
@@ -168,14 +184,18 @@ public class DataManager
         BattleData battleData = JsonUtility.FromJson<BattleData>(json);
 
         characterData.SetJSONData(battleData.character);
-        characterData.LoadModel(battleData.characterModel);
+        characterData.LoadModel();
 
         enemyData.SetJSONData(battleData.enemy);
-        enemyData.LoadModel(battleData.enemyModel);
+        enemyData.LoadModel();
     }
 
     public void LoadCharacterData(GameObject character) {
         characterData.Load(character);
+    }
+
+    public void LoadCurrentCharacterData(GameObject character) {
+        currentCharacterData.Load(character);
     }
 
     public void LoadCharacterData(int i, GameObject character) {
@@ -189,62 +209,15 @@ public class DataManager
         enemyData.Load(character);
     }
 
+    public void SaveCurrentCharacterData(GameObject character) {
+        currentCharacterData.Save(character);
+    }
+
     public void SaveCharacterData(GameObject character) {
         characterData.Save(character);
     }
 
     public void SaveEnemyData(GameObject character) {
         enemyData.Save(character);
-    }
-
-    public void ChangePvPList(List<CharacterData> datas) {
-        GameManager.Instance.StartCoroutine(DownloadPvPCharacters(datas));
-    }
-
-    IEnumerator DownloadPvPCharacters(List<CharacterData> datas) {
-        string pvpURL = "http://localhost:8080/getPvPCharacters.jsp";
-        WWWForm form = new WWWForm();
-        /*
-        string id = "아이디";
-        string pw = "비밀번호";
-        form.AddField("Username", id);
-        form.AddField("Password", pw);
-        */
-
-        form.AddField("count", 8);
-        UnityWebRequest www = UnityWebRequest.Get(pvpURL);  // 보낼 주소와 데이터 입력
-
-        yield return www.SendWebRequest();  // 응답 대기
-
-        if (www.error == null) {
-            Debug.Log("다운로드 완료");
-            Debug.Log(www.downloadHandler.text);    // 데이터 출력
-            Debug.Log(www.downloadHandler.data);    // 데이터 출력
-
-            Managers.Data.LoadPvPCharacters(datas, www.downloadHandler.text);
-        } else {
-            Debug.Log("error");
-        }
-    }
-
-    public void LoadPvPCharacters(List<CharacterData> datas, string json) {
-        PvPData pvpData = new PvPData();
-
-        pvpData = JsonUtility.FromJson<PvPData>(json);
-
-        datas.Clear();
-        for (int i=0; i<pvpData.characterList.Count; i++) {
-            CharacterJSONData characterJSONData = pvpData.characterList[i];
-
-            CharacterData temp = new CharacterData();
-            temp.SetJSONData(characterJSONData);
-
-            //임시 이거는 배틀 들어갈때 다운로드 하게 ㄱㄱ
-            //temp.LoadModel("Enemy.onnx");
-
-            datas.Add(temp);
-        }
-
-        //Debug.Log("datas" + pvpDataList + " " + pvpDataList.Count);
     }
 }

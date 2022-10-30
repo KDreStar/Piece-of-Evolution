@@ -20,6 +20,6 @@ MonoBehaviour:
   icon: {fileID: 4965478120403269316, guid: e3e6b3d6c57dc7b488e7d1e8be902988, type: 3}
   cooltime: 3
   damage: ATK
-  speed: 1
-  range: 0
+  speed: 10
+  range: 10
   effect: {fileID: 6544569667594155968, guid: 38d3dd657d5aa64428a9e3f1ff6eacc1, type: 3}

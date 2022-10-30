@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 //수량 없이 ㄱ 
 public class SkillInventory : MonoBehaviour
 {
-    public List<SkillSlot> skillSlot;
-    public GameObject skillSlotPrefab;
-
+    public SkillSlot[] skillSlot = new SkillSlot[20];
     public List<Skill> skillList;
 
-    public int pageMaxSlot = 20;
+    public int limit = 20;
     public int page = 1;
-    public int maxPage = 5;
+    public int maxPage = 1;
+
+    public TextMeshProUGUI textPage;
 
     public SkillSlot GetSkillSlot(int i) {
         return skillSlot[i];
@@ -52,10 +54,28 @@ public class SkillInventory : MonoBehaviour
     }
 
     public void UpdateSkillList() {
-        int k = (page - 1) * pageMaxSlot;
+        int k = (page - 1) * limit;
 
-        for (int i=0; i<pageMaxSlot; i++)
+        for (int i=0; i<limit; i++)
             skillList[i + k] = GetSkill(i);
+    }
+
+    //이전 버튼 누르면
+    public void Prev() {
+        if (page <= 1)
+            return;
+        
+        page--;
+        UpdateSlots();
+    }
+
+    //다음 버튼 누르면
+    public void Next() {
+        if (page > maxPage)
+            return;
+        
+        page++;
+        UpdateSlots();
     }
     /*
     public void RemoveSkill(Skill skill) {
@@ -65,21 +85,32 @@ public class SkillInventory : MonoBehaviour
             RemoveSkill(index);
     }
     */
+    public void UpdateSlots() {
+        if (skillList == null) {
+            Debug.Log("Null");
+            return;
+        }
 
-    public void CreateSkillSlot(int i) {
-        GameObject skill = Instantiate(skillSlotPrefab);
+        maxPage = (skillList.Count - 1) / limit + 1;
+        maxPage = maxPage < 1 ? 1 : maxPage;
 
-        skill.transform.parent = transform;
-        skill.name = "Slot" + (i + 1);
+        if (page > maxPage)
+            page = maxPage;
 
-        SkillSlot sl = skill.GetComponent<SkillSlot>();
-        sl.dragable = true;
-        sl.tooltipPivot = new Vector2(1, 1);
-        sl.transform.localScale = new Vector3(1, 1, 1);
+        for (int i=0; i<limit; i++) {
+            int k = (page - 1) * limit + i;
 
-        skillSlot.Add(sl);
+
+            if (k >= skillList.Count) {
+                skillSlot[i].skill = null;
+            } else {
+                skillSlot[i].skill = skillList[k];
+            }
+        }
+
+        textPage.text = "" + page + "/" + maxPage;
     }
-    
+
     void Awake()
     {
 
@@ -88,20 +119,13 @@ public class SkillInventory : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        skillSlot = new List<SkillSlot>();
+        skillSlot = GetComponentsInChildren<SkillSlot>();
         skillList = Managers.Data.skillInventoryData.GetSkillList();
-
-        int k = (page - 1) * pageMaxSlot; 
-
-        for (int i=0; i<pageMaxSlot; i++) {
-            CreateSkillSlot(i);
-            AddSkill(i, skillList[i + k]);
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        UpdateSlots();
     }
 }

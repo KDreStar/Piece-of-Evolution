@@ -26,14 +26,13 @@ public class DragSkillSlot : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
 
         gameObject.SetActive(false);
-
-        image = GetComponent<Image>();
     }
 
     // Update is called once per frame

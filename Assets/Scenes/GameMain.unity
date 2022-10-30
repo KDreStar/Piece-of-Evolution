@@ -951,7 +951,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: SelectMonster
+          m_StringArgument: SelectField
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &701196901
@@ -1075,7 +1075,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 762676592}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5853421979298276077, guid: e293e443505690a46902dd5dbc03eace, type: 3}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: ChangeScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: MockBattle
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &762676592
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4258,7 +4270,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7809794877065912195, guid: c35084903b8f6e245beddf0d2b30c616, type: 3}
       propertyPath: m_TagString
-      value: Character
+      value: CurrentCharacter
       objectReference: {fileID: 0}
     - target: {fileID: 8026380110254437057, guid: c35084903b8f6e245beddf0d2b30c616, type: 3}
       propertyPath: m_AnchorMax.y

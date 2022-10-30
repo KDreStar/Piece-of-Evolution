@@ -15,5 +15,11 @@ public class CharacterJSONData
     public float baseSPD;
 
     public int[] skillNoList;
-    public BehaviorType type;
+    
+    public string aiName;
+    public string modelPath;
+    public PathType modelPathType;
+    
+    public string spritePath;
+    public PathType spritePathType;
 }

@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class Field : MonoBehaviour
 {
-    public List<SkillEffect> skillEffects;    
+    public List<SkillEffect> skillEffects;
+    public GameObject leftWall;
+    public GameObject rightWall;
+    public GameObject upWall;
+    public GameObject downWall;
 
     public void Add(SkillEffect skillEffect) {
         skillEffects.Add(skillEffect);

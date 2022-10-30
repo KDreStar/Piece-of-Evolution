@@ -16,7 +16,7 @@ public class CharacterListController : MonoBehaviour
     }
 
     public void DeleteCharacter() {
-        Managers.Data.DeleteCharacter();
+        Managers.Data.DeleteCharacter(characterList.GetCurrentIndex());
         characterList.UpdateSlots();
     }
 

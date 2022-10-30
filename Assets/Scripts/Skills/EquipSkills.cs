@@ -12,8 +12,6 @@ public class EquipSkills : MonoBehaviour
     //인스펙터 적용
     public Skill[] skillList = new Skill[maxSlot];
 
-    public Vector2 tooltipPivot;
-
     //최대 스킬 코스트 (인스펙터에서 설정) 기본 20
     [SerializeField]
     private int maxCost = 20;
@@ -23,19 +21,8 @@ public class EquipSkills : MonoBehaviour
         get { return currentCost; }
     }
 
-    //코스트 체크후 i번째 슬롯에 스킬을 장착함
-    public bool EquipSkill(int i, SkillSlot newSlot) {
-        if (checkCost(i, newSlot.skill) == false)
-            return false;
-
-        SkillController.Instance.SwapSkillSlot(skillSlot[i], newSlot);
-        CalculateCost();
-
-        return true;
-    }
-
     //가능시 true 불가능시 false
-    private bool checkCost(int i, Skill skill) {
+    public bool CheckCost(int i, Skill skill) {
         if (skillSlot[i].IsEmpty()) {
             //cost 확인
             if (currentCost + skill.Cost > maxCost)
@@ -81,12 +68,9 @@ public class EquipSkills : MonoBehaviour
         skillSlot[i].AddSkill(skill);
     }
 
-    public bool UseSkill(int i) {
-        return skillSlot[i].UseSkill(gameObject);
-    }
 
-    public bool UseSkill(int i, int direction) {
-        return skillSlot[i].UseSkill(gameObject, direction);
+    public bool UseSkill(int i, int skillX, int skillY) {
+        return skillSlot[i].UseSkill(gameObject, skillX, skillY);
     }
 
     public Skill GetSkill(int i) {
@@ -121,9 +105,9 @@ public class EquipSkills : MonoBehaviour
             }
 
 
-            Debug.Log("스킬 Init" + checkCost(i, skill));
+            Debug.Log("스킬 Init" + CheckCost(i, skill));
 
-            if (checkCost(i, skill))
+            if (CheckCost(i, skill))
                 AddSkill(i, skill);
         }
     }
@@ -132,9 +116,6 @@ public class EquipSkills : MonoBehaviour
     //그 후 마우스 오버시 나오는 툴팁의 시작위치를 적용
     void Awake() {
         skillSlot = equipSkills.GetComponentsInChildren<SkillSlot>();
-
-        for (int i=0; i<maxSlot; i++)
-            skillSlot[i].tooltipPivot = tooltipPivot;
     }
 
     //Character.cs 에서 다 불러옴

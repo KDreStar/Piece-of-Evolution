@@ -25,6 +25,11 @@ public class Managers : MonoBehaviour
         get { return Instance.pool; }
     }
 
+    private DBManager db = new DBManager();
+    public static DBManager DB {
+        get { return Instance.db; }
+    }
+
     //싱글톤
     void Awake()
     {
@@ -39,6 +44,7 @@ public class Managers : MonoBehaviour
     }
 
     void Init() {
+        DB.Init();
         Data.Init();
     }
 

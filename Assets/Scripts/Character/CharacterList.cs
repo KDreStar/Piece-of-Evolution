@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+
 
 public enum CharacterListType {
     None,
@@ -14,14 +16,16 @@ public class CharacterList : MonoBehaviour
 {
     public CharacterSlot[] slots = new CharacterSlot[4];
     private List<CharacterData> datas; //포인터용도
-
-    //임시
-    private Image[] images = new Image[4];
-
+    
     public CharacterListType listType = CharacterListType.Characters;
     int page = 1;
     int maxPage = 1;
     int index = 0;
+
+    public Sprite idle;
+    private Sprite selected;
+
+    public TextMeshProUGUI textPage;
 
     //이전 버튼 누르면
     public void Prev() {
@@ -47,7 +51,7 @@ public class CharacterList : MonoBehaviour
     }
 
     public int GetCurrentIndex() {
-        return (page - 1) * index;
+        return (page - 1) * 4 + index;
     }
 
     public GameObject GetCurrentCharacter() {
@@ -68,28 +72,35 @@ public class CharacterList : MonoBehaviour
             return;
         }
 
+        maxPage = datas.Count / 4 + 1;
+
+        if (page > maxPage)
+            page = maxPage;
 
         for (int i=0; i<4; i++) {
             int k = (page - 1) * 4 + i;
 
             if (k >= datas.Count) {
-                slots[i].character.gameObject.SetActive(false);
+                slots[i].SetActiveSlot(false);
             } else {
-                slots[i].character.gameObject.SetActive(true);
+                slots[i].SetActiveSlot(true);
                 slots[i].UpdateSlot(datas[k]);
             }
 
             if (index == i) {
-                images[i].color = new Color32(64, 64, 64, 255);
+                slots[i].image.sprite = selected;
             } else {
-                images[i].color = new Color32(128, 128, 128, 255);
+                slots[i].image.sprite = idle;
             }
         }
+
+        textPage.text = "" + page + "/" + maxPage;
     }
 
     void Awake() {
-        for (int i=0; i<4; i++)
-            images[i] = slots[i].GetComponent<Image>();
+        Sprite[] sprites = Resources.LoadAll<Sprite>("UI/Frame");
+        idle = sprites[1];
+        selected = sprites[7];
     }
 
     // Start is called before the first frame update

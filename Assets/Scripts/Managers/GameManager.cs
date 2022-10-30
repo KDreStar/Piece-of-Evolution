@@ -10,6 +10,8 @@ using System.IO;
 using System.Runtime.InteropServices; 
 using UnityEngine.Networking;
 
+
+//게임 진행 관련
 public class GameManager : MonoBehaviour
 {
     private static GameManager instance = null;
@@ -18,6 +20,12 @@ public class GameManager : MonoBehaviour
     }
 
     private string learningPath;
+
+    public string monsterFieldName;
+
+    public void SetMonsterFieldName(string name) {
+        monsterFieldName = name;
+    }
 
     //싱글톤
     void Awake()
@@ -51,9 +59,15 @@ public class GameManager : MonoBehaviour
             File.Delete(learningPath);
     }
 
+    public Vector2 GetCanvasSize() {
+        return new Vector2(1920, 1080);
+    }
+
     void OnApplicationQuit() {
         DeleteLearningFile();
     }
+
+
 
     /*
     승리 => 기본 20%
@@ -87,17 +101,17 @@ public class GameManager : MonoBehaviour
         Debug.Log("Dice: " + second);
 
         if (second < 50)
-            return SkillDatabase.Instance.GetRandomSkill(1);
+            return Managers.DB.SkillDB.GetRandomSkill(1);
 
         if (second < 80)
-            return SkillDatabase.Instance.GetRandomSkill(2);
+            return Managers.DB.SkillDB.GetRandomSkill(2);
 
         if (second < 92)
-            return SkillDatabase.Instance.GetRandomSkill(3);
+            return Managers.DB.SkillDB.GetRandomSkill(3);
 
         if (second < 98)
-            return SkillDatabase.Instance.GetRandomSkill(4);
+            return Managers.DB.SkillDB.GetRandomSkill(4);
 
-        return SkillDatabase.Instance.GetRandomSkill(5);
+        return Managers.DB.SkillDB.GetRandomSkill(5);
     }
 }

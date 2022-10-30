@@ -11,7 +11,4 @@ public class BattleData
 {
     public CharacterJSONData character;
     public CharacterJSONData enemy;
-
-    public string characterModel;
-    public string enemyModel;
 }
