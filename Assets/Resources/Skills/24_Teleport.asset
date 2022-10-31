@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 476d5d6f112f5674797fd7c421c9a64b, type: 3}
+  m_Name: 24_Teleport
+  m_EditorClassIdentifier: 
+  no: 24
+  name: "\uD154\uB808\uD3EC\uD2B8"
+  description: "\uC6D0\uD558\uB294 \uBC29\uD5A5\uC73C\uB85C \uC9E7\uC740 \uAC70\uB9AC\uB97C
+    \uC21C\uAC04\uC774\uB3D9\uD55C\uB2E4.\n\uC774 \uC2A4\uD0AC\uC744 \uC7A5\uCC29
+    \uC2DC \uC774\uB3D9\uC18D\uB3C4\uAC00 \uAC10\uC18C\uB41C\uB2E4."
+  cost: 2
+  icon: {fileID: -404327770, guid: 3363184c5266a8c41bf434b7cc5af340, type: 3}
+  cooltime: 1
+  damage: ATK * 1.5
+  speed: 1
+  range: 1
+  effect: {fileID: 6226665961080616665, guid: 60ebbf5fde89ef14faec8e99a7d5068d, type: 3}

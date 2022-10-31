@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 476d5d6f112f5674797fd7c421c9a64b, type: 3}
+  m_Name: 12_ArrowRain
+  m_EditorClassIdentifier: 
+  no: 12
+  name: "\uD654\uC0B4\uBE44"
+  description: "\uC2DC\uC804\uC790\uB85C\uBD80\uD130 \uC77C\uC815 \uAC70\uB9AC \uB5A8\uC5B4\uC9C4
+    \uC9C0\uC810\uC5D0 \uD654\uC0B4\uBE44\uB97C \uB0B4\uB824 ATK\xD71.5 \uC758 \uB370\uBBF8\uC9C0\uB97C
+    \uC900\uB2E4."
+  cost: 2
+  icon: {fileID: -1196431566, guid: 53d12f64a0ee1cd418aecb584c3157f0, type: 3}
+  cooltime: 1
+  damage: ATK * 1.5
+  speed: 1
+  range: 1
+  effect: {fileID: 6226665961080616665, guid: fbf816a4937aeec4fafe68167cc54cc2, type: 3}

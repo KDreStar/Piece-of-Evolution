@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 476d5d6f112f5674797fd7c421c9a64b, type: 3}
+  m_Name: 13_PierceArrow
+  m_EditorClassIdentifier: 
+  no: 13
+  name: "\uAFF0\uB6AB\uB294\uD654\uC0B4"
+  description: "\uB113\uC740 \uC9C1\uC120\uD615 \uBC94\uC704\uC5D0 \uAC15\uD55C \uD654\uC0B4
+    \uACF5\uACA9\uC744 \uD558\uC5EC ATK\xD71.5 \uC758 \uB370\uBBF8\uC9C0\uB97C \uC900\uB2E4."
+  cost: 2
+  icon: {fileID: 1422464577, guid: debd2bec0dc3b864994fa0ca6e7d7794, type: 3}
+  cooltime: 1
+  damage: ATK * 1.5
+  speed: 1
+  range: 1
+  effect: {fileID: 6226665961080616665, guid: 70d42e516387324478e06bfa98e8265d, type: 3}

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 476d5d6f112f5674797fd7c421c9a64b, type: 3}
+  m_Name: 4_WindCut
+  m_EditorClassIdentifier: 
+  no: 4
+  name: "\uBC14\uB78C\uBCA0\uAE30"
+  description: "\uAC80\uAE30\uB97C \uBC1C\uC0AC\uD558\uC5EC ATKx1.5\uC758 \uB370\uBBF8\uC9C0\uB97C
+    \uC900\uB2E4."
+  cost: 2
+  icon: {fileID: -2093949552, guid: 362b2a6ffa1379746915d96bd37c256f, type: 3}
+  cooltime: 1
+  damage: ATK * 1.5
+  speed: 1
+  range: 1
+  effect: {fileID: 6226665961080616665, guid: 2e04eb1c1e5092246882a5b3a9431d59, type: 3}

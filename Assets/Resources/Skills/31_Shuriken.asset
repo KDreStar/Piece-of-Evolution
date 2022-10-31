@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 476d5d6f112f5674797fd7c421c9a64b, type: 3}
+  m_Name: 31_Shuriken
+  m_EditorClassIdentifier: 
+  no: 31
+  name: "\uC218\uB9AC\uAC80 \uB358\uC9C0\uAE30"
+  description: "\uC218\uB9AC\uAC80\uC744 \uB358\uC838 ATK\xD71.5 \uC758 \uB370\uBBF8\uC9C0\uB97C
+    \uC900\uB2E4."
+  cost: 2
+  icon: {fileID: -1387666433, guid: cd51999147685074b82f607f4258de47, type: 3}
+  cooltime: 1
+  damage: ATK * 1.5
+  speed: 1
+  range: 1
+  effect: {fileID: 6226665961080616665, guid: 20d8187398b3a114eb6f2279fe9c83cc, type: 3}

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4263444405440399494}
   - component: {fileID: 1521181834872609404}
   m_Layer: 0
-  m_Name: Slash
+  m_Name: 22_Thunder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sr: {fileID: 0}
-  activeSkill: {fileID: 11400000, guid: 97986aedaef23f54b96ff7bde5d91b89, type: 2}
+  activeSkill: {fileID: 11400000, guid: 2634f50c2fb6dee4c981593e06f33042, type: 2}
   attacker: {fileID: 0}
   defender: {fileID: 0}
   attackerStatus: {fileID: 0}
@@ -96,7 +96,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1431285095, guid: 5522b99c67f365b4f82f6c607713e610, type: 3}
+  m_Sprite: {fileID: -331655821, guid: 88e03a423d1fff94d8694254ae77df2a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -117,7 +117,7 @@ Animator:
   m_GameObject: {fileID: 6226665961080616665}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 9ee077c272e7a684fa69b298d3c6619a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6a3c5589664f33742bb893a51fd59f48, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -143,8 +143,8 @@ BoxCollider2D:
   m_Offset: {x: 0.046997517, y: 0.007832915}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.37745097, y: 0.63480437}
-    oldSize: {x: 0.64, y: 0.64}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.32, y: 0.32}
     newSize: {x: 0.64, y: 0.64}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 476d5d6f112f5674797fd7c421c9a64b, type: 3}
+  m_Name: 32_Clone
+  m_EditorClassIdentifier: 
+  no: 32
+  name: "\uBD84\uC2E0 \uC18C\uD658"
+  description: "\uACF5\uACA9\uB825\uC774 ATKx0.5\uC778 \uC0AC\uC6A9\uC790\uC640 \uAC19\uC740
+    \uD589\uB3D9\uC744 \uD558\uB294 \uBD84\uC2E0\uC744 \uC18C\uD658\uD55C\uB2E4."
+  cost: 2
+  icon: {fileID: -1599779899, guid: 176929bfc6e60c748aebfbeb0ab7193c, type: 3}
+  cooltime: 1
+  damage: ATK * 1.5
+  speed: 1
+  range: 1
+  effect: {fileID: 6226665961080616665, guid: 3cd7876d35dd8364a9f04ea549b18471, type: 3}
