@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Diagnostics;
 using System.IO;
 using Unity.MLAgents.Policies;
+using System.Runtime.InteropServices;
 
 public class BattleManager
 {
@@ -14,6 +15,8 @@ public class BattleManager
 
     public string judgeMessage;
     public Skill getSkill;
+
+    public Process trainer;
 
     //적의 정보를 세팅
     //학습 버튼을 클릭한 경우 mlagents-learn.exe 매개변수 관리후 실행
@@ -36,21 +39,44 @@ public class BattleManager
         if (isLearning) {
             //유니티 에디터에서는 그냥 1씬으로 함
             #if (UNITY_EDITOR)
-                /*
                 string path = Application.persistentDataPath + "/";
-                string arg = "/c mlagents-learn "
+                string arg = "mlagents-learn "
                         + path + "models/Character.yaml "
                         + "--run-id=" + currentCharacterIndex + " "
                         + "--results-dir=" + (path + "models") + " ";
 
-                if (Directory.Exists(path + "models/" + currentCharacterIndex) == true)
+                bool exist = File.Exists(string.Format("{0}models/{1}/Character.onnx", path, currentCharacterIndex));
+                if (exist == true)
                     arg += "--resume ";
+                else
+                    arg += "--force ";
 
                 UnityEngine.Debug.Log(arg);
-                Process.Start("cmd.exe", arg);
-                */
 
-                GameManager.Instance.ChangeScene("Learning");
+                trainer = new Process();
+                trainer.StartInfo.FileName = "cmd";
+                trainer.StartInfo.Arguments = "/c " + arg;
+                trainer.StartInfo.RedirectStandardError = true;
+                trainer.StartInfo.RedirectStandardInput = false;
+                trainer.StartInfo.RedirectStandardOutput = true;
+                trainer.StartInfo.UseShellExecute = false;
+                trainer.EnableRaisingEvents = true;
+
+                
+                trainer.OutputDataReceived += new DataReceivedEventHandler((s, e) => 
+                { 
+                    UnityEngine.Debug.Log("[Trainer] " + e.Data); 
+                });
+                trainer.ErrorDataReceived += new DataReceivedEventHandler((s, e) =>
+                { 
+                    UnityEngine.Debug.Log("[Trainer] " + e.Data); 
+                });
+                
+
+                trainer.Start();
+                trainer.BeginOutputReadLine();
+                trainer.BeginErrorReadLine();
+                //GameManager.Instance.ChangeScene("Learning");
 
             #else
                 //빈 파일을 생성함
@@ -61,7 +87,7 @@ public class BattleManager
                 int currentCharacterIndex = Managers.Data.currentCharacterIndex; 
 
                 string path = Application.persistentDataPath + "/";
-                string arg = "/c mlagents-learn "
+                string arg = ""
                         + path + "models/Character.yaml "
                         + "--run-id=" + currentCharacterIndex + " "
                         + "--env=Piece-of-Evolution "
@@ -73,8 +99,8 @@ public class BattleManager
                 if (Directory.Exists(path + "models/" + currentCharacterIndex) == true)
                     arg += "--resume ";
 
-                Process.Start("cmd.exe", arg);
-            
+                Process.Start("mlagents-learn.exe", arg);
+
             #endif
         } else {
             Time.timeScale = 0;
@@ -120,6 +146,39 @@ public class BattleManager
         //끝
     }
 
+    internal const int CTRL_C_EVENT = 0;
+    [DllImport("kernel32.dll")]
+    internal static extern bool GenerateConsoleCtrlEvent(uint dwCtrlEvent, uint dwProcessGroupId);
+    [DllImport("kernel32.dll", SetLastError = true)]
+    internal static extern bool AttachConsole(uint dwProcessId);
+    [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
+    internal static extern bool FreeConsole();
+    [DllImport("kernel32.dll")]
+    static extern bool SetConsoleCtrlHandler(ConsoleCtrlDelegate HandlerRoutine, bool Add);
+    // Delegate type to be used as the Handler Routine for SCCH
+    delegate bool ConsoleCtrlDelegate(uint CtrlType);
+
+    public bool StopTrainer() {
+        if (trainer == null)
+            return false;
+
+        if (AttachConsole((uint)trainer.Id)) {
+            SetConsoleCtrlHandler(null, true);
+            try { 
+                if (GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0) == false)
+                    return false;
+                trainer.WaitForExit();
+            } finally {
+                SetConsoleCtrlHandler(null, false);
+                FreeConsole();
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
     public void EndBattle() {
         if (isLearning) {
             //mlagents-learn 종료
@@ -147,6 +206,6 @@ public class BattleManager
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

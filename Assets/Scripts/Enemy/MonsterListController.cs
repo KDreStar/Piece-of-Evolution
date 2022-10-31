@@ -25,10 +25,12 @@ public class MonsterListController : MonoBehaviour
     }
 
     public void ExecuteButton() {
-        bool result = characterList.GetCurrentIndex() < monsterDataList.Count;
+        //bool result = characterList.GetCurrentIndex() < monsterDataList.Count;
 
-        if (result == true)
-            Managers.Battle.BattleSetting(true, Managers.Data.currentCharacterData, monsterDataList[characterList.GetCurrentIndex()]);
+        Managers.Battle.StartLearning();
+
+        //if (result == true)
+        //    Managers.Battle.BattleSetting(true, Managers.Data.currentCharacterData, monsterDataList[characterList.GetCurrentIndex()]);
     }
 
     void Start() {

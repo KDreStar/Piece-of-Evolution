@@ -19,6 +19,10 @@ public class BattleEnvController : MonoBehaviour
 
     public float timer = 0;
 
+    public void StopTrainer() {
+        Managers.Battle.StopTrainer();
+    }
+
     void Start()
     {
         characterAgent = character.GetComponent<BattleAgent>();
