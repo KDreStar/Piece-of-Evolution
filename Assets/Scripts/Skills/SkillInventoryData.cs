@@ -12,16 +12,16 @@ public class SkillInventoryData
     {
         skillList = new List<Skill>();
 
-        skillList.Add(Managers.DB.SkillDB.GetSkill(21));
-        skillList.Add(Managers.DB.SkillDB.GetSkill(26));
-        skillList.Add(Managers.DB.SkillDB.GetSkill(31));
-        skillList.Add(Managers.DB.SkillDB.GetSkill(36));
+        skillList.Add(Managers.DB.SkillDB.GetSkill(1));
+        skillList.Add(Managers.DB.SkillDB.GetSkill(2));
+        skillList.Add(Managers.DB.SkillDB.GetSkill(3));
+        skillList.Add(Managers.DB.SkillDB.GetSkill(4));
+        skillList.Add(Managers.DB.SkillDB.GetSkill(11));
         skillList.Add(Managers.DB.SkillDB.GetSkill(13));
-        skillList.Add(Managers.DB.SkillDB.GetSkill(14));
-        skillList.Add(Managers.DB.SkillDB.GetSkill(16));
-        skillList.Add(Managers.DB.SkillDB.GetSkill(22));
-        skillList.Add(Managers.DB.SkillDB.GetSkill(23));
-        skillList.Add(Managers.DB.SkillDB.GetSkill(24));
+        skillList.Add(Managers.DB.SkillDB.GetSkill(21));
+        skillList.Add(Managers.DB.SkillDB.GetSkill(25));
+        skillList.Add(Managers.DB.SkillDB.GetSkill(55));
+        skillList.Add(Managers.DB.SkillDB.GetSkill(60));
 
         for (int i=0; i<90; i++) {
             skillList.Add(null);

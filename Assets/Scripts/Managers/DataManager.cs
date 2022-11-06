@@ -132,7 +132,7 @@ public class DataManager
 
         battleData.character = characterData.CreateJSONData();
         battleData.enemy = enemyData.CreateJSONData();
-        
+
         string json = JsonUtility.ToJson(battleData);
 
         File.WriteAllText(path, json);

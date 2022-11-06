@@ -10,11 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09ee3bad37ff11541b17a3561f59b40c, type: 3}
-  m_Name: DEFUPI
+  m_Name: 59_DEFUPIV
   m_EditorClassIdentifier: 
-  no: 31
-  name: "\uBC29\uC5B4\uB825 \uC99D\uAC00 I"
-  description: "\uCE90\uB9AD\uD130\uC758 DEF 5 \uC99D\uAC00"
-  cost: 1
+  no: 34
+  name: "\uBC29\uC5B4\uB825 \uC99D\uAC00 IV"
+  description: "\uCE90\uB9AD\uD130\uC758 DEF 20 \uC99D\uAC00"
+  cost: 4
+  effects:
+  - effectTag: 4
+    effectOperator: 1
+    formula: 20
   icon: {fileID: 21300000, guid: 319ebe0e2790db04caf3a1db34ac266d, type: 3}
-  statFormula: DEF = DEF + 5

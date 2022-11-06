@@ -41,114 +41,70 @@ public class BattleAgent : Agent
         fieldHeight = endY - startY;
     }
 
-    /*
-    수집 정보
-    공격자 139
-    - 위치 3
-    - 스킬 정보 (스킬 번호 / 쿨타임) 17 * 8
-    - 스탯 (HP 비율, MaxHP, ATK, DEF, SPD) 5
     
-    방어자 139
-    - 위치 3
-    - 스킬 정보 (스킬 번호 / 쿨타임) 17 * 8
-    - 스탯 (HP 비율, MaxHP, ATK, DEF, SPD) 5
-
-    스킬 이펙트 [생성 시간 기준 8개를 가져옴] 256
-    - 스킬 번호 / 시전자 / 위치 x, y / 크기 x, y, z / 진행방향 direction 8 * 8
-
-    남은 배틀 시간 1
-    벽 거리 4
-
-    = 549
-
-    추가로 추가할 거 배틀 시간
-    */
 
     /*
-    정규화함
+    정규화시 학습 속도가 빨라짐
 
     공격자
-    - 위치 x, y (벽 시작 좌표, 끝 좌표 기준으로 0~1 정규화)
-    - 크기 x, y
-    - HP (HP 비율로 0~1값)
-    - SPD 이동속도를 정규화하는 경우 필드를 얼마나 빠르게 이동하는 경우를 0~1로 나타내는 것이므로
-      1초에 왼쪽에서 오른쪽으로 얼마나 이동하는지를 나타내면 될 듯
-    - 피격 범위
-      위치로 하는 경우 점으로 판단되므로 직사각형의 범위가 필요함
+    필드 중심 기준 좌표 (x, y)
+    자신 캐릭터의 크기 (size.x, size.y)
+    
+    현재 HP (현재 HP / 최대 HP로 정규화)
+    현재 이동속도 (필드에서 1초간 이동할 수 있는 거리를 정규화) (x, y)
 
-    ATK DEF는 스킬에 따라 다르므로 (받는 데미지, 주는 데미지) 의미가 없으므로 제거
+    스킬 정보
+    - 패시브 10 / 액티브 01 / 없음 00
+    - 코스트 (0~5 / 5)
+    - 쿨타임 (현재 쿨타임 / 최대 쿨타임)
+    - 스킬 사정거리 (x, y)
+    - 스킬 생성 좌표 (캐릭터 기준 x, y) (양수 기준)
+    - 스킬 범위 (x, y)
+    - 효과 (2개만)
+        - 태그 (2^8)
+        - 연산자 (5)
+        - 수치 (1) (현재 수치에서 어느정도 비율인지를 확인)
 
-    - 스킬 정보
-      스킬 번호는 아무 의미 없음
-      효과를 벡터로 표현해야 함
-      효과 구분은 다음과 같이 함
+    방어자
+    필드 중심 기준 좌표 (x, y)
+    자신 캐릭터의 크기 (size.x, size.y)
+    
+    현재 HP (현재 HP / 최대 HP로 정규화)
+    현재 이동속도 (필드에서 1초간 이동할 수 있는 거리를 정규화) (x, y)
 
-      태그 + 연산자
+    스킬 정보
+    - 패시브 10 / 액티브 01 / 없음 00
+    - 코스트 (0~5 / 5)
+    - 쿨타임 (현재 쿨타임 / 최대 쿨타임)
+    - 스킬 사정거리 (x, y)
+    - 스킬 생성 좌표 (캐릭터 기준 x, y) (양수 기준)
+    - 스킬 범위 (x, y)
+    - 효과 (2개만)
+        - 태그 (2^8)
+        - 연산자 (5)
+        - 수치 (1) (현재 수치에서 어느정도 비율인지를 확인) (패시브는 이미 적용되서 할 이유 없음)
 
-      HP를 50 소모하고 10초동안 ATK 50증가 버프를 주는 액티브다
-      태그 자신.HP / 연산자 - / 수치 50
-      태그 자신.ATK / 연산자 + / 수치 50 
+    필드 스킬 8개
+    - 시전자
+    - 코스트 (0~5 / 5)
+    - 캐스팅 시간 (1이면 완료)
+    - 현재 좌표 (x, y)
+    - 사정거리 비율 (투사체 기준) (range가 0이면 1)
+    - 속도 (x, y)
+    - 스킬 범위 (x, y)
+    - 효과 (2개만)
+        - 태그 (2^8)
+        - 연산자 (5)
+        - 수치 (1) (현재 수치에서 어느정도 비율인지를 확인)
 
-      이렇게 하면 정확하지만 복잡하므로 간단하게 구분을 해보자
-      태그 / 코스트만 보는 것이다.
-
-      코스트가 높으면 좋은 스킬임을 감지할 수 있을 것이다.
-
-      액티브 패시브 구분 (0 패시브 1 액티브)
-      우선 쿨타임이 필요 (0~1 정규화)
-
-      줄 수 있는 데미지 (스킬 데미지 - 상대방 방어력) / 상대방 HP (0~1)
-
-      스킬 범위 표현
-      직사각형 표현
-      (x1, y1) (x2, y2), 회전값
-
-      나갈 수 있는 범위 7 * 4 (왼오) (상하) (대각) (대각)
-
-    최종
-    스킬 구분
-    00 스킬 없음
-    10 패시브
-    01 액티브
-
-    코스트 0 1 2 3 4 5 / 5
-
-    패시브인 경우 밑의 벡터는 전부 0
-    액티브인 경우
-
-    스킬의 가치는 모델이 판단해야 하므로 제외
-    수집하는 벡터만 필요함
-
-    효과는 일단 생략
-    주는 데미지 
-
-    범위
-    (x1, y1, x2, y2, rotation(x, y, z))
-
-    방어자도 똑같이
-
-    필드 스킬
-    (스킬에는 캐스팅 모션후 즉발 스킬)
-    (즉발)
-    (즉발 + 투사체)
-    - 시전자 0 자신 / 1 상대 (0이면 이미 나간 스킬을 고려하는것) (1이면 상대 스킬을 피해야하는 의미)
-    - 캐스팅 상태 0~1 (완료시 (1) 그 스킬 범위에 데미지가 들어간다는 의미)
-    - 범위 (x1, y1) (x2, y2) 회전상태
-    - 투사체 스킬은 현재 어디 위치에 있는지, 어느 방향으로 가는지를 알아야함
-    - 투사체 범위도 하면 될듯
-
-    - 즉 스킬의 사정거리, 스킬의 현 상태의 범위
-
-    (6 + 7 * 8)
-    (6 + 7 * 8)
-    (14 * 8)
-    1
+    배틀 시간 (1)
+    935?
     */
 
-    private float[] GetBinaryEncoding(int n) {
-        float[] binary = new float[16];
+    private float[] GetBinaryEncoding(int n, int len) {
+        float[] binary = new float[len];
 
-        for (int i=15; i>=0; i--) {
+        for (int i=len-1; i>=0; i--) {
             binary[i] = n % 2;
             n = n / 2;
         }
@@ -181,176 +137,134 @@ public class BattleAgent : Agent
         return Mathf.Clamp01(result);
     }
 
+    public void CollectObservationsCharacter(Character a, Character d, VectorSensor sensor) {
+        //캐릭터 위치 (x, y) (벽과의 거리를 나타냄)
+        sensor.AddObservation(NormalizationX(a.transform.localPosition.x));
+        sensor.AddObservation(NormalizationY(a.transform.localPosition.y));
+        Debug.Log(string.Format("[Collecting] [{0}] [x={1}, y={2}",
+            a.tag, NormalizationX(a.transform.localPosition.x), NormalizationY(a.transform.localPosition.y))
+        );
+
+        //캐릭터 크기 scale 값 (x, y)
+        sensor.AddObservation(NormalizationScaleX(a.GetSizeX()));
+        sensor.AddObservation(NormalizationScaleY(a.GetSizeY()));
+
+        //캐릭터의 HP, SPD
+        float distance1s = a.status.CurrentSPD * Managers.Battle.baseSpeed * 1.0f;
+
+        sensor.AddObservation(a.status.CurrentHP / a.status.MaxHP);
+        sensor.AddObservation(NormalizationScaleX(distance1s));
+        sensor.AddObservation(NormalizationScaleY(distance1s));
+
+        /* 스킬 정보
+        - 패시브 10 / 액티브 01 / 없음 00
+        - 코스트 (0~5 / 5)
+        - 쿨타임 (현재 쿨타임 / 최대 쿨타임)
+        - 스킬 사정거리 (x, y)
+        - 스킬 생성 좌표 (캐릭터 기준 x, y) (양수 기준)
+        - 스킬 범위 (x, y)
+        - 효과 (2개만)
+            - 태그 (2^8)
+            - 연산자 (5)
+            - 수치 (1) (현재 수치에서 어느정도 비율인지를 확인) (패시브는 이미 적용되서 할 이유 없음)
+        */
+
+        int skillVectorSize = 2 + 1 + 1 + 2 + 2 + 2 + (8 + 5 + 1) * 2;
+
+        for (int i=0; i<EquipSkills.maxSlot; i++) {
+            SkillSlot skillSlot = a.equipSkills.GetSkillSlot(i);
+            Skill skill = skillSlot.GetSkill();
+
+            if (skill is ActiveSkill) {
+                ActiveSkill activeSkill = skillSlot.GetActiveSkill();
+                SkillEffect skillEffect = activeSkill.Prefab.GetComponent<SkillEffect>();
+
+                //스킬 구분
+                sensor.AddObservation(new float[2] {0, 1});
+
+                //코스트
+                sensor.AddObservation(skill.Cost / 5);
+
+                //쿨타임
+                sensor.AddObservation(skillSlot.CurrentCooltime / activeSkill.Cooltime);
+
+                //사정거리 (x, y)
+                sensor.AddObservation(NormalizationScaleX(activeSkill.Range));
+                sensor.AddObservation(NormalizationScaleY(activeSkill.Range));
+
+
+
+                //생성 좌표 (x, y) (필드 좌표가 아닌 캐릭터 좌표이므로 size로 함)
+                Vector2 createPos = skillEffect.GetCreatePos();
+                sensor.AddObservation(NormalizationScaleX(createPos.x));
+                sensor.AddObservation(NormalizationScaleY(createPos.y));
+
+                //스킬 범위 (x, y)
+                Vector2 skillRange = skillEffect.GetColliderRange();
+                sensor.AddObservation(NormalizationScaleX(skillRange.x));
+                sensor.AddObservation(NormalizationScaleY(skillRange.y));
+
+                CollectObservationsEffects(activeSkill.Effects, a, d, sensor);
+            } else {
+                sensor.AddObservation(new float[skillVectorSize]);
+            }
+        }
+    }
+
+    public void CollectObservationsEffects(Effect[] effects, Character a, Character d, VectorSensor sensor) {
+        for (int i=0; i<2; i++) {
+            if (i >= effects.Length) {
+                sensor.AddObservation(new float[8 + 5 + 1]);
+                continue;
+            }
+
+            Effect effect = effects[i];
+
+            sensor.AddObservation(GetBinaryEncoding((int)effect.EffectTag, 8));
+            sensor.AddOneHotObservation((int)effect.EffectOperator, 5);
+
+            //일단 데미지로만
+            float damage = Managers.Battle.CalculateDamage(effect.Formula, a.status, d.status);
+            sensor.AddObservation(Mathf.Clamp01(damage / d.status.CurrentHP));
+        }
+    }
+
     public override void CollectObservations(VectorSensor sensor)
     {
         Debug.Log("Collecting...");
         
-        //공격자의 위치 (x, y) (벽과의 거리를 나타냄)
-        sensor.AddObservation(NormalizationX(attacker.transform.localPosition.x));
-        sensor.AddObservation(NormalizationY(attacker.transform.localPosition.y));
-        Debug.Log("[Collecting] [" + attacker.tag +"] [x = " + NormalizationX(attacker.transform.localPosition.x) + " y=]" + NormalizationY(attacker.transform.localPosition.y));
-        //Debug.Log("[Collecting] [" + attacker.tag +"-" + defender.tag + "] [x = " + NormalizationX(attacker.transform.localPosition.x) + "]");
+        CollectObservationsCharacter(attacker, defender, sensor);
+        CollectObservationsCharacter(defender, attacker, sensor);
 
-        //공격자의 크기 scale 값 (x, y)
-        sensor.AddObservation(NormalizationScaleX(attacker.GetSizeX()));
-        sensor.AddObservation(NormalizationScaleY(attacker.GetSizeY()));
-
-        Debug.Log("[Collecting] [" + attacker.tag +"] [size=" + attacker.GetSizeX() + " " +NormalizationScaleX(attacker.GetSizeX()));
-
-
-        //공격자의 HP, SPD
-        sensor.AddObservation(attacker.status.CurrentHP / attacker.status.MaxHP);
-        sensor.AddObservation(attacker.status.CurrentSPD);
-
-        /*
-        공격자의 스킬
-        스킬 구분 00 10 01 (없음 / 패시브 / 액티브)
-        코스트
-        쿨타임
-        x, y scale z 회전값 
-        range, effect object scale을 가져오면
-
-        주는 데미지
-
-        */
-        for (int i=0; i<EquipSkills.maxSlot; i++) {
-            SkillSlot skillSlot = attacker.equipSkills.GetSkillSlot(i);
-            Skill skill = skillSlot.GetSkill();
-
-            if (skill is PassiveSkill) {
-                //스킬 구분
-                sensor.AddObservation(new float[2] {1, 0});
-
-                //코스트
-                sensor.AddObservation(skill.Cost / 5);
-
-                //쿨타임
-                sensor.AddObservation(0);
-
-                //스킬 범위
-                sensor.AddObservation(new float[2]);
-
-                //데미지
-                sensor.AddObservation(0);
-            } else if (skill is ActiveSkill) {
-                ActiveSkill activeSkill = skillSlot.GetActiveSkill();
-                //스킬 구분
-                sensor.AddObservation(new float[2] {0, 1});
-
-                //코스트
-                sensor.AddObservation(skill.Cost / 5);
-
-                //쿨타임
-                sensor.AddObservation(skillSlot.CurrentCooltime / activeSkill.Cooltime);
-
-                //스킬 범위, 모든 스킬은 캐릭터 기준으로 나가므로 중심좌표를 중앙값으로 해도 되긴함
-                GameObject effect = activeSkill.Effect;
-
-                sensor.AddObservation(NormalizationScaleX(activeSkill.Range * 2));
-                sensor.AddObservation(NormalizationScaleY(effect.transform.localScale.y));
-
-                //데미지
-                if (defender.status.CurrentHP < 1)
-                    sensor.AddObservation(1);
-                else {
-                    float skillDamage = attacker.status.Calculate(activeSkill.Damage);
-                    float def = defender.status.CurrentDEF;
-                    float damage = skillDamage - def;
-                    damage = Mathf.Clamp(damage, 1, defender.status.CurrentHP);
-                    sensor.AddObservation(damage / defender.status.CurrentHP);
-                }
-            } else {
-                sensor.AddObservation(new float[2 + 1 + 1 + 2 + 1]);
-            }
-
-        }
-
-        //방어자의 상대위치 (x, y)
-        sensor.AddObservation(NormalizationX(defender.transform.localPosition.x));
-        sensor.AddObservation(NormalizationY(defender.transform.localPosition.y));
-
-        //방어자의 크기 scale 값 (x, y)
-        sensor.AddObservation(NormalizationX(defender.GetSizeX()));
-        sensor.AddObservation(NormalizationY(defender.GetSizeY()));
-
-        //방어자의 HP, SPD
-        sensor.AddObservation(defender.status.CurrentHP / defender.status.MaxHP);
-        sensor.AddObservation(defender.status.CurrentSPD);
-
-        /*
-        방어자의 스킬
-        스킬 구분 00 10 01 (없음 / 패시브 / 액티브)
-        코스트
-        쿨타임
-        공격 범위
-        주는 데미지
-        */
-        for (int i=0; i<EquipSkills.maxSlot; i++) {
-            SkillSlot skillSlot = defender.equipSkills.GetSkillSlot(i);
-            Skill skill = skillSlot.GetSkill();
-
-            if (skill is PassiveSkill) {
-                //스킬 구분
-                sensor.AddObservation(new float[2] {1, 0});
-
-                //코스트
-                sensor.AddObservation(skill.Cost / 5);
-
-                //쿨타임
-                sensor.AddObservation(0);
-
-                //스킬 범위
-                sensor.AddObservation(new float[2]);
-
-                //데미지
-                sensor.AddObservation(0);
-            } else if (skill is ActiveSkill) {
-                ActiveSkill activeSkill = skillSlot.GetActiveSkill();
-                //스킬 구분
-                sensor.AddObservation(new float[2] {0, 1});
-
-                //코스트
-                sensor.AddObservation(skill.Cost / 5);
-
-                //쿨타임
-                sensor.AddObservation(skillSlot.CurrentCooltime / activeSkill.Cooltime);
-
-                //스킬 범위
-                GameObject effect = activeSkill.Effect;
-
-                sensor.AddObservation(NormalizationScaleX(activeSkill.Range * 2));
-                sensor.AddObservation(NormalizationScaleY(effect.transform.localScale.y));
-
-                //데미지
-                if (attacker.status.CurrentHP < 1)
-                    sensor.AddObservation(1);
-                else {
-                    float skillDamage = defender.status.Calculate(activeSkill.Damage);
-                    float def = attacker.status.CurrentDEF;
-                    float damage = skillDamage - def;
-                    //Debug.Log("[Damage]" + activeSkill.Damage  + " " + skillDamage + " " + damage);
-                    damage = Mathf.Clamp(damage, 1, attacker.status.CurrentHP);
-                    sensor.AddObservation(damage / attacker.status.CurrentHP);
-                }
-            } else {
-                sensor.AddObservation(new float[2 + 1 + 1 + 2 + 1]);
-            }
-
-        }
-        
         //스킬 이펙트 8개
-        //시전자 / (최대 범위 위치 x, y / 크기 x, y) / 회전 / 현재 범위 위치 x, y / 크기 / 진행도
+        /*
+        필드 스킬 8개
+        - 시전자
+        - 코스트 (0~5 / 5)
+        - 캐스팅 시간 (1이면 완료)
+        - 현재 좌표 (x, y)
+        - 사정거리 비율 (투사체 기준) (range가 0이면 1)
+        - 속도 (x, y)
+        - 스킬 범위 (x, y)
+        - 효과 (2개만)
+            - 태그 (2^8)
+            - 연산자 (5)
+            - 수치 (1) (현재 수치에서 어느정도 비율인지를 확인)
+        */
         List<SkillEffect> skillEffects = field.GetList();
+        int skillVectorSize = 2 + 1 + 1 + 2 + 1 + 2 + 2 + (8 + 5 + 1) * 2;
 
         for (int i=0; i<8; i++) {
             if (i < skillEffects.Count) {
                 SkillEffect effect = skillEffects[i];
+                ActiveSkill activeSkill = effect.activeSkill;
 
                 if (effect == null) {
-                    sensor.AddObservation(new float[8]);
+                    sensor.AddObservation(new float[skillVectorSize]);
                     continue;
                 }
 
+                //시전자
                 //{1, 0} 내 스킬
                 //{0, 1} 상대 스킬
                 if (gameObject.CompareTag(effect.GetAttackerTag()) == true)
@@ -358,26 +272,38 @@ public class BattleAgent : Agent
                 else
                     sensor.AddObservation(new float[] {0, 1});
 
-                //최대 범위의 중간 위치 <- 이건 나중에
+                //코스트
+                sensor.AddObservation(activeSkill.Cost / 5);
 
-                //스킬의 상대위치
+                //캐스팅 시간
+                sensor.AddObservation(effect.currentCastingTime);
+
+                //현재 좌표
                 sensor.AddObservation(NormalizationX(effect.transform.localPosition.x));
                 sensor.AddObservation(NormalizationY(effect.transform.localPosition.y));
 
-                sensor.AddObservation(NormalizationScaleX(effect.transform.localScale.x));
-                sensor.AddObservation(NormalizationScaleY(effect.transform.localScale.y));
+                //지속 시간
+                sensor.AddObservation(effect.currentDuration);
 
-                //데미지
-                sensor.AddObservation(0.2f);
- 
-                sensor.AddObservation(effect.direction / 7);
+                //속도 (-1 0 1)
+                sensor.AddObservation(effect.GetVelocity());
+
+                //스킬 범위
+                Vector2 skillRange = effect.GetColliderRange();
+                sensor.AddObservation(NormalizationScaleX(skillRange.x));
+                sensor.AddObservation(NormalizationScaleY(skillRange.y));
+
+                CollectObservationsEffects(activeSkill.Effects, attacker, defender, sensor);
             } else {
-                sensor.AddObservation(new float[8]);
+                sensor.AddObservation(new float[skillVectorSize]);
             }
         }
 
+        //배틀 시간
         sensor.AddObservation(battleEnvController.timer / battleEnvController.MaxBattleTime);
     }
+
+
 
     //액션 처리
     public override void OnActionReceived(ActionBuffers actionBuffers)
@@ -399,7 +325,8 @@ public class BattleAgent : Agent
         Vector2 vector = new Vector2(delta[moveXi], delta[moveYi]);
 
         //캐릭터 움직이기
-        attacker.transform.Translate(vector * attacker.status.CurrentSPD * 0.3f * Time.deltaTime);
+        float baseSpeed = Managers.Battle.baseSpeed;
+        attacker.transform.Translate(vector * attacker.status.CurrentSPD * baseSpeed * Time.deltaTime);
 
         //스킬 사용하기
         if (skillIndex > 0) {
@@ -407,6 +334,16 @@ public class BattleAgent : Agent
                 bool result = attacker.equipSkills.UseSkill(skillIndex - 1, delta[skillXi], delta[skillYi]);
             }
             //AddReward(result == true ? 0.02f : 0);
+        }
+    }
+
+    public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask) {
+        for (int i=0; i<EquipSkills.maxSlot; i++) {
+            SkillSlot skillSlot = attacker.equipSkills.GetSkillSlot(i);
+            ActiveSkill activeSkill = skillSlot.GetActiveSkill();
+
+            if (activeSkill == null)
+                actionMask.SetActionEnabled(4, i + 1, false);
         }
     }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Unity.MLAgents.Policies;
 
 //캐릭터 목록 관련
 public class MonsterListController : MonoBehaviour
@@ -14,14 +15,14 @@ public class MonsterListController : MonoBehaviour
         bool result = characterList.GetCurrentIndex() < monsterDataList.Count;
 
         if (result == true)
-            Managers.Battle.BattleSetting(false, Managers.Data.currentCharacterData, monsterDataList[characterList.GetCurrentIndex()]);
+            Managers.Battle.BattleSetting(false, Managers.Data.currentCharacterData, monsterDataList[characterList.GetCurrentIndex()], BehaviorType.HeuristicOnly);
     }
 
     public void LearningButton() {
         bool result = characterList.GetCurrentIndex() < monsterDataList.Count;
 
         if (result == true)
-            Managers.Battle.BattleSetting(true, Managers.Data.currentCharacterData, monsterDataList[characterList.GetCurrentIndex()]);
+            Managers.Battle.BattleSetting(true, Managers.Data.currentCharacterData, monsterDataList[characterList.GetCurrentIndex()], BehaviorType.HeuristicOnly);
     }
 
     public void ExecuteButton() {

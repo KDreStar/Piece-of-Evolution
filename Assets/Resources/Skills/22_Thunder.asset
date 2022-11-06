@@ -18,9 +18,10 @@ MonoBehaviour:
     \uD6C4 \uB099\uB8B0\uAC00 \uB5A8\uC5B4\uC838 ATK\xD71.5 \uC758 \uB370\uBBF8\uC9C0\uB97C
     \uC900\uB2E4."
   cost: 2
+  effects: []
   icon: {fileID: -331655821, guid: 88e03a423d1fff94d8694254ae77df2a, type: 3}
-  cooltime: 1
-  damage: ATK * 1.5
+  cooltime: 4
+  createOffset: {x: 4, y: 0}
+  range: 0
   speed: 1
-  range: 1
-  effect: {fileID: 6226665961080616665, guid: d4dfa9c8f16ba1b48bd7542c82041721, type: 3}
+  prefab: {fileID: 6226665961080616665, guid: d4dfa9c8f16ba1b48bd7542c82041721, type: 3}

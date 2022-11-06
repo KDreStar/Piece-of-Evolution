@@ -278,6 +278,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BattleField
       objectReference: {fileID: 0}
+    - target: {fileID: 3999909075562294524, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: m_InferenceDevice
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3999909075562294525, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: equipSkills
       value: 
@@ -289,6 +293,10 @@ PrefabInstance:
     - target: {fileID: 3999909076433884033, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3999909076433884057, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: m_InferenceDevice
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4515736757712133374, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: equipSkills
@@ -1422,6 +1430,18 @@ PrefabInstance:
       propertyPath: equipSkills
       value: 
       objectReference: {fileID: 1422508663}
+    - target: {fileID: 7114253847282151562, guid: 926fe1a5765194345becedbde5e7a2f8, type: 3}
+      propertyPath: m_Type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7114253847282151562, guid: 926fe1a5765194345becedbde5e7a2f8, type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7114253847282151562, guid: 926fe1a5765194345becedbde5e7a2f8, type: 3}
+      propertyPath: m_FillMethod
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8235369183366024883, guid: 926fe1a5765194345becedbde5e7a2f8, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

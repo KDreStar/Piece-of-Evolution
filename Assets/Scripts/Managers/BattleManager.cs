@@ -5,9 +5,13 @@ using System.Diagnostics;
 using System.IO;
 using Unity.MLAgents.Policies;
 using System.Runtime.InteropServices;
+using System.Data;
+using System;
 
 public class BattleManager
 {
+    public float baseSpeed = 0.3f;
+
     public bool isLearning; //true면 학습용도 전투 false면 1번 전투후 결과
 
     public float startCounter;
@@ -21,14 +25,13 @@ public class BattleManager
     //적의 정보를 세팅
     //학습 버튼을 클릭한 경우 mlagents-learn.exe 매개변수 관리후 실행
     //없는 경우 실행 불가
-    public void BattleSetting(bool isLearning, CharacterData character, CharacterData enemy, bool playerControl=false) {
+    public void BattleSetting(bool isLearning, CharacterData character, CharacterData enemy, BehaviorType behaviorType=BehaviorType.Default) {
         this.isLearning = isLearning;
         
         Managers.Data.characterData.Save(character);
         Managers.Data.enemyData.Save(enemy);
 
-        if (playerControl == true)
-            Managers.Data.characterData.behaviorType = BehaviorType.HeuristicOnly;
+        Managers.Data.enemyData.behaviorType = behaviorType;
 
         //저장하는 이유 = 학습시 유니티 게임을 다시 실행해서 공유해야됨
         //적 AI 가지고 와야함 우선 파일로 대체
@@ -56,10 +59,11 @@ public class BattleManager
                 trainer = new Process();
                 trainer.StartInfo.FileName = "cmd";
                 trainer.StartInfo.Arguments = "/c " + arg;
-                trainer.StartInfo.RedirectStandardError = true;
+                trainer.StartInfo.RedirectStandardError = false;
                 trainer.StartInfo.RedirectStandardInput = false;
-                trainer.StartInfo.RedirectStandardOutput = true;
-                trainer.StartInfo.UseShellExecute = false;
+                trainer.StartInfo.RedirectStandardOutput = false;
+                trainer.StartInfo.UseShellExecute = true;
+                trainer.StartInfo.Verb = "runas";
                 trainer.EnableRaisingEvents = true;
 
                 
@@ -74,8 +78,8 @@ public class BattleManager
                 
 
                 trainer.Start();
-                trainer.BeginOutputReadLine();
-                trainer.BeginErrorReadLine();
+                //trainer.BeginOutputReadLine();
+                //trainer.BeginErrorReadLine();
                 //GameManager.Instance.ChangeScene("Learning");
 
             #else
@@ -83,8 +87,6 @@ public class BattleManager
                 //열때 빈파일이 있으면 바로 러닝씬으로감
                 //유니티 종료시 빈 파일 삭제
                 GameManager.Instance.CreateLearningFile();
-
-                int currentCharacterIndex = Managers.Data.currentCharacterIndex; 
 
                 string path = Application.persistentDataPath + "/";
                 string arg = ""
@@ -94,10 +96,13 @@ public class BattleManager
                         + "--num-envs=4 " //나중에 전역 수정가능하게
                         + "--width=480 "
                         + "--height=270 "
-                        + "--results-dir=" + (path + "models");
+                        + "--results-dir=" + (path + "models") + " ";
 
-                if (Directory.Exists(path + "models/" + currentCharacterIndex) == true)
+                bool exist = File.Exists(string.Format("{0}models/{1}/Character.onnx", path, currentCharacterIndex));
+                if (exist == true)
                     arg += "--resume ";
+                else
+                    arg += "--force ";
 
                 Process.Start("mlagents-learn.exe", arg);
 
@@ -177,6 +182,55 @@ public class BattleManager
         }
 
         return false;
+    }
+
+    public float CalculateFormula(string formula, Status attacker) {
+        return CalculateFormula(formula, attacker, attacker);
+    }
+
+    public float CalculateDamage(string formula, Status attacker, Status defender) {
+        return CalculateFormula(formula, attacker, defender) - defender.CurrentDEF;
+    }
+
+    public float CalculateFormula(string formula, Status attacker, Status defender) {
+        DataTable table = new DataTable();
+
+        string[] statList = {
+            "CHP", "HP", "MHP", "ATK", "DEF", "SPD", //없으면 공격자 기준
+            "A.CHP", "A.MHP", "A.ATK", "A.DEF", "A.SPD",
+            "D.CHP", "D.MHP", "D.ATK", "D.DEF", "D.SPD"
+        };
+
+        float[] statValue = {
+            attacker.CurrentHP, attacker.MaxHP, attacker.MaxHP, attacker.CurrentATK, attacker.CurrentDEF, attacker.CurrentSPD,
+            attacker.CurrentHP, attacker.MaxHP, attacker.CurrentATK, attacker.CurrentDEF, attacker.CurrentSPD,
+            defender.CurrentHP, defender.MaxHP, defender.CurrentATK, defender.CurrentDEF, defender.CurrentSPD
+        };
+
+        List<string> formulaWords = new List<string>();
+        formulaWords.AddRange(formula.Split(" "));
+
+        //열 생성
+        for (int i=0; i<statList.Length; i++) {
+            if (formulaWords.Contains(statList[i]))
+                table.Columns.Add(statList[i], typeof(float));
+        }
+
+        table.Columns.Add("Result").Expression = formula;
+
+        //값 생성
+        DataRow row = table.Rows.Add();
+        
+        for (int i=0; i<statList.Length; i++) {
+            if (formulaWords.Contains(statList[i]))
+                row[statList[i]] = statValue[i];
+        }
+
+        //계산
+        table.BeginLoadData();
+        table.EndLoadData();
+
+        return float.Parse(row["Result"].ToString());
     }
 
     public void EndBattle() {

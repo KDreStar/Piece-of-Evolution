@@ -32,6 +32,12 @@ public class Skill : ScriptableObject
     }
 
     [SerializeField]
+    private Effect[] effects;
+    public Effect[] Effects {
+        get { return effects; }
+    }
+
+    [SerializeField]
     private Sprite icon;
     public Sprite Icon {
         get { return icon; }

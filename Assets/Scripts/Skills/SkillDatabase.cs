@@ -15,11 +15,14 @@ public class SkillDatabase
     public SkillDatabase() {
         skillList = Resources.LoadAll<Skill>("Skills");
 
-        for (int i=0; i<skillList.Length; i++)
-            skillTable.Add(skillList[i].No, skillList[i]);
+        for (int i=0; i<skillList.Length; i++) {
+            //skillTable.Add(i+1, skillList[i]);
+        }
     }
 
     public Skill GetSkill(int no) {
+
+
         for (int i=0; i<skillList.Length; i++) {
             if (skillList[i] != null && skillList[i].No == no)
                 return skillList[i];

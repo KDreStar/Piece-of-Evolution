@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5680589928683139435}
   - component: {fileID: 2103499066876326963}
   m_Layer: 0
-  m_Name: FireBall
+  m_Name: 25_FireBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,8 +28,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3571995790979206623}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.65, y: 1.04, z: 0}
-  m_LocalScale: {x: 2.5753126, y: 2.5753126, z: 2.5753126}
+  m_LocalPosition: {x: -0.73, y: -0.05, z: 0}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -99,13 +99,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccddcea3dde6d254eb173fb8d9a707c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sr: {fileID: 0}
   activeSkill: {fileID: 11400000, guid: f8ae0439baeda5044a035c410237869b, type: 2}
   attacker: {fileID: 0}
   defender: {fileID: 0}
-  attackerStatus: {fileID: 0}
-  defenderStatus: {fileID: 0}
-  collider: {fileID: 0}
+  collider: {fileID: 2103499066876326963}
+  anim: {fileID: 0}
   direction: 0
+  currentCastingTime: 0
 --- !u!95 &5680589928683139435
 Animator:
   serializedVersion: 4

@@ -105,11 +105,11 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
   
         //스킬 관리 인스턴스에서 이펙트 빌림
         //그후 위치 세팅
-        SkillEffect skillEffect = Managers.Pool.GetSkillEffect(activeSkill.Effect);
+        SkillEffect skillEffect = Managers.Pool.GetSkillEffect(activeSkill.Prefab);
         skillEffect.gameObject.tag = attacker.tag + "Skill";
 
-        skillEffect.transform.position = attacker.transform.position;
-        skillEffect.transform.rotation = activeSkill.Effect.transform.rotation * Quaternion.Euler(angle);
+        skillEffect.transform.position = attacker.transform.position + (Vector3)activeSkill.CreateOffset;
+        skillEffect.transform.rotation = activeSkill.Prefab.transform.rotation * Quaternion.Euler(angle);
         skillEffect.transform.parent = attacker.transform.parent.transform;
 
         skillEffect.Initialize();

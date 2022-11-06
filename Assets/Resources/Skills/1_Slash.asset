@@ -17,9 +17,13 @@ MonoBehaviour:
   description: "\uAC80\uC73C\uB85C \uC801\uC744 \uBCA0\uC5B4 ATK\xD71.5 \uC758 \uB370\uBBF8\uC9C0\uB97C
     \uC900\uB2E4."
   cost: 2
+  effects:
+  - effectTag: 7
+    effectOperator: 2
+    formula: ATK * 1.5
   icon: {fileID: 1399088758, guid: 5522b99c67f365b4f82f6c607713e610, type: 3}
   cooltime: 1
-  damage: ATK * 1.5
+  createOffset: {x: 0, y: 0}
+  range: 0
   speed: 1
-  range: 1
-  effect: {fileID: 6226665961080616665, guid: 4193cd7e872ecfd49be0334151a48833, type: 3}
+  prefab: {fileID: 6226665961080616665, guid: 4193cd7e872ecfd49be0334151a48833, type: 3}

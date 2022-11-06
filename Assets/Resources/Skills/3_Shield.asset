@@ -13,13 +13,18 @@ MonoBehaviour:
   m_Name: 3_Shield
   m_EditorClassIdentifier: 
   no: 3
-  name: "\uBC29\uD328\uB9C9\uAE30"
-  description: "\uC55E\uCABD\uC5D0 \uBC29\uD328\uB97C \uC0DD\uC131\uD558\uC5EC \uC77C\uC815
-    \uD53C\uD574\uB97C \uBB34\uD6A8\uD654\uD55C\uB2E4."
+  name: "\uBC29\uD328 \uB9C9\uAE30"
+  description: "\uC55E\uCABD\uC5D0 \uBC29\uD328\uB97C \uC0DD\uC131\uD558\uC5EC 2\uCD08\uB3D9\uC548
+    MHP * 0.1\uC758 \uD53C\uD574\uB97C \uC5C6\uC560\uC8FC\uB294 \uBCF4\uD638\uB9C9\uC744
+    \uC0DD\uC131\uD55C\uB2E4."
   cost: 2
+  effects:
+  - effectTag: 11
+    effectOperator: 1
+    formula: MHP * 0.1
   icon: {fileID: -1988571934, guid: 29dd8390680e74b4494cadcbe8c7cf6d, type: 3}
-  cooltime: 1
-  damage: ATK * 1.5
+  cooltime: 8
+  createOffset: {x: 0, y: 0}
+  range: 0
   speed: 1
-  range: 1
-  effect: {fileID: 6226665961080616665, guid: 7da6dc44fb04ba945861ee1bf76eefdb, type: 3}
+  prefab: {fileID: 6226665961080616665, guid: 7da6dc44fb04ba945861ee1bf76eefdb, type: 3}

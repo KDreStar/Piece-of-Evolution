@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.MLAgents.Policies;
 
 //캐릭터 목록 관련
 public class MockListController : MonoBehaviour
@@ -11,7 +12,23 @@ public class MockListController : MonoBehaviour
         bool result = characterList.GetCurrentIndex() < Managers.Data.characterDataList.Count;
 
         if (result == true) {
-            Managers.Battle.BattleSetting(false, Managers.Data.characterDataList[characterList.GetCurrentIndex()], Managers.Data.currentCharacterData, playerControl);
+            Managers.Battle.BattleSetting(false, Managers.Data.currentCharacterData, Managers.Data.characterDataList[characterList.GetCurrentIndex()], BehaviorType.HeuristicOnly);
+        }
+    }
+
+    public void Learning() {
+        bool result = characterList.GetCurrentIndex() < Managers.Data.characterDataList.Count;
+
+        if (result == true) {
+            Managers.Battle.BattleSetting(true, Managers.Data.currentCharacterData, Managers.Data.characterDataList[characterList.GetCurrentIndex()], BehaviorType.InferenceOnly);
+        }
+    }
+
+    public void SelfPlay() {
+        bool result = characterList.GetCurrentIndex() < Managers.Data.characterDataList.Count;
+
+        if (result == true) {
+            Managers.Battle.BattleSetting(true, Managers.Data.currentCharacterData, Managers.Data.characterDataList[characterList.GetCurrentIndex()]);
         }
     }
 

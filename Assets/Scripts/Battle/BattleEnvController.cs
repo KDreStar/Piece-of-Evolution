@@ -54,32 +54,30 @@ public class BattleEnvController : MonoBehaviour
     }
 
     //상대 HP를 깐 만큼 보상을 줌
-
+    //+는 승리 -는 패배여야함 (셀프플레이시)
     public void EndEpisode() {
         float characterHPRate = characterStatus.CurrentHP / characterStatus.MaxHP;
         float enemyHPRate = enemyStatus.CurrentHP / enemyStatus.MaxHP;
-        float timePenalty = -5.0f * timer / MaxBattleTime; //0~-5
+        float timeBonus = 2f - 1.5f * timer / MaxBattleTime; //2~0.5
 
         float differentHPRate;
-        float rewardBonus = 5.0f;
+        float rewardBonus = 2.5f;
         float finalReward;
 
-        characterHPRate = characterHPRate < 0 ? 0 : characterHPRate;
-        enemyHPRate = enemyHPRate < 0 ? 0 : enemyHPRate;
+        characterHPRate = Mathf.Clamp01(characterHPRate);
+        enemyHPRate = Mathf.Clamp01(enemyHPRate);
 
         differentHPRate = characterHPRate - enemyHPRate;
-        finalReward = rewardBonus * differentHPRate;
+        finalReward = rewardBonus * differentHPRate * timeBonus;
 
         if (characterAgent != null) {
             characterAgent.AddReward(finalReward);
-            characterAgent.AddReward(timePenalty);
             characterAgent.EndEpisode();
         }
 
         //적이 완성된 모델을 가지고 있는 경우
         if (enemyAgent != null) {
             enemyAgent.AddReward(-finalReward);
-            enemyAgent.AddReward(timePenalty);
             enemyAgent.EndEpisode();
         }
 

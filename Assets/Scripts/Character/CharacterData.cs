@@ -166,6 +166,8 @@ public class CharacterData
         for (int i=0; i<EquipSkills.maxSlot; i++)
             data.skillNoList[i] = skillList[i] != null ? skillList[i].No : 0;
         
+        data.behaviorType = behaviorType;
+
         data.aiName = aiName;
         data.modelPath = modelPath;
         data.modelPathType = modelPathType;
@@ -189,6 +191,8 @@ public class CharacterData
             if (no != 0)
                 skillList[i] = Managers.DB.SkillDB.GetSkill(no);
         }
+
+        behaviorType = data.behaviorType;
 
         aiName = data.aiName;
         modelPath = data.modelPath;

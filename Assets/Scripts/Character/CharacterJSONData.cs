@@ -16,6 +16,8 @@ public class CharacterJSONData
 
     public int[] skillNoList;
     
+    public BehaviorType behaviorType;
+
     public string aiName;
     public string modelPath;
     public PathType modelPathType;

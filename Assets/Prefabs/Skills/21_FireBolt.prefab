@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -3724988328011388498}
   - component: {fileID: 6078821927275819643}
   m_Layer: 0
-  m_Name: FireArrow
+  m_Name: 21_FireBolt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -99,12 +99,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8eb3a4637c91794f8d37cd45e2f2a92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sr: {fileID: 0}
   activeSkill: {fileID: 11400000, guid: f16126d946390ae46a8dda48d4df221b, type: 2}
   attacker: {fileID: 0}
   defender: {fileID: 0}
-  attackerStatus: {fileID: 0}
-  defenderStatus: {fileID: 0}
+  collider: {fileID: 6078821927275819643}
+  anim: {fileID: 0}
   direction: 0
+  currentCastingTime: 0
 --- !u!95 &-3724988328011388498
 Animator:
   serializedVersion: 4

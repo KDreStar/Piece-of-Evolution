@@ -2,7 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 //액티브 스킬 기본 정보
+//모든 스킬에 있을만한 정보만
 [CreateAssetMenu(menuName = "ActiveSkill")]
 public class ActiveSkill : Skill
 {
@@ -13,31 +16,33 @@ public class ActiveSkill : Skill
         get { return cooltime; }
     }
 
-    //데미지 공식
+    //생성 위치 (기본 0, 0)
     [SerializeField]
-    private string damage;
-    public string Damage {
-        get { return damage; }
+    private Vector2 createOffset;
+    public Vector2 CreateOffset {
+        get { return createOffset; }
     }
 
-    //스킬 속도
-    [SerializeField]
-    private float speed;
-    public float Speed {
-        get { return speed; }
-    }
-
-    //사정거리
+    //사정거리 (투사체)
+    //안날라가는 경우 = 0으로 설정
     [SerializeField]
     private float range;
     public float Range {
         get { return range; }
     }
 
+    //스킬속도 (투사체 or 애니메이션 속도)
+    //기본 1
+    [SerializeField]
+    private float speed = 1;
+    public float Speed {
+        get { return speed; }
+    }
+
     //이펙트 프리팹
     [SerializeField]
-    private GameObject effect;
-    public GameObject Effect {
-        get { return effect; }
+    private GameObject prefab;
+    public GameObject Prefab {
+        get { return prefab; }
     }
 }

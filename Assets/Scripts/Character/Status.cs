@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Data;
-using System;
 using Unity.MLAgents.Policies;
 
 public class Status : MonoBehaviour
@@ -66,66 +64,66 @@ public class Status : MonoBehaviour
     enum Stat {HP, ATK, DEF, SPD}
 
     private void ApplyPassiveSkill(PassiveSkill skill) {
-        string[] formulaList = skill.StatFormula.Replace(" ", "").Split(',');
-       
         /*
         HP = (ATK + 50) * 2
         HP
         (ATK+50)*2
         */ 
-        for (int i=0; i<formulaList.Length; i++) {
-            string[] formula = formulaList[i].Split('=');
-            
-            float result = Calculate(formula[1]);
+        for (int i=0; i<skill.Effects.Length; i++) {
+            Effect effect = skill.Effects[i];
 
-            Stat stat = (Stat)Enum.Parse(typeof(Stat), formula[0]);
+            float result = Managers.Battle.CalculateFormula(effect.Formula, this);
 
-            switch (stat) {
-                case Stat.HP:
-                    maxHP = result;
-                    break;
-
-                case Stat.ATK:
-                    currentATK = result;
-                    break;
-
-                case Stat.DEF:
-                    currentDEF = result;
-                    break;
-
-                case Stat.SPD:
-                    currentSPD = result;
-                    break;
-            }
+            ApplyEffect(effect, result);
         }
     }
 
-    public float Calculate(string formula) {
-        DataTable table = new DataTable();
-        string[] statList = {"HP", "ATK", "DEF", "SPD"};
-        float[] statValue = {maxHP, currentATK, currentDEF, currentSPD};
+    public void ApplyEffect(Effect effect, float num) {
+        switch (effect.EffectTag) {
+            case EffectTag.ATTACKER_MHP:
+                Operate(ref maxHP, effect.EffectOperator, num);
+                break;
 
-        //열 생성
-        for (int i=0; i<statList.Length; i++) {
-            if (formula.Contains(statList[i]))
-                table.Columns.Add(statList[i], typeof(float));
+            case EffectTag.ATTACKER_CHP:
+                Operate(ref currentHP, effect.EffectOperator, num);
+                break;
+
+            case EffectTag.ATTACKER_ATK:
+                Operate(ref currentATK, effect.EffectOperator, num);
+                break;
+
+            case EffectTag.ATTACKER_DEF:
+                Operate(ref currentDEF, effect.EffectOperator, num);
+                break;
+
+            case EffectTag.ATTACKER_SPD:
+                Operate(ref currentSPD, effect.EffectOperator, num);
+                break;
         }
+    }
 
-        table.Columns.Add("Result").Expression = formula;
+    private void Operate(ref float stat, EffectOperator op, float num) {
+        switch (op) {
+            case EffectOperator.SET:
+                stat = num;
+                break;
 
-        //값 생성
-        DataRow row = table.Rows.Add();
-        
-        for (int i=0; i<statList.Length; i++) {
-            if (formula.Contains(statList[i]))
-                row[statList[i]] = statValue[i];
+            case EffectOperator.ADD:
+                stat += num;
+                break;
+
+            case EffectOperator.SUB:
+                stat -= num;
+                break;
+
+            case EffectOperator.MUL:
+                stat *= num;
+                break;
+
+            case EffectOperator.DIV:
+                stat /= num;
+                break;
         }
-
-        //계산
-        table.BeginLoadData();
-        table.EndLoadData();
-
-        return float.Parse(row["Result"].ToString());
     }
 
     //태그가 있는 경우 Data에서 가져옴

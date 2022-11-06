@@ -22,7 +22,7 @@ public class CharacterList : MonoBehaviour
     int maxPage = 1;
     int index = 0;
 
-    public Sprite idle;
+    private Sprite idle;
     private Sprite selected;
 
     public TextMeshProUGUI textPage;
