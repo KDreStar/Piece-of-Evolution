@@ -26,7 +26,7 @@ public class Scarecrow2AI : EnemyAI
 
         discreteActionsOut[4] = 0;
 
-        for (int i=0; i<EquipSkills.maxSlot; i++) {
+        for (int i=0; i<EquipSkills.MaxSlot; i++) {
             SkillSlot skillSlot = agent.attacker.equipSkills.GetSkillSlot(i);
             ActiveSkill activeSkill = skillSlot.GetActiveSkill();
             

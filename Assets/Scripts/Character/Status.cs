@@ -7,38 +7,52 @@ public class Status : MonoBehaviour
 {
     public string name;
 
+    [Space (10f)]
+    public float baseHP;
+    public float baseATK;
+    public float baseDEF;
+    public float baseSPD;
+
+    [Space (10f)]
+    [SerializeField]
+    float maxHP;
+    public float MaxHP {
+        get { return maxHP; }
+    }
+
+    [SerializeField]
     float currentHP;
     public float CurrentHP {
         get { return currentHP; }
     }
 
-    float maxHP;
-    public float MaxHP {
-        get { return maxHP; }
-    }
-    public float baseHP;
-
+    [SerializeField]
     float currentATK;
     public float CurrentATK {
         get { return currentATK; }
     }
-    public float baseATK;
     
+    [SerializeField]
     float currentDEF; //방어력 DEF
     public float CurrentDEF {
         get { return currentDEF; }
     }
-    public float baseDEF; //기본 방어력 baseDEF
-
+    
+    [SerializeField]
     float currentSPD; //스피드 SPD
-    public float baseSPD; //기본 스피드 baseSPD
-
     public float CurrentSPD {
         get { return currentSPD; }
     }
 
-    //버프
-    //스킬
+    //현재 패시브
+    [Space (10f)]
+    public Buffs passives;
+
+    //현재 버프
+    [Space (10f)]
+    public Buffs buffs;
+
+
     private EquipSkills equipSkills;
 
     public void SetDefaultStat() {
@@ -50,32 +64,66 @@ public class Status : MonoBehaviour
 
     void CalculateStat() {
         SetDefaultStat();
-        //패시브 스킬, 버프등을 처리하고 currentStat을 설정
-        for (int i=0; i<EquipSkills.maxSlot; i++) {
-            PassiveSkill skill = equipSkills.GetPassiveSkill(i);
-
-            if (skill == null)
-                continue;
-            
-            ApplyPassiveSkill(skill);
-        }
+        
+        SetPassives();
+        
+        ApplyPassives();
+        ApplyBuffs();
     }
 
     enum Stat {HP, ATK, DEF, SPD}
 
-    private void ApplyPassiveSkill(PassiveSkill skill) {
-        /*
-        HP = (ATK + 50) * 2
-        HP
-        (ATK+50)*2
-        */ 
-        for (int i=0; i<skill.Effects.Length; i++) {
-            Effect effect = skill.Effects[i];
+    //패시브 세팅
+    public void SetPassives() {
+        passives.Reset();
 
-            float result = Managers.Battle.CalculateFormula(effect.Formula, this);
+        for (int i=0; i<EquipSkills.MaxSlot; i++) {
+            PassiveSkill passiveSkill = equipSkills.GetPassiveSkill(i);
 
-            ApplyEffect(effect, result);
+            if (passiveSkill == null)
+                continue;
+
+            foreach (var effect in passiveSkill.Effects) {
+                passives.AddPassive(effect);
+            }
         }
+    }
+
+    //패시브 적용
+    public void ApplyPassives() {
+        List<Buff> buffList = passives.buffs;
+
+        if (buffList == null)
+            return;
+
+        for (int i=0; i<buffList.Count; i++) {
+            Effect effect = buffList[i].effect;
+
+            float num = Managers.Battle.CalculateFormula(effect.Formula, this);
+
+            ApplyEffect(effect, num);
+        }
+    }
+
+    //버프 적용
+    public void ApplyBuffs() {
+        List<Buff> buffList = buffs.buffs;
+
+        if (buffList == null)
+            return;
+
+        for (int i=0; i<buffList.Count; i++) {
+            Effect effect = buffList[i].effect;
+
+            float num = Managers.Battle.CalculateFormula(effect.Formula, this);
+
+            ApplyEffect(effect, num);
+        }
+    }
+
+    //버프 추가
+    public void AddBuff(Effect effect, float duration, bool infinity=false) {
+        buffs.AddBuff(effect, duration, infinity);
     }
 
     public void ApplyEffect(Effect effect, float num) {
@@ -126,8 +174,6 @@ public class Status : MonoBehaviour
         }
     }
 
-    //태그가 있는 경우 Data에서 가져옴
-    //태그가 없는 경우 인스펙터창의 것을 적용
     public void Init() {
         currentHP  = baseHP;
         currentATK = baseATK;

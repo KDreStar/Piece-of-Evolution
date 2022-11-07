@@ -105,7 +105,7 @@ public class CharacterData
             skillList[i] = skill;
         }
         */
-        skillList = equipSkills.GetSkillList();
+        skillList = equipSkills.GetSkills();
     }
 
     public void Load(GameObject character) {
@@ -136,11 +136,7 @@ public class CharacterData
             skillList[i] = skill;
         }
         */
-        equipSkills.skillList = skillList;
-
-        for (int i=0; i<8; i++) {
-            Debug.Log("스킬 인수인계" + skillList[i] + " " +equipSkills.skillList[i]);
-        }
+        equipSkills.skills = skillList;
 
         if (bp != null && model != null) {
             bp.Model = model;
@@ -161,9 +157,9 @@ public class CharacterData
         data.baseATK = baseATK;
         data.baseDEF = baseDEF;
         data.baseSPD = baseSPD;
-        data.skillNoList = new int[EquipSkills.maxSlot];
+        data.skillNoList = new int[EquipSkills.MaxSlot];
 
-        for (int i=0; i<EquipSkills.maxSlot; i++)
+        for (int i=0; i<EquipSkills.MaxSlot; i++)
             data.skillNoList[i] = skillList[i] != null ? skillList[i].No : 0;
         
         data.behaviorType = behaviorType;
@@ -185,7 +181,7 @@ public class CharacterData
         baseDEF = data.baseDEF;
         baseSPD = data.baseSPD;
 
-        for (int i=0; i<EquipSkills.maxSlot; i++) {
+        for (int i=0; i<EquipSkills.MaxSlot; i++) {
             int no = data.skillNoList[i];
 
             if (no != 0)

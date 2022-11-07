@@ -36,7 +36,7 @@ public class BattleEnvController : MonoBehaviour
         ResetScene();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         timer += Time.deltaTime;
 
@@ -113,7 +113,7 @@ public class BattleEnvController : MonoBehaviour
         character.GetComponent<Status>().SetDefaultHP();
         enemy.GetComponent<Status>().SetDefaultHP();
 
-        for (int i=0; i<EquipSkills.maxSlot; i++) {
+        for (int i=0; i<EquipSkills.MaxSlot; i++) {
 			character.GetComponent<EquipSkills>().GetSkillSlot(i).ResetCooltime();
             enemy.GetComponent<EquipSkills>().GetSkillSlot(i).ResetCooltime();
         }

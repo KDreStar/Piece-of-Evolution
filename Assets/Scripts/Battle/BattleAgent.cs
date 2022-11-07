@@ -5,6 +5,7 @@ using Unity.MLAgents.Sensors;
 using Random = UnityEngine.Random;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class BattleAgent : Agent
 {
@@ -26,6 +27,8 @@ public class BattleAgent : Agent
 
     public EnemyAI ai;
 
+    public string aiName;
+
     public override void Initialize()
     {
         m_ResetParams = Academy.Instance.EnvironmentParameters;
@@ -39,6 +42,12 @@ public class BattleAgent : Agent
 
         fieldWidth = endX - startX;
         fieldHeight = endY - startY;
+
+        if (!aiName.Equals("")) {
+            AIFactory temp = new AIFactory();
+            Debug.Log(aiName);
+            ai = temp.Create(aiName);
+        }
     }
 
     
@@ -101,6 +110,31 @@ public class BattleAgent : Agent
     935?
     */
 
+    /*
+    new
+
+    공격자
+    필드 중심 기준 좌표 (x, y)
+
+    현재 HP (현재 HP / 최대 HP로 정규화)
+    최대 HP
+    현재 공격력
+    현재 방어력
+    현재 이동속도 (필드에서 1초간 이동할 수 있는 거리를 정규화) (x, y)
+
+    스킬 정보
+    - 최대 쿨타임
+    - 사용 가능 여부 (0--->1)
+    - 스킬 사정거리 (x, y)
+    - 스킬 생성 좌표 (캐릭터 기준 x, y) (양수 기준)
+    - 스킬 범위 (x, y)
+    - 효과 (2개만)
+        - 태그 (2^8)
+        - 연산자 (5)
+        - 수치 (1) (현재 수치에서 어느정도 비율인지를 확인)
+
+    */
+
     private float[] GetBinaryEncoding(int n, int len) {
         float[] binary = new float[len];
 
@@ -159,6 +193,7 @@ public class BattleAgent : Agent
         /* 스킬 정보
         - 패시브 10 / 액티브 01 / 없음 00
         - 코스트 (0~5 / 5)
+        - 최대 쿨타임 (스킬 쿨타임 / 120초, 쿨타임이 긴 스킬이면 적절한 때에 쓰라는 것)
         - 쿨타임 (현재 쿨타임 / 최대 쿨타임)
         - 스킬 사정거리 (x, y)
         - 스킬 생성 좌표 (캐릭터 기준 x, y) (양수 기준)
@@ -169,9 +204,9 @@ public class BattleAgent : Agent
             - 수치 (1) (현재 수치에서 어느정도 비율인지를 확인) (패시브는 이미 적용되서 할 이유 없음)
         */
 
-        int skillVectorSize = 2 + 1 + 1 + 2 + 2 + 2 + (8 + 5 + 1) * 2;
+        int skillVectorSize = 2 + 1 + 1 + 1 + 2 + 2 + 2 + (8 + 5 + 1) * 2;
 
-        for (int i=0; i<EquipSkills.maxSlot; i++) {
+        for (int i=0; i<EquipSkills.MaxSlot; i++) {
             SkillSlot skillSlot = a.equipSkills.GetSkillSlot(i);
             Skill skill = skillSlot.GetSkill();
 
@@ -185,8 +220,11 @@ public class BattleAgent : Agent
                 //코스트
                 sensor.AddObservation(skill.Cost / 5);
 
-                //쿨타임
-                sensor.AddObservation(skillSlot.CurrentCooltime / activeSkill.Cooltime);
+                //최대 쿨타임 (120초 기준)
+                sensor.AddObservation(Mathf.Clamp01(activeSkill.Cooltime / 120.0f));
+
+                //현재 쿨타임 (0~1 사용불가능 1 사용가능)
+                sensor.AddObservation(Mathf.Clamp01(1.0f - skillSlot.CurrentCooltime / activeSkill.Cooltime));
 
                 //사정거리 (x, y)
                 sensor.AddObservation(NormalizationScaleX(activeSkill.Range));
@@ -244,7 +282,8 @@ public class BattleAgent : Agent
         - 캐스팅 시간 (1이면 완료)
         - 현재 좌표 (x, y)
         - 사정거리 비율 (투사체 기준) (range가 0이면 1)
-        - 속도 (x, y)
+        - 회전 여부
+        - 속도 (x, y) (투사체)
         - 스킬 범위 (x, y)
         - 효과 (2개만)
             - 태그 (2^8)
@@ -252,7 +291,7 @@ public class BattleAgent : Agent
             - 수치 (1) (현재 수치에서 어느정도 비율인지를 확인)
         */
         List<SkillEffect> skillEffects = field.GetList();
-        int skillVectorSize = 2 + 1 + 1 + 2 + 1 + 2 + 2 + (8 + 5 + 1) * 2;
+        int skillVectorSize = 2 + 1 + 1 + 1 + 2 + 1 + 2 + 2 + (8 + 5 + 1) * 2;
 
         for (int i=0; i<8; i++) {
             if (i < skillEffects.Count) {
@@ -278,12 +317,15 @@ public class BattleAgent : Agent
                 //캐스팅 시간
                 sensor.AddObservation(effect.currentCastingTime);
 
+                //지속 시간
+                sensor.AddObservation(effect.currentDuration);
+
                 //현재 좌표
                 sensor.AddObservation(NormalizationX(effect.transform.localPosition.x));
                 sensor.AddObservation(NormalizationY(effect.transform.localPosition.y));
 
-                //지속 시간
-                sensor.AddObservation(effect.currentDuration);
+                //회전 여부
+                sensor.AddObservation(effect.direction / 8);
 
                 //속도 (-1 0 1)
                 sensor.AddObservation(effect.GetVelocity());
@@ -326,7 +368,7 @@ public class BattleAgent : Agent
 
         //캐릭터 움직이기
         float baseSpeed = Managers.Battle.baseSpeed;
-        attacker.transform.Translate(vector * attacker.status.CurrentSPD * baseSpeed * Time.deltaTime);
+        attacker.rigid.MovePosition(attacker.rigid.position + vector * attacker.status.CurrentSPD * baseSpeed * Time.deltaTime);
 
         //스킬 사용하기
         if (skillIndex > 0) {
@@ -336,9 +378,9 @@ public class BattleAgent : Agent
             //AddReward(result == true ? 0.02f : 0);
         }
     }
-
+    
     public override void WriteDiscreteActionMask(IDiscreteActionMask actionMask) {
-        for (int i=0; i<EquipSkills.maxSlot; i++) {
+        for (int i=0; i<EquipSkills.MaxSlot; i++) {
             SkillSlot skillSlot = attacker.equipSkills.GetSkillSlot(i);
             ActiveSkill activeSkill = skillSlot.GetActiveSkill();
 

@@ -1,5 +1,173 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2363878877432590758
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8528716138093323373}
+  - component: {fileID: 2942153153629803017}
+  m_Layer: 10
+  m_Name: OppoSkillRay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8528716138093323373
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2363878877432590758}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9065742834548992606}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2942153153629803017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2363878877432590758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f67c7e722ba14acd9153bb4488bff6e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SensorName: OppoSkillRayPerceptionSensor
+  m_DetectableTags: []
+  m_RaysPerDirection: 14
+  m_MaxRayDegrees: 180
+  m_SphereCastRadius: 0.2
+  m_RayLength: 40
+  m_RayLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294965435
+  m_ObservationStacks: 1
+  rayHitColor: {r: 0.9716981, g: 0.31626022, b: 0.32248598, a: 1}
+  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!1 &5375860228637736479
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5988516684395704625}
+  - component: {fileID: 9191882247699036189}
+  m_Layer: 10
+  m_Name: AgentRay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5988516684395704625
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5375860228637736479}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9065742834548992606}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9191882247699036189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5375860228637736479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f67c7e722ba14acd9153bb4488bff6e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SensorName: RayPerceptionSensor
+  m_DetectableTags: []
+  m_RaysPerDirection: 14
+  m_MaxRayDegrees: 180
+  m_SphereCastRadius: 0.2
+  m_RayLength: 40
+  m_RayLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967099
+  m_ObservationStacks: 1
+  rayHitColor: {r: 0.7110069, g: 0.5896226, b: 1, a: 1}
+  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
+--- !u!1 &8135402696198084784
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4999968586321640284}
+  - component: {fileID: 8465966242759282870}
+  m_Layer: 10
+  m_Name: MySkillRay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4999968586321640284
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8135402696198084784}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9065742834548992606}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8465966242759282870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8135402696198084784}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f67c7e722ba14acd9153bb4488bff6e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SensorName: MySkillRayPerceptionSensor
+  m_DetectableTags: []
+  m_RaysPerDirection: 14
+  m_MaxRayDegrees: 180
+  m_SphereCastRadius: 0.2
+  m_RayLength: 40
+  m_RayLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294965883
+  m_ObservationStacks: 1
+  rayHitColor: {r: 0.48410904, g: 0.9528302, b: 0.30113026, a: 1}
+  rayMissColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &9065742834548992605
 GameObject:
   m_ObjectHideFlags: 0
@@ -18,7 +186,7 @@ GameObject:
   - component: {fileID: 9065742834548992582}
   - component: {fileID: 9065742834548992583}
   - component: {fileID: 9065742834548992580}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Character
   m_TagString: Character
   m_Icon: {fileID: 0}
@@ -36,7 +204,10 @@ Transform:
   m_LocalPosition: {x: -5.913, y: -0.1691, z: -0.012093563}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5988516684395704625}
+  - {fileID: 4999968586321640284}
+  - {fileID: 8528716138093323373}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -104,8 +275,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d88755b75d8359549a57dc7503620df3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dontLoad: 0
   image: {fileID: 0}
-  customSetting: 0
+  status: {fileID: 0}
+  equipSkills: {fileID: 0}
+  rigid: {fileID: 0}
 --- !u!114 &9065742834548992579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,6 +297,15 @@ MonoBehaviour:
   baseATK: 0
   baseDEF: 0
   baseSPD: 0
+  maxHP: 0
+  currentHP: 0
+  currentATK: 0
+  currentDEF: 0
+  currentSPD: 0
+  passives:
+    buffs: []
+  buffs:
+    buffs: []
 --- !u!114 &8423538523725702433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,8 +318,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b40fbaf3fc530c44b3c884cd41aefae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  equipSkills: {fileID: 0}
-  skillList:
+  equipSkillsObject: {fileID: 0}
+  skills:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -145,7 +328,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  tooltipPivot: {x: 0, y: 0}
   maxCost: 20
 --- !u!50 &9065742834548992585
 Rigidbody2D:
@@ -181,7 +363,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.040602922, y: -0.03530699}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -192,7 +374,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.78462744, y: 0.929386}
   m_EdgeRadius: 0
 --- !u!114 &9065742834548992582
 MonoBehaviour:
@@ -242,14 +424,10 @@ MonoBehaviour:
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
   attacker: {fileID: 9065742834548992605}
-  attackerStatus: {fileID: 0}
-  attackerEquipSkills: {fileID: 0}
   defender: {fileID: 0}
-  defenderEquipSkills: {fileID: 0}
-  defenderStatus: {fileID: 0}
-  lastDirection: 3
   field: {fileID: 0}
   battleEnvController: {fileID: 0}
+  aiName: 
 --- !u!114 &9065742834548992580
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,9 +8,6 @@ public class Slash : SkillEffect
 
     public override void Initialize() {
         base.Initialize();
-
-        //캐릭터 중심이 계속 기준
-        gameObject.transform.parent = attacker.transform;
     }
 
     public override IEnumerator Hitting() {
@@ -39,6 +36,6 @@ public class Slash : SkillEffect
     // Update is called once per frame
     public override void Update()
     {
-
+        gameObject.transform.position = attacker.transform.position;
     }
 }

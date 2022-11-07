@@ -15,10 +15,13 @@ MonoBehaviour:
   no: 22
   name: "\uB099\uB8B0"
   description: "\uC2DC\uC804\uC790\uC758 \uC55E\uCABD\uC5D0 \uC77C\uC815 \uC2DC\uAC04
-    \uD6C4 \uB099\uB8B0\uAC00 \uB5A8\uC5B4\uC838 ATK\xD71.5 \uC758 \uB370\uBBF8\uC9C0\uB97C
+    \uD6C4 \uB099\uB8B0\uAC00 \uB5A8\uC5B4\uC838 ATK\xD73 \uC758 \uB370\uBBF8\uC9C0\uB97C
     \uC900\uB2E4."
   cost: 2
-  effects: []
+  effects:
+  - effectTag: 7
+    effectOperator: 2
+    formula: ATK * 3
   icon: {fileID: -331655821, guid: 88e03a423d1fff94d8694254ae77df2a, type: 3}
   cooltime: 4
   createOffset: {x: 4, y: 0}

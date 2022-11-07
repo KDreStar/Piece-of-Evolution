@@ -80,7 +80,7 @@ public class SkillController : MonoBehaviour
         //각각 Data의 SkillList를 참조하고 있으므로 우선 업데이트
 
         skillInventory.UpdateSkillList();
-        equipSkills.UpdateSkillList();
+        equipSkills.UpdateGameData();
 
         Managers.Data.SaveGameData();
         //SkillInventoryData.Instance.UpdateSkills(SkillInventory.Instance);

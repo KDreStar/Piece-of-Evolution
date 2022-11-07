@@ -6,6 +6,9 @@ using UnityEngine.UI;
 //기타 정보, 정보 불러오기용도
 public class Character : MonoBehaviour
 {
+    [Tooltip("세이브 데이터로부터 로드를 하지 않음")]
+    public bool dontLoad = false;
+
     //UI용도
     public Image image;
 
@@ -15,21 +18,25 @@ public class Character : MonoBehaviour
     [HideInInspector]
     public EquipSkills equipSkills;
 
+    [HideInInspector]
+    public Rigidbody2D rigid;
+
     private SpriteRenderer sr;
 
 
-    public bool customSetting = false;
+    
     
     // Start is called before the first frame update
     void Awake() {
         status = GetComponent<Status>();
         equipSkills = GetComponent<EquipSkills>();
         sr = GetComponent<SpriteRenderer>();
+        rigid = GetComponent<Rigidbody2D>();
     }
 
     void Start()
     {
-        if (customSetting == false)
+        if (dontLoad == false)
             LoadData();
         else
             Init();

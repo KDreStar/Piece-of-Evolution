@@ -828,8 +828,16 @@ PrefabInstance:
       propertyPath: battleEnvController
       value: 
       objectReference: {fileID: 3999909075100648275}
+    - target: {fileID: 1589529876771655449, guid: 61cabadac2919ff4790726486c82c837, type: 3}
+      propertyPath: TakeActionsBetweenDecisions
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1589529876771655450, guid: 61cabadac2919ff4790726486c82c837, type: 3}
       propertyPath: equipSkills
+      value: 
+      objectReference: {fileID: 6311951982354285545}
+    - target: {fileID: 1589529876771655450, guid: 61cabadac2919ff4790726486c82c837, type: 3}
+      propertyPath: equipSkillsObject
       value: 
       objectReference: {fileID: 6311951982354285545}
     - target: {fileID: 1589529876771655450, guid: 61cabadac2919ff4790726486c82c837, type: 3}
@@ -873,8 +881,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1589529876771655451, guid: 61cabadac2919ff4790726486c82c837, type: 3}
+      propertyPath: m_UseChildSensors
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589529876771655451, guid: 61cabadac2919ff4790726486c82c837, type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
-      value: 935
+      value: 959
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61cabadac2919ff4790726486c82c837, type: 3}
@@ -1136,6 +1148,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4217755862309237520}
     - target: {fileID: 8423538523725702433, guid: 8f3addbaa235253429cd13d18b4024ee, type: 3}
+      propertyPath: equipSkillsObject
+      value: 
+      objectReference: {fileID: 4217755862309237520}
+    - target: {fileID: 8423538523725702433, guid: 8f3addbaa235253429cd13d18b4024ee, type: 3}
       propertyPath: skillSlot.Array.data[0]
       value: 
       objectReference: {fileID: 0}
@@ -1172,8 +1188,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9065742834548992582, guid: 8f3addbaa235253429cd13d18b4024ee, type: 3}
+      propertyPath: m_UseChildSensors
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065742834548992582, guid: 8f3addbaa235253429cd13d18b4024ee, type: 3}
       propertyPath: m_BrainParameters.VectorObservationSize
-      value: 935
+      value: 959
       objectReference: {fileID: 0}
     - target: {fileID: 9065742834548992583, guid: 8f3addbaa235253429cd13d18b4024ee, type: 3}
       propertyPath: field

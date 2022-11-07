@@ -138,7 +138,9 @@ public class SkillEffect : MonoBehaviour
         float[] dx = new float[] { 0,  0,  1,  1,  1,  0, -1, -1, -1};
         float[] dy = new float[] { 0,  1,  1,  0, -1, -1, -1,  0,  1};
 
-        return new Vector2(dx[direction], dy[direction]);
+        float shoot = activeSkill.Range == 0 ? 0 : 1;
+
+        return new Vector2(dx[direction], dy[direction]) * shoot;
     }
 
     // Update is called once per frame

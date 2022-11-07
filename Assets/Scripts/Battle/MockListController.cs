@@ -11,8 +11,10 @@ public class MockListController : MonoBehaviour
     public void MockBattle(bool playerControl) {
         bool result = characterList.GetCurrentIndex() < Managers.Data.characterDataList.Count;
 
+        BehaviorType type = playerControl == true ? BehaviorType.HeuristicOnly : BehaviorType.InferenceOnly;
+
         if (result == true) {
-            Managers.Battle.BattleSetting(false, Managers.Data.currentCharacterData, Managers.Data.characterDataList[characterList.GetCurrentIndex()], BehaviorType.HeuristicOnly);
+            Managers.Battle.BattleSetting(false, Managers.Data.currentCharacterData, Managers.Data.characterDataList[characterList.GetCurrentIndex()], type);
         }
     }
 

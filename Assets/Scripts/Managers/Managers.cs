@@ -37,6 +37,7 @@ public class Managers : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
 
+            Debug.Log("매니저 초기화");
             Init();
         } else {
             Destroy(gameObject);

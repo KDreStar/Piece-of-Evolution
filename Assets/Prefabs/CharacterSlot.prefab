@@ -1928,10 +1928,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7585009833225142530}
   - component: {fileID: 2157491197395125384}
-  - component: {fileID: 6414857355786571316}
-  - component: {fileID: 182916509132500421}
-  - component: {fileID: 7367205988850459725}
   - component: {fileID: 2019498146248142621}
+  - component: {fileID: 6414857355786571316}
+  - component: {fileID: 7367205988850459725}
+  - component: {fileID: 182916509132500421}
   m_Layer: 5
   m_Name: Character
   m_TagString: Untagged
@@ -1981,6 +1981,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6650340368882972368}
   m_CullTransparentMesh: 1
+--- !u!114 &2019498146248142621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6650340368882972368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d88755b75d8359549a57dc7503620df3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dontLoad: 0
+  image: {fileID: 6049214150679211918}
+  status: {fileID: 0}
+  equipSkills: {fileID: 0}
+  rigid: {fileID: 0}
 --- !u!114 &6414857355786571316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1998,6 +2015,38 @@ MonoBehaviour:
   baseATK: 15
   baseDEF: 5
   baseSPD: 25
+  maxHP: 0
+  currentHP: 0
+  currentATK: 0
+  currentDEF: 0
+  currentSPD: 0
+  passives:
+    buffs: []
+  buffs:
+    buffs: []
+--- !u!114 &7367205988850459725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6650340368882972368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b40fbaf3fc530c44b3c884cd41aefae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  equipSkillsObject: {fileID: 7252036257832784024}
+  skills:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  maxCost: 20
 --- !u!114 &182916509132500421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2020,45 +2069,6 @@ MonoBehaviour:
   textCost: {fileID: 8283804360795959326}
   textHPBar: {fileID: 0}
   HPBar: {fileID: 0}
---- !u!114 &7367205988850459725
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6650340368882972368}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b40fbaf3fc530c44b3c884cd41aefae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  equipSkills: {fileID: 7252036257832784024}
-  skillList:
-  - {fileID: 11400000, guid: f16126d946390ae46a8dda48d4df221b, type: 2}
-  - {fileID: 11400000, guid: 807165498947deb418cfb3a38ff3e0da, type: 2}
-  - {fileID: 11400000, guid: 240063ed07ab8764f8c9c1499dad3ea5, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  maxCost: 20
---- !u!114 &2019498146248142621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6650340368882972368}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d88755b75d8359549a57dc7503620df3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  image: {fileID: 6049214150679211918}
-  status: {fileID: 0}
-  equipSkills: {fileID: 0}
-  customSetting: 0
 --- !u!1 &6959487708744369144
 GameObject:
   m_ObjectHideFlags: 0
