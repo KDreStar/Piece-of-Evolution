@@ -23,7 +23,8 @@ public class Character : MonoBehaviour
 
     private SpriteRenderer sr;
 
-
+    [HideInInspector]
+    public bool isStopping = false;
     
     
     // Start is called before the first frame update
@@ -41,6 +42,13 @@ public class Character : MonoBehaviour
         else
             Init();
     }
+
+    public Vector2 GetSize() {
+        if (sr == null)
+            return Vector2.zero;
+
+        return sr.bounds.size;
+    }   
 
     public float GetSizeX() {
         if (sr == null)

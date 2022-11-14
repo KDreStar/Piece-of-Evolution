@@ -4,12 +4,7 @@ using UnityEngine;
 
 public class FireBall : SkillEffect
 {
-
-    public override void Initialize() {
-        base.Initialize();
-    }
-
-    public override IEnumerator Hitting() {
+    public override IEnumerator Active() {
         float currentTime = 0;
         float destroyTime = activeSkill.Range / activeSkill.Speed;
 
@@ -24,7 +19,7 @@ public class FireBall : SkillEffect
         DestroySkillEffect();
     }
     // Update is called once per frame
-    public override void Update()
+    public override void FixedUpdate()
     {
         Vector2 vector = new Vector2(1, 0);
         transform.Translate(vector * activeSkill.Speed * Time.deltaTime);

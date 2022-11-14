@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 476d5d6f112f5674797fd7c421c9a64b, type: 3}
+  m_Name: 5_Rush
+  m_EditorClassIdentifier: 
+  no: 5
+  name: "\uB3CC\uC9C4"
+  description: "\uBC14\uB77C\uBCF4\uB294 \uBC29\uD5A5\uC73C\uB85C \uB3CC\uC9C4\uD558\uC5EC
+    ATKx2 \uC758 \uB370\uBBF8\uC9C0\uB97C \uC900\uB2E4."
+  cost: 3
+  effects:
+  - effectTag: 7
+    effectOperator: 2
+    formula: ATK * 2
+  icon: {fileID: 829985737, guid: 1c8039fd8969f134ea6603caaa9aaede, type: 3}
+  cooltime: 4
+  createOffset: {x: 0, y: 0}
+  range: 6
+  speed: 8
+  prefab: {fileID: 6226665961080616665, guid: f034ee26572c14c4993f7885f1268d1f, type: 3}

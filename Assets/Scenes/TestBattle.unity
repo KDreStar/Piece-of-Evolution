@@ -240,6 +240,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3179299576419644045, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: dontLoad
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3179299576419644045, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: customSetting
       value: 1
       objectReference: {fileID: 0}
@@ -340,6 +344,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 565664262}
     - target: {fileID: 3999909075562294525, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: skills.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: f8ae0439baeda5044a035c410237869b, type: 2}
+    - target: {fileID: 3999909075562294525, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: skillList.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: f8ae0439baeda5044a035c410237869b, type: 2}
@@ -430,11 +438,31 @@ PrefabInstance:
     - target: {fileID: 4515736757712133374, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: skills.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 31ecd34744fbf5f40b0becb302ee6c7a, type: 2}
+      objectReference: {fileID: 11400000, guid: f16126d946390ae46a8dda48d4df221b, type: 2}
     - target: {fileID: 4515736757712133374, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: skills.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 2b089af3a08b73e4cb54b005fe1f253f, type: 2}
+      objectReference: {fileID: 11400000, guid: f8ae0439baeda5044a035c410237869b, type: 2}
+    - target: {fileID: 4515736757712133374, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: skills.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4515736757712133374, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: skills.Array.data[3]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4515736757712133374, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: skills.Array.data[4]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4515736757712133374, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: skills.Array.data[5]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4515736757712133374, guid: 94083a97355f54749954464101c7fdd7, type: 3}
+      propertyPath: skills.Array.data[7]
+      value: 
+      objectReference: {fileID: 11400000, guid: bd1d5bd54aebea04a9feff06bab823a9, type: 2}
     - target: {fileID: 4515736757712133374, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: skillList.Array.data[0]
       value: 
@@ -511,9 +539,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2902496c0120472b90269f94a0aec7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Record: 1
+  Record: 0
   NumStepsToRecord: 1000
-  DemonstrationName: ScarecrowR2
+  DemonstrationName: Scarecrow
   DemonstrationDirectory: Assets/Demonstrations
 --- !u!1 &949226616
 GameObject:
@@ -987,7 +1015,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3203394341147440995, guid: 80c9fb6450e99444badca0e46d757298, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 191.25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3203394341147440995, guid: 80c9fb6450e99444badca0e46d757298, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1087,7 +1115,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7858100228945182571, guid: 80c9fb6450e99444badca0e46d757298, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 58.913902
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7858100228945182571, guid: 80c9fb6450e99444badca0e46d757298, type: 3}
       propertyPath: m_AnchoredPosition.y

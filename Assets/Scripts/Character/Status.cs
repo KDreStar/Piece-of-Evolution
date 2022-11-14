@@ -176,6 +176,7 @@ public class Status : MonoBehaviour
 
     public void Init() {
         currentHP  = baseHP;
+        maxHP      = baseHP;
         currentATK = baseATK;
         currentDEF = baseDEF;
         currentSPD = baseSPD;

@@ -51,10 +51,11 @@ MonoBehaviour:
   activeSkill: {fileID: 11400000, guid: 7512199bd8c5bef4ca71deb5bb05ca5e, type: 2}
   attacker: {fileID: 0}
   defender: {fileID: 0}
-  attackerStatus: {fileID: 0}
-  defenderStatus: {fileID: 0}
   collider: {fileID: 1521181834872609404}
+  anim: {fileID: 0}
   direction: 0
+  currentCastingTime: 0
+  currentDuration: 0
 --- !u!212 &6011818274611963560
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -137,7 +138,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.0057982877, y: 0.0040142015}

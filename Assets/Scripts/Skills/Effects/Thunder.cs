@@ -4,21 +4,26 @@ using UnityEngine;
 
 public class Thunder : SkillEffect
 {
+    public override void Initialize(GameObject caster, int skillX, int skillY) {
+        base.Initialize(caster, skillX, skillY);
 
-    public override void Initialize() {
-        base.Initialize();
+        //CreateOffset로 이동후 다시 회전 초기화
+        transform.Translate(activeSkill.CreateOffset);
+        DisableCollider();
+
+        transform.rotation = Quaternion.identity;
     }
 
-    public override IEnumerator Hitting() {
+    public override IEnumerator Active() {
         while (true) {
-            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Active"))
                 break;
 
             yield return null;
         }
 
         EnableCollider();
-        if (anim.GetCurrentAnimatorStateInfo(0).length > 0 && anim.GetCurrentAnimatorStateInfo(0).IsName("Attack")) {
+        if (anim.GetCurrentAnimatorStateInfo(0).length > 0 && anim.GetCurrentAnimatorStateInfo(0).IsName("Active")) {
             while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1) {
                 currentDuration = anim.GetCurrentAnimatorStateInfo(0).normalizedTime;
                 Debug.Log("지속시간" + currentDuration);
@@ -33,7 +38,7 @@ public class Thunder : SkillEffect
     }
 
     // Update is called once per frame
-    public override void Update()
+    public override void FixedUpdate()
     {
         
     }

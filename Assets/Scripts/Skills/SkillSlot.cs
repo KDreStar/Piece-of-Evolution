@@ -86,33 +86,9 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (isUse == false)
             return false;
 
-        //                         x   ↑  ↗   →  ↘   ↓  ↙   ←   ↖
-        float[] dx = new float[] { 0,  0,  1,  1,  1,  0, -1, -1, -1};
-        float[] dy = new float[] { 0,  1,  1,  0, -1, -1, -1,  0,  1};
-
-        int direction = 3;
-
-        for (int i=1; i<9; i++) {
-            if (dx[i] == skillX && dy[i] == skillY) {
-                direction = i;
-                break;
-            }
-        }
-
-        //바라보는 방향으로 스킬 생성
-        // 1 = ↑ //
-        Vector3 angle = new Vector3(0, 0, 135 - direction * 45);
-  
-        //스킬 관리 인스턴스에서 이펙트 빌림
-        //그후 위치 세팅
         SkillEffect skillEffect = Managers.Pool.GetSkillEffect(activeSkill.Prefab);
-        skillEffect.gameObject.tag = attacker.tag + "Skill";
 
-        skillEffect.transform.position = attacker.transform.position + (Vector3)activeSkill.CreateOffset;
-        skillEffect.transform.rotation = activeSkill.Prefab.transform.rotation * Quaternion.Euler(angle);
-        skillEffect.transform.parent = attacker.transform.parent.transform;
-
-        skillEffect.Initialize();
+        skillEffect.Initialize(attacker, skillX, skillY);
 
         Debug.Log(name + "사용");
 

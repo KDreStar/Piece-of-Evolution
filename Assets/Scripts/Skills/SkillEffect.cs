@@ -39,6 +39,7 @@ public class SkillEffect : MonoBehaviour
 
     }
 
+    //준비
     public virtual IEnumerator Casting() {
         if (anim.GetCurrentAnimatorStateInfo(0).length > 0 && anim.GetCurrentAnimatorStateInfo(0).IsName("Casting")) {
             while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1) {
@@ -52,15 +53,20 @@ public class SkillEffect : MonoBehaviour
         }
 
         currentCastingTime = 1;
-        StartCoroutine(Hitting());
+        StartCoroutine(Active());
     }
 
-    public virtual IEnumerator Hitting() {
+    //활성
+    public virtual IEnumerator Active() {
         yield return null;
     }
 
-    public virtual void Initialize() {
+    public virtual void Initialize(GameObject caster, int skillX, int skillY) {
+        transform.parent = caster.transform.parent.transform;
+
         field = transform.GetComponentInParent<Field>();
+
+        gameObject.tag = caster.gameObject.tag + "Skill";
 
         if (gameObject.tag == "CharacterSkill") {
             attacker = field.transform.Find("Character").GetComponent<Character>();
@@ -74,21 +80,27 @@ public class SkillEffect : MonoBehaviour
 
         if (collider != null)
             EnableCollider();
-        /*
-        공식
-        135 - 45 * direction = z
-        direction = -(z - 135) / 45
-        direction = (135 - z) / 45
-        z는 90부터 시작해서 45씩 낮아짐
-        */
 
-        Debug.Log("부모 Start 실행" + attacker.tag + " " + defender.tag);
-        direction = (int)((135 - transform.rotation.z) / 45);
+        
+        //                         x   ↑  ↗   →  ↘   ↓  ↙   ←   ↖
+        float[] dx = new float[] { 0,  0,  1,  1,  1,  0, -1, -1, -1};
+        float[] dy = new float[] { 0,  1,  1,  0, -1, -1, -1,  0,  1};
 
-        //거리로 해야됨 임시로 1
+        direction = 3;
 
+        for (int i=1; i<9; i++) {
+            if (dx[i] == skillX && dy[i] == skillY) {
+                direction = i;
+                break;
+            }
+        }
 
-        //Invoke("DestroySkillEffect", activeSkill.Range / activeSkill.Speed);
+        Vector3 angle = new Vector3(0, 0, 135 - direction * 45);
+  
+        //스킬 관리 인스턴스에서 이펙트 빌림
+        //그후 위치 세팅
+        transform.position = caster.transform.position;
+        transform.rotation = Quaternion.Euler(angle);
 
         field.Add(this);
 
@@ -144,7 +156,7 @@ public class SkillEffect : MonoBehaviour
     }
 
     // Update is called once per frame
-    public virtual void Update()
+    public virtual void FixedUpdate()
     {
         
     }
@@ -156,6 +168,7 @@ public class SkillEffect : MonoBehaviour
     public void DestroySkillEffect() {
         Debug.Log("Destroyed");
 
+        attacker.isStopping = false;
         field.Remove(this);
         Managers.Pool.ReturnSkillEffect(this);
     }

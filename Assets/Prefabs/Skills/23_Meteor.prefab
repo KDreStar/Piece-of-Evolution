@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6226665961080616664}
-  - component: {fileID: 1484512856028260512}
   - component: {fileID: 6011818274611963560}
   - component: {fileID: 4263444405440399494}
   - component: {fileID: 1521181834872609404}
+  - component: {fileID: 7967481325675384012}
   m_Layer: 0
   m_Name: 23_Meteor
   m_TagString: Untagged
@@ -29,32 +29,12 @@ Transform:
   m_GameObject: {fileID: 6226665961080616665}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -5.12, y: -0.07, z: -0.20708926}
-  m_LocalScale: {x: 6, y: 6, z: 6}
+  m_LocalScale: {x: 12, y: 12, z: 6}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1484512856028260512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6226665961080616665}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab6caa245a015dc4cb67963dfde9e082, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sr: {fileID: 0}
-  activeSkill: {fileID: 11400000, guid: 0f431d4baf5c5d74a94bdd5caa8d9099, type: 2}
-  attacker: {fileID: 0}
-  defender: {fileID: 0}
-  attackerStatus: {fileID: 0}
-  defenderStatus: {fileID: 0}
-  collider: {fileID: 1521181834872609404}
-  direction: 0
 --- !u!212 &6011818274611963560
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -96,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1722027578, guid: 972edd9512efa014ab00c0ac078bcf98, type: 3}
+  m_Sprite: {fileID: 1016328636, guid: 972edd9512efa014ab00c0ac078bcf98, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -153,3 +133,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.17284337, y: 0.18014684}
   m_EdgeRadius: 0
+--- !u!114 &7967481325675384012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6226665961080616665}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e457f201010a8ee49a8fc3d0d183ce65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sr: {fileID: 0}
+  activeSkill: {fileID: 11400000, guid: 0f431d4baf5c5d74a94bdd5caa8d9099, type: 2}
+  attacker: {fileID: 0}
+  defender: {fileID: 0}
+  collider: {fileID: 1521181834872609404}
+  anim: {fileID: 0}
+  direction: 0
+  currentCastingTime: 0
+  currentDuration: 0
