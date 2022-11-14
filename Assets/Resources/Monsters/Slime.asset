@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Slime
   m_EditorClassIdentifier: 
   name: "\uC2AC\uB77C\uC784"
-  baseHP: 50
-  baseATK: 5
+  baseHP: 500
+  baseATK: 40
   baseDEF: 5
   baseSPD: 5
   skillList:

@@ -11,6 +11,9 @@ public class AIFactory
 
             case "Scarecrow2AI":
                 return new Scarecrow2AI();
+
+            case "SlimeAI":
+                return new SlimeAI();
         }
 
         return null;
