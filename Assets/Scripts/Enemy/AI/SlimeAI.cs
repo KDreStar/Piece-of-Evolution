@@ -5,8 +5,14 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 
-public class Scarecrow2AI : SlimeAI
+public class SlimeAI : EnemyAI
 {
+
+    
+    public SlimeAI() {
+
+    }
+
     /** 행동 방식
     이동 = 적에게 무조건 다가감
                 a  (-x, -y)
@@ -29,59 +35,75 @@ public class Scarecrow2AI : SlimeAI
         float defenderX = agent.defender.transform.localPosition.x;
         float defenderY = agent.defender.transform.localPosition.y;
 
-        discreteActionsOut[0] = 0;
-        discreteActionsOut[1] = 0;
-
-        discreteActionsOut[2] = 0;
-        discreteActionsOut[3] = 0;
-
-        discreteActionsOut[4] = 0;
-
         EquipSkills equipSkills = agent.attacker.equipSkills;
         SkillSlot   acidBubbleSlot = equipSkills.GetSkillSlot(0);
         ActiveSkill acidBubble = acidBubbleSlot.GetActiveSkill();
+        SkillEffect acidBubbleEffect = acidBubble.Prefab.GetComponent<SkillEffect>();
 
         SkillSlot   acidZoneSlot = equipSkills.GetSkillSlot(1);
         ActiveSkill acidZone = acidBubbleSlot.GetActiveSkill();
+        SkillEffect acidZoneEffect = acidZone.Prefab.GetComponent<SkillEffect>();
 
-        
+        float relativeX = defenderX - attackerX;
+        float relativeY = defenderY - attackerY;
 
-        for (int i=0; i<EquipSkills.MaxSlot; i++) {
-            SkillSlot skillSlot = 
-            ActiveSkill activeSkill = skillSlot.GetActiveSkill();
-            
-            if (activeSkill == null || skillSlot.CurrentCooltime > 0)
-                continue;
+        int moveX = 0;
+        int moveY = 0;
 
-            //유니티 scale은 오브젝트 크기와 같음 그러므로 x2
-            for (int k=0; k<4; k++) {
-                //4방향 박스 안에 적이 존재하면 그 방향으로 스킬 발사
-                Collider2D[] list = Physics2D.OverlapBoxAll(
-                    new Vector2(x1, y1),
-                    new Vector2(activeSkill.Range * 2, 2),
-                    k * 45
-                );
+        if (-0.5f < relativeX && relativeX < 0.5f)
+            moveX = 0;
+        else if (relativeX <= -0.5f)
+            moveX = -1;
+        else
+            moveX = 1;
 
-                for (int p=0; p<list.Length; p++) {
-                    // 상대 ..... 나   x1 > x2
-                    // 나 ....... 상대 x1 < x2 
-                    if (list[p].CompareTag(agent.defender.gameObject.tag) == true) {
-                        int inputXi = x1 > x2 ? 1 : 2;
-                        int inputYi = y1 > y2 ? 1 : 2;
+        if (-0.5f < relativeX && relativeX < 0.5f)
+            moveX = 0;
+        else if (relativeX <= -0.5f)
+            moveX = -1;
+        else
+            moveX = 1;
 
-                        if (k == 0)
-                            inputYi = 0;
-                        if (k == 2)
-                            inputXi = 0;
+        int skillX = moveX;
+        int skillY = moveY;
 
-                        discreteActionsOut[2] = inputXi;
-                        discreteActionsOut[3] = inputYi;
-                        discreteActionsOut[4] = i + 1;
+        if (skillX == 0 && skillY == 0) {
+            skillX = (int)(relativeX / Mathf.Abs(relativeX));
+            skillY = (int)(relativeY / Mathf.Abs(relativeY));
+        }
 
-                        return;
-                    }
-                }
+        int skillIndex = 0;
+
+        if (acidBubbleSlot.CurrentCooltime <= 0) {
+            skillIndex = 1;
+        } else if (acidZoneSlot.CurrentCooltime <= 0) {
+            Vector2 size = acidZoneEffect.GetColliderRange();
+
+            if (Mathf.Abs(relativeX) <= size.x || Mathf.Abs(relativeY) <= size.y) {
+                skillX = 1;
+                skillY = 0;
+                skillIndex = 2;
             }
         }
+
+        discreteActionsOut[0] = PosIndex(moveX);
+        discreteActionsOut[1] = PosIndex(moveY);
+
+        discreteActionsOut[2] = PosIndex(skillX);
+        discreteActionsOut[3] = PosIndex(skillY);
+
+        discreteActionsOut[4] = skillIndex;
+    }
+
+    int PosIndex(int k) {
+        switch (k) {
+            case 1:
+                return 2;
+
+            case -1:
+                return 1;
+        }
+
+        return 0;
     }
 }

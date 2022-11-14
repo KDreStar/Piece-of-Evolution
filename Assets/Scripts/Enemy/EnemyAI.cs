@@ -11,6 +11,9 @@ public class EnemyAI
     //BattleAgent 에서 model이 없는 경우 휴리스틱으로 동작
     //-> 이때 몬스터 AI 스크립트가 있으면 휴리스틱이 그걸로 동작
     //public BattleAgent agent;
+    public EnemyAI() {
+        
+    }
 
     public virtual void Judge(BattleAgent agent, in ActionBuffers actionsOut) {
 
