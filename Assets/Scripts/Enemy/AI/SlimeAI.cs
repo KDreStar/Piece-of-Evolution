@@ -39,12 +39,12 @@ public class SlimeAI : EnemyAI
 
         SkillSlot   acidBubbleSlot = null;
         ActiveSkill acidBubble = null;
-        SkillEffect acidBubbleEffect = Managers.Pool.GetSkillEffectInfo(acidBubble.Prefab);
+        SkillEffect acidBubbleEffect = null;
         int acidBubbleIndex = 0;
 
         SkillSlot   acidZoneSlot = null;
         ActiveSkill acidZone = null;
-        SkillEffect acidZoneEffect = Managers.Pool.GetSkillEffectInfo(acidZone.Prefab);
+        SkillEffect acidZoneEffect = null;
         int acidZoneIndex = 1;
 
         for (int i=0; i<EquipSkills.MaxSlot; i++) {
@@ -56,10 +56,12 @@ public class SlimeAI : EnemyAI
             if (activeSkill.No == 1001) {
                 acidBubbleSlot = equipSkills.GetSkillSlot(i);
                 acidBubble = acidBubbleSlot.GetActiveSkill();
+                acidBubbleEffect = Managers.Pool.GetSkillEffectInfo(acidBubble.Prefab);
                 acidBubbleIndex = i;
             } else if (activeSkill.No == 1002) {
                 acidZoneSlot = equipSkills.GetSkillSlot(i);
                 acidZone = acidZoneSlot.GetActiveSkill();
+                acidZoneEffect = Managers.Pool.GetSkillEffectInfo(acidZone.Prefab);
                 acidZoneIndex = i;
             }
         }
