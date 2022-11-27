@@ -378,7 +378,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3999909075562294527, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: aiName
-      value: ScarecrowAI
+      value: Scarecrow
       objectReference: {fileID: 0}
     - target: {fileID: 3999909076433884032, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: m_Sprite
@@ -439,11 +439,11 @@ PrefabInstance:
     - target: {fileID: 4515736757712133374, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: skills.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: 2634f50c2fb6dee4c981593e06f33042, type: 2}
+      objectReference: {fileID: 11400000, guid: 97986aedaef23f54b96ff7bde5d91b89, type: 2}
     - target: {fileID: 4515736757712133374, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: skills.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 0f431d4baf5c5d74a94bdd5caa8d9099, type: 2}
+      objectReference: {fileID: 11400000, guid: b15093438dd612f4788e8590deca0c93, type: 2}
     - target: {fileID: 4515736757712133374, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: skills.Array.data[2]
       value: 

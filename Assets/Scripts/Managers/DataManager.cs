@@ -15,44 +15,25 @@ using UnityEngine.Networking;
 
 /*
 파일 <-> 메모리 <-> 오브젝트
-
+파일 -> 임시 테이블 -> 메모리 -> 오브젝트
+임시 테이블 -> 오브젝트도 되긴 하지만
+모델 로드시 여러개 로드해야되면 1개만 로드하고 해야하므로
 
 */
 
 public class DataManager
 {
-    public List<CharacterData> characterDataList;
-
-    public int currentCharacterIndex = 0;
-
-    public GameData gameData;
-    
-    //UI 불러오기용도
-    public CharacterData currentCharacterData;
+    public GameData gameData = new GameData();
 
     //배틀용
-    public CharacterData characterData;
-    public CharacterData enemyData;
-
-    public SkillInventoryData skillInventoryData;
-
-    public AIFactory AIFactory;
+    public BattleData battleData = new BattleData();
 
     public void Init() {
-        characterDataList = new List<CharacterData>();
-
-        currentCharacterData = new CharacterData();
-
-        characterData = new CharacterData();
-        enemyData = new CharacterData();
-
-        skillInventoryData = new SkillInventoryData();
-        skillInventoryData.Init();
-
-        AIFactory = new AIFactory();
+        battleData.characterData = new CharacterData();
+        battleData.enemyData = new CharacterData();
 
         if (File.Exists(Application.persistentDataPath + "/Game.json") == false)
-            SaveGameData();
+            SaveFirstGameData();
 
         LoadGameData();
     }
@@ -66,81 +47,93 @@ public class DataManager
         temp.baseDEF = 10;
         temp.baseSPD = 10;
 
-        temp.aiName = "" + characterDataList.Count;
-        temp.modelPath = "models/" + characterDataList.Count + "/Character.onnx";
+        temp.aiName = "" + gameData.characterCreateCount;
+        temp.modelPath = "models/" + gameData.characterCreateCount + "/Character.onnx";
         temp.modelPathType = PathType.Local;
 
         temp.spritePath = "Characters/Mask Dude/Fall (32x32)";
         temp.spritePathType = PathType.Resources;
-        //temp.spritePath = "images/" + characterDataList.Count + ".png";
-        //temp.spritePathType = PathType.Local;
 
-        characterDataList.Add(temp);
+        gameData.characterCreateCount++;
+
+        gameData.characterDatas.Add(temp);
         SaveGameData();
     }
 
     public bool DeleteCharacter(int i) {
-        if (i >= characterDataList.Count)
+        if (i >= gameData.characterDatas.Count)
             return false;
 
-        characterDataList.RemoveAt(i);
+        gameData.characterDatas.RemoveAt(i);
         SaveGameData();
 
         return true;
     }
 
     public bool SelectCharacter(int i) {
-        if (i >= characterDataList.Count)
+        if (i >= gameData.characterDatas.Count)
             return false;
 
-        currentCharacterData = characterDataList[i];
-        currentCharacterIndex = i;
+        gameData.currentCharacterIndex = i;
+
+        SaveGameData();
 
         return true;
     }
 
-    public void SaveGameData() {
-        gameData = new GameData();
+    public bool ExistCharacter(int i) {
+        if (i >= gameData.characterDatas.Count)
+            return false;
 
-        string path = Application.persistentDataPath + "/Game.json";
+        if (gameData.characterDatas[i] == null)
+            return false;
 
+        return true;
+    }
+
+    //스킬 주고
+    public void SaveFirstGameData() {
         gameData.playerName = "Temp";
-        gameData.lastCharacterIndex = currentCharacterIndex;
+        gameData.currentCharacterIndex = 0;
+        gameData.characterCreateCount = 0;
 
-        for (int i=0; i<characterDataList.Count; i++) {
-            CharacterData data = characterDataList[i];
+        SkillInventoryData inv = gameData.skillInventoryData;
 
-            gameData.characterList.Add(data == null ? null : data.CreateJSONData());
-        }
+        inv.AddSkill(1);
+        inv.AddSkill(2);
+        inv.AddSkill(3);
+        inv.AddSkill(4);
+        inv.AddSkill(21);
+        inv.AddSkill(22);
+        inv.AddSkill(23);
+        inv.AddSkill(25);
+        inv.AddSkill(1);
+        inv.AddSkill(1);
 
-        List<Skill> skillList = skillInventoryData.skillList;
+        for (int i=0; i<90; i++)
+            inv.AddSkill(0);
 
-        for (int i=0; i<skillList.Count; i++) {
-            Skill skill = skillList[i];
-            int skillNo = skillList[i] == null ? 0 : skill.No;
-            gameData.skillInvNoList.Add(skillNo);
-        }
+        SaveGameData();
+    }
+
+    public void SaveGameData() {
+        string path = Application.persistentDataPath + "/Game.json";
 
         string json = JsonUtility.ToJson(gameData);
 
         File.WriteAllText(path, json);
     }
 
-    public void SaveBattleData() {
-        BattleData battleData = new BattleData();
+    public void SaveBattleData(CharacterData character, CharacterData enemy) {
         string path = Application.persistentDataPath + "/Battle.json";
 
-        battleData.character = characterData.CreateJSONData();
-        battleData.enemy = enemyData.CreateJSONData();
+        battleData.characterData = character;
+        battleData.enemyData = enemy;
 
         string json = JsonUtility.ToJson(battleData);
 
         File.WriteAllText(path, json);
     }
-
-    //public void LoadPvPCharacters(string json) {
-    //    pvpData = JsonUtility.FromJson<PvPData>(json);
-    //}
 
     public void LoadGameData() {
         string path = Application.persistentDataPath + "/Game.json";
@@ -148,76 +141,57 @@ public class DataManager
 
         gameData = JsonUtility.FromJson<GameData>(json);
 
-        Debug.Log(gameData);
-
-        characterDataList.Clear();
-        for (int i=0; i<gameData.characterList.Count; i++) {
-            CharacterJSONData characterJSONData = gameData.characterList[i];
-
-            if (characterJSONData == null) {
-                characterDataList.Add(null);
-                continue;
-            }
-
-            CharacterData temp = new CharacterData();
-            temp.SetJSONData(characterJSONData);
-            //temp.LoadModel(i + ".onnx");
-            temp.LoadSprite();
-            characterDataList.Add(temp);
+        for (int i=0; i<gameData.characterDatas.Count; i++) {
+            gameData.characterDatas[i].LoadSprite();
         }
-
-        List<Skill> skillList = skillInventoryData.skillList;
-        for (int i=0; i<gameData.skillInvNoList.Count; i++) {
-            int skillNo = gameData.skillInvNoList[i];
-
-            Debug.Log(Managers.DB.SkillDB.GetSkill(skillNo));
-            skillList[i] = skillNo == 0 ? null : Managers.DB.SkillDB.GetSkill(skillNo);
-        }
-
-        SelectCharacter(gameData.lastCharacterIndex);
     }
 
     public void LoadBattleData() {
         string path = Application.persistentDataPath + "/Battle.json";
         string json = File.ReadAllText(path);
 
-        BattleData battleData = JsonUtility.FromJson<BattleData>(json);
+        battleData = JsonUtility.FromJson<BattleData>(json);
 
-        characterData.SetJSONData(battleData.character);
-        characterData.LoadModel();
+        battleData.characterData.LoadSprite();
+        battleData.enemyData.LoadSprite();
 
-        enemyData.SetJSONData(battleData.enemy);
-        enemyData.LoadModel();
+        battleData.characterData.LoadModel();
+        battleData.enemyData.LoadModel();
     }
 
-    public void LoadCharacterData(GameObject character) {
-        characterData.Load(character);
+    public void SetCurrentCharacterData(Character character) {
+        int cur = gameData.currentCharacterIndex;
+
+        gameData.characterDatas[cur].SetData(character);
     }
 
-    public void LoadCurrentCharacterData(GameObject character) {
-        currentCharacterData.Load(character);
+    public CharacterData GetCurrentCharacterData() {
+        int cur = gameData.currentCharacterIndex;
+
+        return gameData.characterDatas[cur];
     }
 
-    public void LoadCharacterData(int i, GameObject character) {
-        if (i >= characterDataList.Count)
-            return;
-
-        characterDataList[i].Load(character);
+    public void SetCharacterData(int i, Character character) {
+        gameData.characterDatas[i].SetData(character);
     }
 
-    public void LoadEnemyData(GameObject character) {
-        enemyData.Load(character);
+    public CharacterData GetCharacterData(int i) {
+        return gameData.characterDatas[i];
     }
 
-    public void SaveCurrentCharacterData(GameObject character) {
-        currentCharacterData.Save(character);
+    public void SetBattleCharacterData(Character character) {
+        battleData.characterData.SetData(character);
     }
 
-    public void SaveCharacterData(GameObject character) {
-        characterData.Save(character);
+    public CharacterData GetBattleCharacterData() {
+        return battleData.characterData;
     }
 
-    public void SaveEnemyData(GameObject character) {
-        enemyData.Save(character);
+    public void SetBattleEnemyData(Character character) {
+        battleData.enemyData.SetData(character);
+    }
+
+    public CharacterData GetBattleEnemyData() {
+        return battleData.enemyData;
     }
 }

@@ -54,6 +54,15 @@ public class CharacterList : MonoBehaviour
         return (page - 1) * 4 + index;
     }
 
+    public CharacterData GetCurrentCharacterData() {
+        int i = GetCurrentIndex();
+
+        if (i >= datas.Count)
+            return null;
+        
+        return datas[i];
+    }
+
     public GameObject GetCurrentCharacter() {
         return slots[index].character.gameObject;
     }
@@ -107,7 +116,7 @@ public class CharacterList : MonoBehaviour
     void Start()
     {
         if (listType == CharacterListType.Characters) {
-            index = Managers.Data.currentCharacterIndex; //Load시 자동으로 마지막으로 선택한 캐릭터 인덱스로 됨
+            index = Managers.Data.gameData.currentCharacterIndex; //Load시 자동으로 마지막으로 선택한 캐릭터 인덱스로 됨
 
             page = (int)(index / 4) + 1;
             index = index % 4; 

@@ -1,49 +1,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 //수량 없이 ㄱ 
+[Serializable]
 public class SkillInventoryData
 {
-    public int page = 1;
-    public List<Skill> skillList;
+    public List<int> skillNos;
     
-    public void Init()
-    {
-        skillList = new List<Skill>();
+    public SkillInventoryData() {
+        skillNos = new List<int>();
+    }
 
-        skillList.Add(Managers.DB.SkillDB.GetSkill(1));
-        skillList.Add(Managers.DB.SkillDB.GetSkill(2));
-        skillList.Add(Managers.DB.SkillDB.GetSkill(3));
-        skillList.Add(Managers.DB.SkillDB.GetSkill(4));
-        skillList.Add(Managers.DB.SkillDB.GetSkill(11));
-        skillList.Add(Managers.DB.SkillDB.GetSkill(13));
-        skillList.Add(Managers.DB.SkillDB.GetSkill(21));
-        skillList.Add(Managers.DB.SkillDB.GetSkill(25));
-        skillList.Add(Managers.DB.SkillDB.GetSkill(55));
-        skillList.Add(Managers.DB.SkillDB.GetSkill(60));
-
-        for (int i=0; i<90; i++) {
-            skillList.Add(null);
+    public void AddSkill(int skillNo) {
+        if (skillNo == 0) {
+            skillNos.Add(skillNo);
+            return;
         }
-    }
 
-    public Skill GetSkill(int i) {
-        return skillList[i];
-    }
-
-    public void AddSkill(Skill skill) {
-        for (int i=0; i<skillList.Count; i++) {
-            if (skillList[i] == null) {
-                skillList[i] = skill;
+        for (int i=0; i<skillNos.Count; i++) {
+            if (skillNos[i] == 0) {
+                skillNos[i] = skillNo;
                 return;
             }
         }
 
-        skillList.Add(skill);
+        skillNos.Add(skillNo);
     }
 
-    public List<Skill> GetSkillList() {
-        return skillList;
+    public void AddSkill(Skill skill) {
+        if (skill == null)
+            return;
+        
+        AddSkill(skill.No);
     }
 }

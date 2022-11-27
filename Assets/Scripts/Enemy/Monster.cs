@@ -38,9 +38,9 @@ public class Monster : ScriptableObject
     }
 
     [SerializeField]
-    private Skill[] skillList = new Skill[8];
-    public Skill[] SkillList {
-        get { return skillList; }
+    private Skill[] skills = new Skill[8];
+    public Skill[] Skills {
+        get { return skills; }
     }
 
     [SerializeField]
@@ -56,9 +56,9 @@ public class Monster : ScriptableObject
     }
 
     [SerializeField]
-    private string[] fieldList;
-    public string[] FieldList {
-        get { return fieldList; }
+    private string[] fields;
+    public string[] Fields {
+        get { return fields; }
     }
 
     [SerializeField]

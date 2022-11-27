@@ -17,7 +17,7 @@ MonoBehaviour:
   baseATK: 0
   baseDEF: 20
   baseSPD: 15
-  skillList:
+  skills:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -28,6 +28,6 @@ MonoBehaviour:
   - {fileID: 0}
   fileName: Scarecrow3
   isOnnx: 0
-  fieldList:
+  fields:
   - "\uC218\uB828\uC7A5"
   sprite: {fileID: 21300000, guid: f4172173222e4f64ea0bcec2d6cffa65, type: 3}

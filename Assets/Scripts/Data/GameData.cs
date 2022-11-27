@@ -16,8 +16,9 @@ using System;
 public class GameData
 {
     public string playerName;
-    public int lastCharacterIndex;
+    public int currentCharacterIndex;
+    public int characterCreateCount;
 
-    public List<CharacterJSONData> characterList = new List<CharacterJSONData>();
-    public List<int> skillInvNoList = new List<int>();
+    public List<CharacterData> characterDatas = new List<CharacterData>();
+    public SkillInventoryData skillInventoryData = new SkillInventoryData();
 }

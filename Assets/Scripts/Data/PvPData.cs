@@ -6,5 +6,5 @@ using System;
 [Serializable]
 public class PvPData
 {
-    public List<CharacterJSONData> characterList = new List<CharacterJSONData>();
+    public List<CharacterData> characterDatas = new List<CharacterData>();
 }

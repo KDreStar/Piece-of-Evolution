@@ -5,46 +5,53 @@ using System;
 
 public class MonsterDatabase
 {
-    private Monster[] monsterList;
+    private Monster[] monsters;
 
     public MonsterDatabase() {
-        monsterList = Resources.LoadAll<Monster>("Monsters");
+        monsters = Resources.LoadAll<Monster>("Monsters");
     }
 
     //실제 게임에서 쓰이는 CharacterData로 변경
-    public void LoadFieldMonsterList(List<CharacterData> datas, string field) {
-        LoadFieldMonsterList(datas, new string[] {field});
+    public List<CharacterData> GetFieldMonsterList(string field) {
+        return GetFieldMonsterList(new string[] {field});
     }
 
     //실제 게임에서 쓰이는 CharacterData로 변경
-    public void LoadFieldMonsterList(List<CharacterData> datas, string[] field) {
+    public List<CharacterData> GetFieldMonsterList(string[] field) {
         List<Monster> temp = new List<Monster>();
 
-        for (int i=0; i<monsterList.Length; i++) {
+        for (int i=0; i<monsters.Length; i++) {
             foreach (string f1 in field) {
-                if (Array.Find(monsterList[i].FieldList, x => x.Equals(f1)) != null) {
-                    temp.Add(monsterList[i]);
+                if (Array.Find(monsters[i].Fields, x => x.Equals(f1)) != null) {
+                    temp.Add(monsters[i]);
                     break;
                 }
             }
         }
 
-        datas.Clear();
+        Debug.Log("OK?");
+        List<CharacterData> result = new List<CharacterData>();
         for (int i=0; i<temp.Count; i++) {
+            Debug.Log("OK");
             CharacterData characterData = new CharacterData();
 
-            characterData.Save(temp[i]);
-            datas.Add(characterData);
+            characterData.SetData(temp[i]);
+            result.Add(characterData);
         }
+
+        return result;
     }
 
-    public void LoadFieldMonsterList(List<CharacterData> datas) {
-        datas.Clear();
-        for (int i=0; i<monsterList.Length; i++) {
+    public List<CharacterData> GetFieldMonsterList() {
+        List<CharacterData> result = new List<CharacterData>();
+
+        for (int i=0; i<monsters.Length; i++) {
             CharacterData characterData = new CharacterData();
 
-            characterData.Save(monsterList[i]);
-            datas.Add(characterData);
+            characterData.SetData(monsters[i]);
+            result.Add(characterData);
         }
+
+        return result;
     }
 }

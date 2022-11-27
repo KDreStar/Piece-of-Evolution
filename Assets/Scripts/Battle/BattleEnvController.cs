@@ -18,10 +18,6 @@ public class BattleEnvController : MonoBehaviour
     public float timePenalty  = -1.0f;
     public float hitReward    = 1.0f; 
 
-    public void StopTrainer() {
-        Managers.Battle.StopTrainer();
-    }
-
     void Start()
     {
         field = GetComponent<Field>();
@@ -136,8 +132,7 @@ public class BattleEnvController : MonoBehaviour
             enemy.equipSkills.GetSkillSlot(i).ResetCooltime();
         }
 
-        character.equipSkills.Randomize();
-        enemy.equipSkills.Randomize();
+        
         //characterEquipSkills.GetSkillSlot(0).ResetCooltime();
     }
 }

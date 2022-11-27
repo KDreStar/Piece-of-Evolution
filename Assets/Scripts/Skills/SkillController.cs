@@ -79,7 +79,7 @@ public class SkillController : MonoBehaviour
         //캐릭터 스킬, 스킬 인벤토리 세이브
         //각각 Data의 SkillList를 참조하고 있으므로 우선 업데이트
 
-        skillInventory.UpdateSkillList();
+        skillInventory.UpdateGameData();
         equipSkills.UpdateGameData();
 
         Managers.Data.SaveGameData();

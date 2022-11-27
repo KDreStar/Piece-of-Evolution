@@ -14,8 +14,14 @@ public class DBManager
         get {return monsterDB; }
     }
 
+    private AIFactory aiFactory;
+    public AIFactory AIFactory {
+        get {return aiFactory; }
+    }
+
     public void Init() {
         skillDB = new SkillDatabase();
         monsterDB = new MonsterDatabase();
+        aiFactory = new AIFactory();
     }
 }

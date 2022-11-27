@@ -2,18 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using Unity.MLAgents.Policies;
 
 public class PvPListController : MonoBehaviour
 {
     public CharacterList characterList;
-    public List<CharacterData> pvpDataList = new List<CharacterData>();
 
     public void ChangeList() {
         StartCoroutine(DownloadPvPCharacters());
     }
 
     public void StartPvP() {
-        Managers.Battle.BattleSetting(false, Managers.Data.currentCharacterData, pvpDataList[characterList.GetCurrentIndex()]);
+        CharacterData character = Managers.Data.GetCurrentCharacterData();
+        CharacterData enemy     = characterList.GetCurrentCharacterData();
+
+        character.behaviorType = BehaviorType.Default;
+        enemy.behaviorType     = BehaviorType.InferenceOnly;
+
+        Managers.Battle.BattleSetting(false, character, enemy);
     }
 
     IEnumerator DownloadPvPCharacters() {
@@ -46,30 +52,13 @@ public class PvPListController : MonoBehaviour
         PvPData pvpData = new PvPData();
 
         pvpData = JsonUtility.FromJson<PvPData>(json);
-
-        pvpDataList.Clear();
-        for (int i=0; i<pvpData.characterList.Count; i++) {
-            CharacterJSONData characterJSONData = pvpData.characterList[i];
-
-            CharacterData temp = new CharacterData();
-            temp.SetJSONData(characterJSONData);
-
-            temp.modelPath = "Temp.onnx";
-            temp.modelPathType = PathType.Local;
-
-            //임시 이거는 배틀 들어갈때 다운로드 하게 ㄱㄱ
-            //temp.LoadModel("Enemy.onnx");
-
-            pvpDataList.Add(temp);
-        }
-
-        //Debug.Log("datas" + pvpDataList + " " + pvpDataList.Count);
+        characterList.SetDatas(pvpData.characterDatas);
     }
 
     void Start() {
         ChangeList();
 
-        characterList.SetDatas(pvpDataList);
+        //characterList.SetDatas(pvpDataList);
     }
 
     // Update is called once per frame

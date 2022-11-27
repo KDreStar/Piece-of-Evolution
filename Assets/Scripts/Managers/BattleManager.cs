@@ -25,30 +25,25 @@ public class BattleManager
     //적의 정보를 세팅
     //학습 버튼을 클릭한 경우 mlagents-learn.exe 매개변수 관리후 실행
     //없는 경우 실행 불가
-    public void BattleSetting(bool isLearning, CharacterData character, CharacterData enemy, BehaviorType behaviorType=BehaviorType.Default) {
+    public void BattleSetting(bool isLearning, CharacterData character, CharacterData enemy) {
         this.isLearning = isLearning;
         
-        Managers.Data.characterData.Save(character);
-        Managers.Data.enemyData.Save(enemy);
-
-        Managers.Data.enemyData.behaviorType = behaviorType;
-
         //저장하는 이유 = 학습시 유니티 게임을 다시 실행해서 공유해야됨
         //적 AI 가지고 와야함 우선 파일로 대체
-        Managers.Data.SaveBattleData();
-
-        int currentCharacterIndex = Managers.Data.currentCharacterIndex;
+        Managers.Data.SaveBattleData(character, enemy);
 
         if (isLearning) {
+            int characterNo = character.no;
+
             //유니티 에디터에서는 그냥 1씬으로 함
             #if (UNITY_EDITOR)
                 string path = Application.persistentDataPath + "/";
                 string arg = "mlagents-learn "
                         + path + "models/Character.yaml "
-                        + "--run-id=" + currentCharacterIndex + " "
+                        + "--run-id=" + characterNo + " "
                         + "--results-dir=" + (path + "models") + " ";
 
-                bool exist = File.Exists(string.Format("{0}models/{1}/Character.onnx", path, currentCharacterIndex));
+                bool exist = File.Exists(string.Format("{0}models/{1}/Character.onnx", path, characterNo));
                 if (exist == true)
                     arg += "--resume ";
                 else
@@ -91,17 +86,17 @@ public class BattleManager
                 string path = Application.persistentDataPath + "/";
                 string arg = ""
                         + path + "models/Character.yaml "
-                        + "--run-id=" + currentCharacterIndex + " "
+                        + "--run-id=" + characterNo + " "
                         + "--env=Piece-of-Evolution "
                         + "--num-envs=4 " //나중에 전역 수정가능하게
                         + "--width=480 "
                         + "--height=270 "
                         + "--time-scale=1 "
                         //+ "--no-graphics "
-                        + "--torch-device=cuda "
+                        //+ "--torch-device=cuda "
                         + "--results-dir=" + (path + "models") + " ";
 
-                bool exist = File.Exists(string.Format("{0}models/{1}/Character.onnx", path, currentCharacterIndex));
+                bool exist = File.Exists(string.Format("{0}models/{1}/Character.onnx", path, characterNo));
                 if (exist == true)
                     arg += "--resume ";
                 else
@@ -152,39 +147,6 @@ public class BattleManager
         }
 
         //끝
-    }
-
-    internal const int CTRL_C_EVENT = 0;
-    [DllImport("kernel32.dll")]
-    internal static extern bool GenerateConsoleCtrlEvent(uint dwCtrlEvent, uint dwProcessGroupId);
-    [DllImport("kernel32.dll", SetLastError = true)]
-    internal static extern bool AttachConsole(uint dwProcessId);
-    [DllImport("kernel32.dll", SetLastError = true, ExactSpelling = true)]
-    internal static extern bool FreeConsole();
-    [DllImport("kernel32.dll")]
-    static extern bool SetConsoleCtrlHandler(ConsoleCtrlDelegate HandlerRoutine, bool Add);
-    // Delegate type to be used as the Handler Routine for SCCH
-    delegate bool ConsoleCtrlDelegate(uint CtrlType);
-
-    public bool StopTrainer() {
-        if (trainer == null)
-            return false;
-
-        if (AttachConsole((uint)trainer.Id)) {
-            SetConsoleCtrlHandler(null, true);
-            try { 
-                if (GenerateConsoleCtrlEvent(CTRL_C_EVENT, 0) == false)
-                    return false;
-                trainer.WaitForExit();
-            } finally {
-                SetConsoleCtrlHandler(null, false);
-                FreeConsole();
-            }
-
-            return true;
-        }
-
-        return false;
     }
 
     public float CalculateFormula(string formula, Status attacker) {
@@ -246,7 +208,7 @@ public class BattleManager
 
         if (getSkill != null) {
             judgeMessage = "스킬 획득!";
-            Managers.Data.skillInventoryData.AddSkill(getSkill);
+            Managers.Data.gameData.skillInventoryData.AddSkill(getSkill);
         } else {
             judgeMessage = "스킬 획득 실패...";
         }

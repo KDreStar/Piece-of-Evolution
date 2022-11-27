@@ -9,33 +9,40 @@ public class MockListController : MonoBehaviour
     public CharacterList characterList;
 
     public void MockBattle(bool playerControl) {
-        bool result = characterList.GetCurrentIndex() < Managers.Data.characterDataList.Count;
+        CharacterData character = Managers.Data.GetCurrentCharacterData();
+        CharacterData enemy = characterList.GetCurrentCharacterData();
 
-        BehaviorType type = playerControl == true ? BehaviorType.HeuristicOnly : BehaviorType.InferenceOnly;
+        if (enemy == null)
+            return;
 
-        if (result == true) {
-            Managers.Battle.BattleSetting(false, Managers.Data.currentCharacterData, Managers.Data.characterDataList[characterList.GetCurrentIndex()], type);
-        }
+        character.behaviorType = playerControl == true ? BehaviorType.HeuristicOnly : BehaviorType.Default;
+        enemy.behaviorType     = BehaviorType.InferenceOnly;
+
+        Managers.Battle.BattleSetting(false, character, enemy);
     }
 
     public void Learning() {
-        bool result = characterList.GetCurrentIndex() < Managers.Data.characterDataList.Count;
+        CharacterData character = Managers.Data.GetCurrentCharacterData();
+        CharacterData enemy = characterList.GetCurrentCharacterData();
 
-        if (result == true) {
-            Managers.Battle.BattleSetting(true, Managers.Data.currentCharacterData, Managers.Data.characterDataList[characterList.GetCurrentIndex()], BehaviorType.InferenceOnly);
-        }
+        if (enemy == null)
+            return;
+
+        character.behaviorType = BehaviorType.Default;
+        enemy.behaviorType     = BehaviorType.InferenceOnly;
+
+        Managers.Battle.BattleSetting(true, character, enemy);
     }
 
     public void SelfPlay() {
-        bool result = characterList.GetCurrentIndex() < Managers.Data.characterDataList.Count;
+        CharacterData character = Managers.Data.GetCurrentCharacterData();
+        character.behaviorType = BehaviorType.Default;
 
-        if (result == true) {
-            Managers.Battle.BattleSetting(true, Managers.Data.currentCharacterData, Managers.Data.characterDataList[characterList.GetCurrentIndex()]);
-        }
+        Managers.Battle.BattleSetting(true, character, character);
     }
 
     void Start() {
-        characterList.SetDatas(Managers.Data.characterDataList);
+        characterList.SetDatas(Managers.Data.gameData.characterDatas);
     }
 
     // Update is called once per frame

@@ -15,6 +15,8 @@ public class BattleAgent : Agent
     EnvironmentParameters m_ResetParams;
     public Field field;
     public BattleEnvController battleEnvController;
+    private BufferSensorComponent attackerSkillsBufferSensor;
+    private BufferSensorComponent defenderSkillsBufferSensor;
     private BufferSensorComponent fieldBufferSensor;
 
     private float startX;
@@ -36,7 +38,16 @@ public class BattleAgent : Agent
     {
         m_ResetParams = Academy.Instance.EnvironmentParameters;
 
-        fieldBufferSensor = GetComponentInChildren<BufferSensorComponent>();
+        BufferSensorComponent[] bufferSensors = GetComponentsInChildren<BufferSensorComponent>();
+
+        foreach (var sensor in bufferSensors) {
+            if (sensor.SensorName.Equals("AttackerSkillsBufferSensor"))
+                attackerSkillsBufferSensor = sensor;
+            if (sensor.SensorName.Equals("DefenderSkillsBufferSensor"))
+                defenderSkillsBufferSensor = sensor;
+            if (sensor.SensorName.Equals("FieldBufferSensor"))
+                fieldBufferSensor = sensor;
+        }
 
         float scale = field.leftWall.transform.localScale.x / 2;
         startX = field.leftWall.transform.localPosition.x + scale;
@@ -238,48 +249,118 @@ public class BattleAgent : Agent
             - 연산자 (5)
             - 수치 (1) (현재 수치에서 어느정도 비율인지를 확인) (패시브는 이미 적용되서 할 이유 없음)
         */
+        CollectObservationsEquipSkills(a, d);
+        
+    }
 
+    public EffectTag InverseEffectTag(EffectTag tag) {
+        switch (tag) {
+            case EffectTag.ATTACKER_MHP:
+                return EffectTag.DEFENDER_MHP;
+
+            case EffectTag.ATTACKER_ATK:
+                return EffectTag.DEFENDER_ATK;
+
+            case EffectTag.ATTACKER_DEF:
+                return EffectTag.DEFENDER_DEF;
+
+            case EffectTag.ATTACKER_SPD:
+                return EffectTag.DEFENDER_SPD;
+            
+            case EffectTag.ATTACKER_CHP:
+                return EffectTag.DEFENDER_CHP;
+
+            case EffectTag.ATTACKER_DMG:
+                return EffectTag.DEFENDER_DMG;
+
+            case EffectTag.DEFENDER_MHP:
+                return EffectTag.ATTACKER_MHP;
+
+            case EffectTag.DEFENDER_ATK:
+                return EffectTag.ATTACKER_ATK;
+
+            case EffectTag.DEFENDER_DEF:
+                return EffectTag.ATTACKER_DEF;
+
+            case EffectTag.DEFENDER_SPD:
+                return EffectTag.ATTACKER_SPD;
+            
+            case EffectTag.DEFENDER_CHP:
+                return EffectTag.ATTACKER_CHP;
+
+            case EffectTag.DEFENDER_DMG:
+                return EffectTag.ATTACKER_DMG;
+        }
+
+        return tag;
+    }
+
+    public void CollectObservationsEquipSkills(Character a, Character d) {
         int skillVectorSize = 1 + 1 + 1 + 2 + 2 + 2 + (8 + 5 + 1) * 2;
 
         for (int i=0; i<EquipSkills.MaxSlot; i++) {
             SkillSlot skillSlot = a.equipSkills.GetSkillSlot(i);
             Skill skill = skillSlot.GetSkill();
 
-            if (skill is ActiveSkill) {
-                ActiveSkill activeSkill = skillSlot.GetActiveSkill();
-                SkillEffect skillEffect = Managers.Pool.GetSkillEffectInfo(activeSkill.Prefab);
+            if (skill is not ActiveSkill)
+                continue;
 
-                //스킬 구분
-                sensor.AddObservation(1);
+            float[] listObservation = new float[skillVectorSize];
+            int k = 0;
 
-                //최대 쿨타임 (120초 기준)
-                sensor.AddObservation(Mathf.Clamp01(activeSkill.Cooltime / 120.0f));
+            ActiveSkill activeSkill = skillSlot.GetActiveSkill();
+            SkillEffect skillEffect = Managers.Pool.GetSkillEffectInfo(activeSkill.Prefab);
 
-                //현재 쿨타임 (0~1 사용불가능 1 사용가능)
-                sensor.AddObservation(Mathf.Clamp01(1.0f - skillSlot.CurrentCooltime / activeSkill.Cooltime));
+            //스킬 구분
+            listObservation[k++] = 1;
 
-                //사정거리 (x, y)
-                Vector2 range = new Vector2(activeSkill.Range, activeSkill.Range);
-                sensor.AddObservation(NormalizeSize(range));
+            //최대 쿨타임 (120초 기준)
+            listObservation[k++] = Mathf.Clamp01(activeSkill.Cooltime / 120.0f);
 
-                //생성 좌표 (x, y) (필드 좌표가 아닌 캐릭터 좌표이므로 size로 함)
-                Vector2 createPos = skillEffect.GetCreatePos();
-                sensor.AddObservation(NormalizeSize(createPos));
+            //현재 쿨타임 (0~1 사용불가능 1 사용가능)
+            listObservation[k++] = Mathf.Clamp01(1.0f - skillSlot.CurrentCooltime / activeSkill.Cooltime);
 
-                //스킬 범위 (x, y)
-                Vector2 skillRange = skillEffect.GetColliderRange();
-                Debug.Log("[Collecting] Skill " + createPos + " " + skillRange);
+            //사정거리 (x, y)
+            Vector2 range = new Vector2(activeSkill.Range, activeSkill.Range);
+            Vector2 normRange = NormalizeSize(range);
+            listObservation[k++] = normRange.x;
+            listObservation[k++] = normRange.y;
 
-                sensor.AddObservation(NormalizeSize(skillRange));
+            //생성 좌표 (x, y) (필드 좌표가 아닌 캐릭터 좌표이므로 size로 함)
+            Vector2 createPos = skillEffect.GetCreatePos();
+            Vector2 normCreatePos = NormalizeSize(createPos);
+            listObservation[k++] = normCreatePos.x;
+            listObservation[k++] = normCreatePos.y;
 
-                sensor.AddObservation(GetObservationsEffects(activeSkill.Effects, a, d));
-            } else {
-                sensor.AddObservation(new float[skillVectorSize]);
-            }
+            //스킬 범위 (x, y)
+            Vector2 colliderRange = skillEffect.GetColliderRange();
+            Vector2 normColliderRange = NormalizeSize(colliderRange);
+            listObservation[k++] = normColliderRange.x;
+            listObservation[k++] = normColliderRange.y;
+
+            Debug.Log("[Collecting] Skill " + createPos + " " + colliderRange);
+
+            bool inverseTag = false;
+            if (a == defender)
+                inverseTag = true;
+
+            float[] effectObs = GetObservationsEffects(activeSkill.Effects, attacker, defender, inverseTag);
+
+            //복사
+            for (int ei=0; ei<effectObs.Length; ei++)
+                listObservation[k++] = effectObs[ei];
+
+            if (a == attacker)
+                attackerSkillsBufferSensor.AppendObservation(listObservation);
+            else
+                defenderSkillsBufferSensor.AppendObservation(listObservation);
         }
     }
 
-    public float[] GetObservationsEffects(Effect[] effects, Character a, Character d) {
+    //방어자의 스킬을 확인 할때는 반대로 적용되어야 함
+    //예를 들어 데미지를 주는 스킬은 DEFENDER_DAMAGE 이지만
+    //방어자의 스킬을 볼 때도 DEFENDER_DAMAGE = 적에게 데미지가 들어가는 것으로 판단을 할 수 있음
+    public float[] GetObservationsEffects(Effect[] effects, Character a, Character d, bool inverseTag=false) {
         int effectVectorSize = 8 + 5 + 1;
 
         float[] result = new float[effectVectorSize * 2];
@@ -292,7 +373,13 @@ public class BattleAgent : Agent
 
             Effect effect = effects[i];
 
-            float[] binary = GetBinaryEncoding((int)effect.EffectTag, 8);
+            EffectTag tag = effect.EffectTag;
+
+            if (inverseTag == true) {
+                tag = InverseEffectTag(tag);
+            }
+
+            float[] binary = GetBinaryEncoding((int)tag, 8);
 
             for (int bi=0; bi<binary.Length; bi++)
                 result[k++] = binary[bi];
@@ -341,10 +428,14 @@ public class BattleAgent : Agent
             //시전자
             //{1, 0} 내 스킬
             //{0, 1} 상대 스킬
-            if (gameObject.CompareTag(effect.GetAttackerTag()) == true)
+            bool inverseTag;
+            if (gameObject.CompareTag(effect.GetAttackerTag()) == true) {
                 listObservation[k] = 1;
-            else
+                inverseTag = false;
+            } else {
                 listObservation[k+1] = 1;
+                inverseTag = true;
+            }
 
             k += 2;
 
@@ -378,7 +469,9 @@ public class BattleAgent : Agent
 
             Debug.Log("[Collecting] " + field.gameObject.name  + " Skill pos:" + effect.GetCurrentPos() + " " + pos + " range: " + skillRange + " time: " + effect.currentCastingTime + ", " + effect.currentDuration + " rotation: " + effect.transform.eulerAngles.z + " used: " + isUsed);
 
-            float[] effectObs = GetObservationsEffects(activeSkill.Effects, attacker, defender);
+
+
+            float[] effectObs = GetObservationsEffects(activeSkill.Effects, attacker, defender, inverseTag);
 
             //복사
             for (int ei=0; ei<effectObs.Length; ei++)
@@ -428,6 +521,7 @@ public class BattleAgent : Agent
 
         //스킬 사용하기
         if (skillIndex > 0 && skillDirection > 0) {
+            
             bool result = attacker.equipSkills.UseSkill(skillIndex - 1, skillDirection);
             //AddReward(result == true ? 0.02f : 0);
         }

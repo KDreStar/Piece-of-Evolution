@@ -28,7 +28,7 @@ public class CharacterListController : MonoBehaviour
     }
 
     void Start() {
-        characterList.SetDatas(Managers.Data.characterDataList);
+        characterList.SetDatas(Managers.Data.gameData.characterDatas);
     }
 
     // Update is called once per frame

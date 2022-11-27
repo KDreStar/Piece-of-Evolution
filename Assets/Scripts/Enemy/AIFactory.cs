@@ -6,16 +6,16 @@ public class AIFactory
 {
     public EnemyAI Create(string name) {
         switch (name) {
-            case "ScarecrowAI":
+            case "Scarecrow":
                 return new ScarecrowAI();
 
-            case "Scarecrow2AI":
+            case "Scarecrow2":
                 return new Scarecrow2AI();
 
-            case "Scarecrow3AI":
+            case "Scarecrow3":
                 return new Scarecrow3AI();
 
-            case "SlimeAI":
+            case "Slime":
                 return new SlimeAI();
         }
 

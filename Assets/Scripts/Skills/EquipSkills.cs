@@ -96,12 +96,17 @@ public class EquipSkills : MonoBehaviour
         for (int i=0; i<MaxSlot; i++) {
             int k = Random.Range(0, indexs.Count);
 
+            k = indexs[k];
             randomIndexs[k] = i;
-            indexs.RemoveAt(k);
-        }         
+            indexs.Remove(k);
+        }
+
+        
 
         for (int i=0; i<MaxSlot; i++) {
+            
             int k = randomIndexs[i];
+            Debug.Log("[Random] " + k);
             Skill skill = skills[k];
 
             if (skill == null)
@@ -111,9 +116,29 @@ public class EquipSkills : MonoBehaviour
         }
     }
 
+    public void LoadSkills(int[] skillNos) {
+        for (int i=0; i<MaxSlot; i++) {
+            Skill skill = Managers.DB.SkillDB.GetSkill(skillNos[i]);
+
+            if (skill == null)
+                skills[i] = null;
+            else
+                skills[i] = skill;
+        }
+    }
+
     //GameData에 있는 skillNo들을 업데이트
     public void UpdateGameData() {
+        CharacterData characterData = Managers.Data.GetCurrentCharacterData();
 
+        for (int i=0; i<MaxSlot; i++) {
+            Skill skill = GetSkill(i);
+            skills[i] = skill;
+
+            int no = skill == null ? 0 : skill.No;
+
+            characterData.skillNos[i] = no;
+        }
     }
 
     public void Init() {

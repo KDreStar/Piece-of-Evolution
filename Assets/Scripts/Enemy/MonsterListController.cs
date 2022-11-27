@@ -8,21 +8,43 @@ using Unity.MLAgents.Policies;
 //캐릭터 목록 관련
 public class MonsterListController : MonoBehaviour
 {
-    public List<CharacterData> monsterDataList = new List<CharacterData>();
+    public List<CharacterData> monsterDatas = new List<CharacterData>();
     public CharacterList characterList;
 
     public void BattleButton() {
-        bool result = characterList.GetCurrentIndex() < monsterDataList.Count;
+        CharacterData character = Managers.Data.GetCurrentCharacterData();
+        CharacterData enemy     = characterList.GetCurrentCharacterData();
 
-        if (result == true)
-            Managers.Battle.BattleSetting(false, Managers.Data.currentCharacterData, monsterDataList[characterList.GetCurrentIndex()], BehaviorType.HeuristicOnly);
+        if (enemy == null)
+            return;
+
+        character.behaviorType = BehaviorType.Default;
+
+        Managers.Battle.BattleSetting(false, character, enemy);
     }
 
     public void LearningButton() {
-        bool result = characterList.GetCurrentIndex() < monsterDataList.Count;
+        CharacterData character = Managers.Data.GetCurrentCharacterData();
+        CharacterData enemy     = characterList.GetCurrentCharacterData();
 
-        if (result == true)
-            Managers.Battle.BattleSetting(true, Managers.Data.currentCharacterData, monsterDataList[characterList.GetCurrentIndex()], BehaviorType.HeuristicOnly);
+        if (enemy == null)
+            return;
+
+        character.behaviorType = BehaviorType.Default;
+
+        Managers.Battle.BattleSetting(true, character, enemy);
+    }
+
+    public void ControlButton() {
+        CharacterData character = Managers.Data.GetCurrentCharacterData();
+        CharacterData enemy     = characterList.GetCurrentCharacterData();
+
+        if (enemy == null)
+            return;
+
+        character.behaviorType = BehaviorType.HeuristicOnly;
+
+        Managers.Battle.BattleSetting(false, character, enemy);
     }
 
     public void ExecuteButton() {
@@ -35,9 +57,10 @@ public class MonsterListController : MonoBehaviour
     }
 
     void Start() {
-        Managers.DB.MonsterDB.LoadFieldMonsterList(monsterDataList, GameManager.Instance.monsterFieldName);
+        Debug.Log("?");
+        monsterDatas = Managers.DB.MonsterDB.GetFieldMonsterList(GameManager.Instance.monsterFieldName);
 
-        characterList.SetDatas(monsterDataList);
+        characterList.SetDatas(monsterDatas);
     }
 
     // Update is called once per frame

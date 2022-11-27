@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Unity.MLAgents.Policies;
 
 //기타 정보, 정보 불러오기용도
 public class Character : MonoBehaviour
@@ -21,7 +22,11 @@ public class Character : MonoBehaviour
     [HideInInspector]
     public Rigidbody2D rigid;
 
-    private SpriteRenderer sr;
+    [HideInInspector]
+    public SpriteRenderer sr;
+
+    [HideInInspector]
+    public BehaviorParameters bp;
 
     [HideInInspector]
     public bool isStopping = false;
@@ -73,25 +78,50 @@ public class Character : MonoBehaviour
         bool isEnemy     = this.CompareTag("Enemy");
         bool isCurrentCharacter = this.CompareTag("CurrentCharacter");
 
-        Debug.Log("[Load CharacterData] " + Managers.Data.characterData.baseHP);
+        CharacterData data = null;
 
-        if (isCharacter) {
-            Managers.Data.LoadCharacterData(gameObject);
-            //equipSkills.skillList = Managers.Data.characterData.skillList;
-        }
+        if (isCharacter)
+            data = Managers.Data.GetBattleCharacterData();
 
         if (isEnemy)
-            Managers.Data.LoadEnemyData(gameObject);
+            data = Managers.Data.GetBattleEnemyData();
 
-        if (isCurrentCharacter) {
-            Managers.Data.LoadCurrentCharacterData(gameObject);
-        }
+        if (isCurrentCharacter)
+            data = Managers.Data.GetCurrentCharacterData();
+
+        if (data != null)
+            LoadData(data);
 
         Init();
     }
 
-    public void LoadData(CharacterData characterData) {
-        characterData.Load(gameObject);
+    public void LoadData(CharacterData data) {
+        status.name = data.name;
+        
+        status.baseHP  = data.baseHP;
+        status.baseATK = data.baseATK;
+        status.baseDEF = data.baseDEF;
+        status.baseSPD = data.baseSPD;
+
+        if (image != null && data.sprite != null)
+            image.sprite = data.sprite;
+
+        if (sr != null && data.sprite != null)
+            sr.sprite = data.sprite;
+
+
+        equipSkills.LoadSkills(data.skillNos);
+
+        if (bp != null) {
+            if (data.model != null) {
+                bp.Model = data.model;
+                bp.BehaviorType = data.behaviorType;
+            } else {
+                agent.ai = Managers.DB.AIFactory.Create(data.aiName);
+                bp.BehaviorType = data.behaviorType;
+            }
+        }
+        
         Init();
     }
 

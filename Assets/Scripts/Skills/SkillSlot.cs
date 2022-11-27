@@ -78,13 +78,18 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public bool UseSkill(GameObject attacker, int direction) {
         ActiveSkill activeSkill = GetActiveSkill();
 
+        Debug.Log("[Skill 1]");
+
         if (activeSkill == null)
             return false;
         
+        Debug.Log("[Skill 2]");
         //코루틴 종료 직전 -> UseSkill 실행 -> 쿨타임 다시 0 초과됨 -> 코루틴 2개 돌아감
         //이 현상 방지
         if (isUse == false)
             return false;
+
+        Debug.Log("[Skill 3]");
 
         SkillEffect skillEffect = Managers.Pool.GetSkillEffect(activeSkill.Prefab);
 

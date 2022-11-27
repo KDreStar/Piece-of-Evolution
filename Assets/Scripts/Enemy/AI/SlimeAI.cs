@@ -36,35 +36,14 @@ public class SlimeAI : EnemyAI
         float defenderY = agent.defender.transform.localPosition.y;
 
         EquipSkills equipSkills = agent.attacker.equipSkills;
+        
+        SkillSlot   acidBubbleSlot = equipSkills.GetSkillSlot(0);
+        ActiveSkill acidBubble = acidBubbleSlot.GetActiveSkill();
+        SkillEffect acidBubbleEffect = Managers.Pool.GetSkillEffectInfo(acidBubble.Prefab);
 
-        SkillSlot   acidBubbleSlot = null;
-        ActiveSkill acidBubble = null;
-        SkillEffect acidBubbleEffect = null;
-        int acidBubbleIndex = 0;
-
-        SkillSlot   acidZoneSlot = null;
-        ActiveSkill acidZone = null;
-        SkillEffect acidZoneEffect = null;
-        int acidZoneIndex = 1;
-
-        for (int i=0; i<EquipSkills.MaxSlot; i++) {
-            ActiveSkill activeSkill = equipSkills.GetActiveSkill(i);
-
-            if (activeSkill == null)
-                continue;
-
-            if (activeSkill.No == 1001) {
-                acidBubbleSlot = equipSkills.GetSkillSlot(i);
-                acidBubble = acidBubbleSlot.GetActiveSkill();
-                acidBubbleEffect = Managers.Pool.GetSkillEffectInfo(acidBubble.Prefab);
-                acidBubbleIndex = i;
-            } else if (activeSkill.No == 1002) {
-                acidZoneSlot = equipSkills.GetSkillSlot(i);
-                acidZone = acidZoneSlot.GetActiveSkill();
-                acidZoneEffect = Managers.Pool.GetSkillEffectInfo(acidZone.Prefab);
-                acidZoneIndex = i;
-            }
-        }
+        SkillSlot   acidZoneSlot = equipSkills.GetSkillSlot(1);
+        ActiveSkill acidZone = acidZoneSlot.GetActiveSkill();
+        SkillEffect acidZoneEffect = Managers.Pool.GetSkillEffectInfo(acidZone.Prefab);
 
         float relativeX = defenderX - attackerX;
         float relativeY = defenderY - attackerY;
@@ -97,7 +76,7 @@ public class SlimeAI : EnemyAI
         int skillIndex = 0;
 
         if (acidBubbleSlot.CurrentCooltime <= 0) {
-            skillIndex = acidBubbleIndex;
+            skillIndex = 1;
         } else if (acidZoneSlot.CurrentCooltime <= 0) {
             Vector2 size = acidZoneEffect.GetColliderRange() / 2 + agent.defender.GetSize() / 2;
 
@@ -106,7 +85,7 @@ public class SlimeAI : EnemyAI
             if (Mathf.Abs(relativeX) <= size.x && Mathf.Abs(relativeY) <= size.y) {
                 skillX = 1;
                 skillY = 0;
-                skillIndex = acidZoneIndex;
+                skillIndex = 2;
             }
         }
 

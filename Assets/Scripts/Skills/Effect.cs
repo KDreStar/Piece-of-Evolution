@@ -10,12 +10,15 @@ public enum EffectTag {
     ATTACKER_ATK,
     ATTACKER_DEF,
     ATTACKER_SPD,
+    ATTACKER_DMG,
+    ATTACKER_SHIELD,
     DEFENDER_MHP,
-    DEFENDER_CHP, //데미지
+    DEFENDER_CHP,
     DEFENDER_ATK,
     DEFENDER_DEF,
     DEFENDER_SPD,
-    SHIELD,
+    DEFENDER_DMG,
+    DEFENDER_SHIELD,
 }
 
 public enum EffectOperator {
