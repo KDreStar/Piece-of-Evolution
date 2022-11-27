@@ -19,11 +19,19 @@ public class BattleUI : MonoBehaviour
         Managers.Battle.StartBattle();
     }
 
+    public void Toggle(GameObject status) {
+        bool active = status.activeSelf;
+
+        status.SetActive(!active);
+    }
+
     // Update is called once per frame
     void Update()
     {
-        if (textTime != null)
-            textTime.text = Mathf.Ceil(battleEnvController.MaxBattleTime - battleEnvController.timer).ToString();
+        if (textTime != null) {
+            int t = (int)Mathf.Ceil(battleEnvController.MaxBattleTime - battleEnvController.timer);
+            textTime.text = string.Format("<mspace=0.75em>{0}</mspace>", t);
+        }
 
         float counter = Managers.Battle.startCounter;
 

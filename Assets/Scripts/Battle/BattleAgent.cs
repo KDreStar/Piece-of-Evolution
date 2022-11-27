@@ -17,15 +17,15 @@ public class BattleAgent : Agent
     public BattleEnvController battleEnvController;
     private BufferSensorComponent fieldBufferSensor;
 
-    public bool useRaycast = false;
-
-    
     private float startX;
     private float startY;
     private float endX;
     private float endY;
-    private float fieldWidth;
-    private float fieldHeight;
+
+    [HideInInspector]
+    public float fieldWidth;
+    [HideInInspector]
+    public float fieldHeight;
     ///////
 
     public EnemyAI ai;
@@ -156,8 +156,8 @@ public class BattleAgent : Agent
         return binary;
     }
 
-    //좌표 정규화
-    //|<--------.-------->|
+    //좌표 정규화 0~1로 함
+    //|----------------->|
     public Vector2 NormalizePos(Vector2 pos) {
         float width = fieldWidth / 2;
         float height = fieldHeight / 2;
@@ -180,7 +180,7 @@ public class BattleAgent : Agent
         return new Vector2(x, y);
     }
 
-    //캐릭터 기준 거리 정규화 (-1~1)
+    //캐릭터 기준 거리 정규화 (-1~1) 안씀
     //|----------------->| +1
     //|<-----------------| -1
     public Vector2 NormalizeRelativePos(Vector2 pos) {
@@ -196,9 +196,13 @@ public class BattleAgent : Agent
         return new Vector2(x, y);
     }
 
+    public float NormalizeValue(Effect effect, Character a, Character d) {
+
+        return 0;
+    }
+
     public void CollectObservationsCharacter(Character a, Character d, VectorSensor sensor) {
         //캐릭터 위치 (x, y) (벽과의 거리를 나타냄)
-
         if (a == attacker) {
             sensor.AddObservation(NormalizePos(a.transform.localPosition));
             Debug.Log(string.Format("[Collecting] [{0}] [pos={1}",
@@ -210,9 +214,7 @@ public class BattleAgent : Agent
                 a.tag, NormalizeRelativePos(a.transform.localPosition))
             );
         }
-
         
-
         //캐릭터 크기 scale 값 (x, y)
         sensor.AddObservation(NormalizeSize(a.GetSize()));
         Debug.Log(string.Format("[Collecting] [{0}] [size={1} {2}", a.tag, NormalizeSize(a.GetSize()), a.GetSize()));
@@ -245,7 +247,7 @@ public class BattleAgent : Agent
 
             if (skill is ActiveSkill) {
                 ActiveSkill activeSkill = skillSlot.GetActiveSkill();
-                SkillEffect skillEffect = activeSkill.Prefab.GetComponent<SkillEffect>();
+                SkillEffect skillEffect = Managers.Pool.GetSkillEffectInfo(activeSkill.Prefab);
 
                 //스킬 구분
                 sensor.AddObservation(1);
@@ -266,6 +268,8 @@ public class BattleAgent : Agent
 
                 //스킬 범위 (x, y)
                 Vector2 skillRange = skillEffect.GetColliderRange();
+                Debug.Log("[Collecting] Skill " + createPos + " " + skillRange);
+
                 sensor.AddObservation(NormalizeSize(skillRange));
 
                 sensor.AddObservation(GetObservationsEffects(activeSkill.Effects, a, d));
@@ -299,6 +303,9 @@ public class BattleAgent : Agent
 
             float damage = Managers.Battle.CalculateDamage(effect.Formula, a.status, d.status);
             result[k++] = Mathf.Clamp01(damage / d.status.CurrentHP);
+
+            if (damage > 0)
+                Debug.Log("[Damage] " + result[k-1]);
         }
 
         return result;
@@ -320,7 +327,7 @@ public class BattleAgent : Agent
     */
     public void CollectObservationsFieldSkills() {
         List<SkillEffect> skillEffects = field.GetList();
-        int skillVectorSize = 2 + 1 + 1 + 2 + 1 + 2 + 2 + (8 + 5 + 1) * 2;
+        int skillVectorSize = 2 + 1 + 1 + 2 + 1 + 2 + 2 + 1 + (8 + 5 + 1) * 2;
 
         for (int i=0; i<8; i++) {
             if (i >= skillEffects.Count)
@@ -337,23 +344,23 @@ public class BattleAgent : Agent
             if (gameObject.CompareTag(effect.GetAttackerTag()) == true)
                 listObservation[k] = 1;
             else
-                listObservation[k] = 1;
+                listObservation[k+1] = 1;
 
             k += 2;
 
             //캐스팅 시간
-            listObservation[k++] = effect.currentCastingTime;
+            listObservation[k++] = Mathf.Clamp01(effect.currentCastingTime);
 
             //지속 시간
-            listObservation[k++] = effect.currentDuration;
+            listObservation[k++] = Mathf.Clamp01(effect.currentDuration);
 
             //현재 좌표
-            Vector2 pos = NormalizeRelativePos(effect.transform.localPosition);
+            Vector2 pos = NormalizeRelativePos(effect.GetCurrentPos());
             listObservation[k++] = pos.x;
             listObservation[k++] = pos.y;
 
             //회전 여부
-            listObservation[k++] = effect.direction / 8;
+            listObservation[k++] = effect.transform.eulerAngles.z / 360;
 
             //속도 (-1 0 1)
             Vector2 velocity = effect.GetVelocity();
@@ -364,6 +371,12 @@ public class BattleAgent : Agent
             Vector2 skillRange = NormalizeSize(effect.GetColliderRange());
             listObservation[k++] = skillRange.x;
             listObservation[k++] = skillRange.y;
+
+            //공격 여부 (닿았으면 무시해도 됨)
+            bool isUsed = effect.isAttacked;
+            listObservation[k++] = isUsed ? 0 : 1; 
+
+            Debug.Log("[Collecting] " + field.gameObject.name  + " Skill pos:" + effect.GetCurrentPos() + " " + pos + " range: " + skillRange + " time: " + effect.currentCastingTime + ", " + effect.currentDuration + " rotation: " + effect.transform.eulerAngles.z + " used: " + isUsed);
 
             float[] effectObs = GetObservationsEffects(activeSkill.Effects, attacker, defender);
 
@@ -390,25 +403,22 @@ public class BattleAgent : Agent
     }
 
 
-
+    //상대를 스킬로 맞추는 경우 깎은 HP 비율을 보상으로 줌 
     //액션 처리
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
-        int moveXi = actionBuffers.DiscreteActions[0];
-        int moveYi = actionBuffers.DiscreteActions[1];
+        int moveDirection = actionBuffers.DiscreteActions[0];
+        int skillDirection = actionBuffers.DiscreteActions[1];
 
-        int skillXi = actionBuffers.DiscreteActions[2];
-        int skillYi = actionBuffers.DiscreteActions[3];
+        var skillIndex = actionBuffers.DiscreteActions[2];
 
-        var skillIndex = actionBuffers.DiscreteActions[4];
-        int[] delta = new int[] {0, -1, 1};
+        Debug.Log("[Action] + " + attacker.tag + "Move " + moveDirection + " Skill " + skillDirection + " index "+ skillIndex);
 
+        //                         x   ↑  ↗   →  ↘   ↓  ↙   ←   ↖
+        float[] dx = new float[] { 0,  0,  1,  1,  1,  0, -1, -1, -1};
+        float[] dy = new float[] { 0,  1,  1,  0, -1, -1, -1,  0,  1};
 
-        Debug.Log("[Action] + " + attacker.tag + "Move " + delta[moveXi] + ", " + delta[moveYi] + " Skill " + delta[skillXi] + ", " + delta[skillYi] + " index "+ skillIndex);
-
-        
-
-        Vector2 vector = new Vector2(delta[moveXi], delta[moveYi]);
+        Vector2 vector = new Vector2(dx[moveDirection], dy[moveDirection]);
 
         //캐릭터 움직이기
         float baseSpeed = Managers.Battle.baseSpeed;
@@ -417,10 +427,8 @@ public class BattleAgent : Agent
             attacker.rigid.MovePosition(attacker.rigid.position + vector * attacker.status.CurrentSPD * baseSpeed * Time.deltaTime);
 
         //스킬 사용하기
-        if (skillIndex > 0) {
-            if (!(skillXi == 0 && skillYi == 0)) {
-                bool result = attacker.equipSkills.UseSkill(skillIndex - 1, delta[skillXi], delta[skillYi]);
-            }
+        if (skillIndex > 0 && skillDirection > 0) {
+            bool result = attacker.equipSkills.UseSkill(skillIndex - 1, skillDirection);
             //AddReward(result == true ? 0.02f : 0);
         }
     }
@@ -440,7 +448,7 @@ public class BattleAgent : Agent
             if (skillSlot.CurrentCooltime > 0)
                 available = false;
             
-            actionMask.SetActionEnabled(4, i + 1, available);
+            actionMask.SetActionEnabled(2, i + 1, available);
         }
     }
 
@@ -466,6 +474,9 @@ public class BattleAgent : Agent
         float[] dx = new float[] { 0,  0,  1,  1,  1,  0, -1, -1, -1};
         float[] dy = new float[] { 0,  1,  1,  0, -1, -1, -1,  0,  1};
 
+        int moveDirection = 0;
+        int skillDirection = 0;
+
         int inputX = 0;
         int inputY = 0;
 
@@ -481,43 +492,44 @@ public class BattleAgent : Agent
         if (Input.GetKey(KeyCode.RightArrow))
             inputX += 1;
 
-        inputX = inputX > 0 ? 2 : (inputX < 0 ? 1 : 0);
-        inputY = inputY > 0 ? 2 : (inputY < 0 ? 1 : 0);
-
-        discreteActionsOut[0] = inputX;
-        discreteActionsOut[2] = inputX;
-
-        discreteActionsOut[1] = inputY;
-        discreteActionsOut[3] = inputY;
+        for (int i=0; i<9; i++) {
+            if (dx[i] == inputX && dy[i] == inputY) {
+                moveDirection = i;
+                skillDirection = i;
+                break;
+            }
+        }
         
-        discreteActionsOut[4] = 0;
+        discreteActionsOut[0] = moveDirection;
+        discreteActionsOut[1] = skillDirection;
+        discreteActionsOut[2] = 0;
 
         if (Input.GetKey(KeyCode.Q)) {
-            discreteActionsOut[4] = 1;
+            discreteActionsOut[2] = 1;
             Debug.Log("Pressed Q Key");
         }
 
         if (Input.GetKey(KeyCode.W)) {
-            discreteActionsOut[4] = 2;
+            discreteActionsOut[2] = 2;
             Debug.Log("Pressed W Key");
         }
 
         if (Input.GetKey(KeyCode.E))
-            discreteActionsOut[4] = 3;
+            discreteActionsOut[2] = 3;
 
         if (Input.GetKey(KeyCode.A))
-            discreteActionsOut[4] = 4;
+            discreteActionsOut[2] = 4;
 
         if (Input.GetKey(KeyCode.S))
-            discreteActionsOut[4] = 5;
+            discreteActionsOut[2] = 5;
 
         if (Input.GetKey(KeyCode.D))
-            discreteActionsOut[4] = 6;
+            discreteActionsOut[2] = 6;
 
         if (Input.GetKey(KeyCode.X))
-            discreteActionsOut[4] = 7;
+            discreteActionsOut[2] = 7;
 
         if (Input.GetKey(KeyCode.Space))
-            discreteActionsOut[4] = 8;
+            discreteActionsOut[2] = 8;
     }
 }

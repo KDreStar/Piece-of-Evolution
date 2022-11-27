@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 4e6a0f6ea502e44409e7fdaec9888b89
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - activeSkill: {fileID: 11400000, guid: f8ae0439baeda5044a035c410237869b, type: 2}
+  - attacker: {instanceID: 0}
+  - defender: {instanceID: 0}
+  - attackerStatus: {instanceID: 0}
+  - defenderStatus: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

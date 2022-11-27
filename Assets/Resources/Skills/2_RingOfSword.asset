@@ -22,7 +22,7 @@ MonoBehaviour:
     effectOperator: 2
     formula: ATK * 1.5
   icon: {fileID: 881293202, guid: 99c83568759bb514babd07cc615bc9e4, type: 3}
-  cooltime: 2
+  cooltime: 4.5
   createOffset: {x: 0, y: 0}
   range: 0
   speed: 1

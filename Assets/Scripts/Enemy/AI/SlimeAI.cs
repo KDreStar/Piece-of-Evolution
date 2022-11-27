@@ -36,13 +36,33 @@ public class SlimeAI : EnemyAI
         float defenderY = agent.defender.transform.localPosition.y;
 
         EquipSkills equipSkills = agent.attacker.equipSkills;
-        SkillSlot   acidBubbleSlot = equipSkills.GetSkillSlot(0);
-        ActiveSkill acidBubble = acidBubbleSlot.GetActiveSkill();
-        SkillEffect acidBubbleEffect = acidBubble.Prefab.GetComponent<SkillEffect>();
 
-        SkillSlot   acidZoneSlot = equipSkills.GetSkillSlot(1);
-        ActiveSkill acidZone = acidBubbleSlot.GetActiveSkill();
-        SkillEffect acidZoneEffect = acidZone.Prefab.GetComponent<SkillEffect>();
+        SkillSlot   acidBubbleSlot = null;
+        ActiveSkill acidBubble = null;
+        SkillEffect acidBubbleEffect = Managers.Pool.GetSkillEffectInfo(acidBubble.Prefab);
+        int acidBubbleIndex = 0;
+
+        SkillSlot   acidZoneSlot = null;
+        ActiveSkill acidZone = null;
+        SkillEffect acidZoneEffect = Managers.Pool.GetSkillEffectInfo(acidZone.Prefab);
+        int acidZoneIndex = 1;
+
+        for (int i=0; i<EquipSkills.MaxSlot; i++) {
+            ActiveSkill activeSkill = equipSkills.GetActiveSkill(i);
+
+            if (activeSkill == null)
+                continue;
+
+            if (activeSkill.No == 1001) {
+                acidBubbleSlot = equipSkills.GetSkillSlot(i);
+                acidBubble = acidBubbleSlot.GetActiveSkill();
+                acidBubbleIndex = i;
+            } else if (activeSkill.No == 1002) {
+                acidZoneSlot = equipSkills.GetSkillSlot(i);
+                acidZone = acidZoneSlot.GetActiveSkill();
+                acidZoneIndex = i;
+            }
+        }
 
         float relativeX = defenderX - attackerX;
         float relativeY = defenderY - attackerY;
@@ -57,12 +77,12 @@ public class SlimeAI : EnemyAI
         else
             moveX = 1;
 
-        if (-0.5f < relativeX && relativeX < 0.5f)
-            moveX = 0;
-        else if (relativeX <= -0.5f)
-            moveX = -1;
+        if (-0.5f < relativeY && relativeY < 0.5f)
+            moveY = 0;
+        else if (relativeY <= -0.5f)
+            moveY = -1;
         else
-            moveX = 1;
+            moveY = 1;
 
         int skillX = moveX;
         int skillY = moveY;
@@ -75,33 +95,32 @@ public class SlimeAI : EnemyAI
         int skillIndex = 0;
 
         if (acidBubbleSlot.CurrentCooltime <= 0) {
-            skillIndex = 1;
+            skillIndex = acidBubbleIndex;
         } else if (acidZoneSlot.CurrentCooltime <= 0) {
-            Vector2 size = acidZoneEffect.GetColliderRange();
+            Vector2 size = acidZoneEffect.GetColliderRange() / 2 + agent.defender.GetSize() / 2;
 
-            if (Mathf.Abs(relativeX) <= size.x || Mathf.Abs(relativeY) <= size.y) {
+            Debug.Log("[Size] " + size + " " + relativeX + " " + relativeY);
+
+            if (Mathf.Abs(relativeX) <= size.x && Mathf.Abs(relativeY) <= size.y) {
                 skillX = 1;
                 skillY = 0;
-                skillIndex = 2;
+                skillIndex = acidZoneIndex;
             }
         }
 
-        discreteActionsOut[0] = PosIndex(moveX);
-        discreteActionsOut[1] = PosIndex(moveY);
-
-        discreteActionsOut[2] = PosIndex(skillX);
-        discreteActionsOut[3] = PosIndex(skillY);
-
-        discreteActionsOut[4] = skillIndex;
+        discreteActionsOut[0] = GetDirection(moveX, moveY);
+        discreteActionsOut[1] = GetDirection(skillX, skillY);
+        discreteActionsOut[2] = skillIndex;
     }
 
-    int PosIndex(int k) {
-        switch (k) {
-            case 1:
-                return 2;
+    public int GetDirection(int inputX, int inputY) {
+        //                         x   ↑  ↗   →  ↘   ↓  ↙   ←   ↖
+        float[] dx = new float[] { 0,  0,  1,  1,  1,  0, -1, -1, -1};
+        float[] dy = new float[] { 0,  1,  1,  0, -1, -1, -1,  0,  1};
 
-            case -1:
-                return 1;
+        for (int i=0; i<9; i++) {
+            if (inputX == dx[i] && inputY == dy[i])
+                return i;
         }
 
         return 0;

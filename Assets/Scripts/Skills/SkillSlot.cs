@@ -75,7 +75,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     //스킬을 사용하면 프리펩을 생성하면 됨
     //프리펩에는 이펙트랑 스크립트를 가지고 있음
     //각 스킬 마다 구현되어 있음
-    public bool UseSkill(GameObject attacker, int skillX, int skillY) {
+    public bool UseSkill(GameObject attacker, int direction) {
         ActiveSkill activeSkill = GetActiveSkill();
 
         if (activeSkill == null)
@@ -88,7 +88,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         SkillEffect skillEffect = Managers.Pool.GetSkillEffect(activeSkill.Prefab);
 
-        skillEffect.Initialize(attacker, skillX, skillY);
+        skillEffect.Initialize(attacker, direction);
 
         Debug.Log(name + "사용");
 

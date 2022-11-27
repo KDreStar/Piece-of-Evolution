@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4721526170312441399}
   - component: {fileID: -3724988328011388498}
   - component: {fileID: 6078821927275819643}
+  - component: {fileID: -6140977486367911466}
   m_Layer: 0
   m_Name: 21_FireBolt
   m_TagString: Untagged
@@ -107,6 +108,7 @@ MonoBehaviour:
   anim: {fileID: 0}
   direction: 0
   currentCastingTime: 0
+  currentDuration: 0
 --- !u!95 &-3724988328011388498
 Animator:
   serializedVersion: 4
@@ -153,3 +155,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.91, y: 0.4}
   m_EdgeRadius: 0
+--- !u!50 &-6140977486367911466
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1327035046624340984}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

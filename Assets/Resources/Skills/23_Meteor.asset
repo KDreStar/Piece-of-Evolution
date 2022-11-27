@@ -25,7 +25,7 @@ MonoBehaviour:
     formula: ATK * 4
   icon: {fileID: -1722027578, guid: 972edd9512efa014ab00c0ac078bcf98, type: 3}
   cooltime: 6
-  createOffset: {x: 8, y: 0}
+  createOffset: {x: 6, y: 0}
   range: 0
   speed: 1
   prefab: {fileID: 6226665961080616665, guid: d26b17b0ec7f841408cb6f8f3e08fe8b, type: 3}

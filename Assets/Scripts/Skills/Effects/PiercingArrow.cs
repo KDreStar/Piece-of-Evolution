@@ -12,7 +12,7 @@ public class PiercingArrow : SkillEffect
             currentTime += Time.deltaTime;
             currentDuration = currentTime / destroyTime;
 
-            yield return null;
+            yield return wait;
         }
         
         currentDuration = 1;

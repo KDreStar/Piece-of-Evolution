@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SensorName: FieldBufferSensor
-  m_ObservableSize: 39
+  m_ObservableSize: 40
   m_MaxNumObservables: 8
 --- !u!1 &9065742834548992605
 GameObject:
@@ -157,6 +157,8 @@ MonoBehaviour:
   status: {fileID: 0}
   equipSkills: {fileID: 0}
   rigid: {fileID: 0}
+  isStopping: 0
+  agent: {fileID: 0}
 --- !u!114 &9065742834548992579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,7 +306,8 @@ MonoBehaviour:
   defender: {fileID: 0}
   field: {fileID: 0}
   battleEnvController: {fileID: 0}
-  useRaycast: 0
+  fieldWidth: 0
+  fieldHeight: 0
   aiName: 
 --- !u!114 &9065742834548992580
 MonoBehaviour:

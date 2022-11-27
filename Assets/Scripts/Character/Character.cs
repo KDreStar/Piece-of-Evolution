@@ -26,6 +26,8 @@ public class Character : MonoBehaviour
     [HideInInspector]
     public bool isStopping = false;
     
+    [HideInInspector]
+    public BattleAgent agent;
     
     // Start is called before the first frame update
     void Awake() {
@@ -33,6 +35,7 @@ public class Character : MonoBehaviour
         equipSkills = GetComponent<EquipSkills>();
         sr = GetComponent<SpriteRenderer>();
         rigid = GetComponent<Rigidbody2D>();
+        agent = GetComponent<BattleAgent>();
     }
 
     void Start()

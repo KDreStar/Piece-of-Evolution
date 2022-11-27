@@ -9,6 +9,27 @@ public class PoolManager
     public int count = 0;
     //<스킬번호, 스킬이펙트 큐>로 저장
     private Dictionary<int, Queue<SkillEffect>> skillEffectTable = new Dictionary<int, Queue<SkillEffect>>();
+    private Dictionary<int, SkillEffect> skillEffectInfoTable = new Dictionary<int, SkillEffect>();
+
+    public SkillEffect GetSkillEffectInfo(GameObject prefab) {
+        int no = prefab.GetComponent<SkillEffect>().GetSkillNo();
+
+        if (skillEffectInfoTable.ContainsKey(no) == false)
+            skillEffectInfoTable.Add(no, CreateSkillEffectInfo(prefab));
+
+        Debug.Log(skillEffectInfoTable[no]);
+
+        return skillEffectInfoTable[no];
+    }
+
+    private SkillEffect CreateSkillEffectInfo(GameObject prefab) {
+        SkillEffect skillEffect = Managers.Instantiate(prefab).GetComponent<SkillEffect>();
+
+        skillEffect.gameObject.SetActive(false);
+        skillEffect.transform.parent = Managers.Instance.transform;
+
+        return skillEffect;
+    }
 
     //큐에 스킬 이펙트가 없으면 생성
     private SkillEffect CreateSkillEffect(GameObject prefab) {

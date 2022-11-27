@@ -66,8 +66,8 @@ public class EquipSkills : MonoBehaviour
         skillSlots[i].AddSkill(skill);
     }
     
-    public bool UseSkill(int i, int skillX, int skillY) {
-        return skillSlots[i].UseSkill(gameObject, skillX, skillY);
+    public bool UseSkill(int i, int direction) {
+        return skillSlots[i].UseSkill(gameObject, direction);
     }
 
     public Skill GetSkill(int i) {
@@ -84,6 +84,31 @@ public class EquipSkills : MonoBehaviour
 
     public PassiveSkill GetPassiveSkill(int i) {
         return skillSlots[i].GetPassiveSkill();
+    }
+
+    public void Randomize() {
+        List<int> indexs = new List<int>();
+        int[] randomIndexs = new int[MaxSlot];
+
+        for (int i=0; i<MaxSlot; i++)
+            indexs.Add(i);
+
+        for (int i=0; i<MaxSlot; i++) {
+            int k = Random.Range(0, indexs.Count);
+
+            randomIndexs[k] = i;
+            indexs.RemoveAt(k);
+        }         
+
+        for (int i=0; i<MaxSlot; i++) {
+            int k = randomIndexs[i];
+            Skill skill = skills[k];
+
+            if (skill == null)
+                RemoveSkill(i);
+            else
+                AddSkill(i, skill);
+        }
     }
 
     //GameData에 있는 skillNo들을 업데이트

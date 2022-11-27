@@ -20,11 +20,7 @@ public class Scarecrow2AI : EnemyAI
 
         discreteActionsOut[0] = 0;
         discreteActionsOut[1] = 0;
-
         discreteActionsOut[2] = 0;
-        discreteActionsOut[3] = 0;
-
-        discreteActionsOut[4] = 0;
 
         for (int i=0; i<EquipSkills.MaxSlot; i++) {
             SkillSlot skillSlot = agent.attacker.equipSkills.GetSkillSlot(i);
@@ -46,22 +42,34 @@ public class Scarecrow2AI : EnemyAI
                     // 상대 ..... 나   x1 > x2
                     // 나 ....... 상대 x1 < x2 
                     if (list[p].CompareTag(agent.defender.gameObject.tag) == true) {
-                        int inputXi = x1 > x2 ? 1 : 2;
-                        int inputYi = y1 > y2 ? 1 : 2;
+                        int inputX = x1 > x2 ? -1 : 1;
+                        int inputY = y1 > y2 ? -1 : 1;
 
                         if (k == 0)
-                            inputYi = 0;
+                            inputY = 0;
                         if (k == 2)
-                            inputXi = 0;
+                            inputX = 0;
 
-                        discreteActionsOut[2] = inputXi;
-                        discreteActionsOut[3] = inputYi;
-                        discreteActionsOut[4] = i + 1;
+                        discreteActionsOut[1] = GetDirection(inputX, inputY);
+                        discreteActionsOut[2] = i + 1;
 
                         return;
                     }
                 }
             }
         }
+    }
+
+    public int GetDirection(int inputX, int inputY) {
+        //                         x   ↑  ↗   →  ↘   ↓  ↙   ←   ↖
+        float[] dx = new float[] { 0,  0,  1,  1,  1,  0, -1, -1, -1};
+        float[] dy = new float[] { 0,  1,  1,  0, -1, -1, -1,  0,  1};
+
+        for (int i=0; i<9; i++) {
+            if (inputX == dx[i] && inputY == dy[i])
+                return i;
+        }
+
+        return 0;
     }
 }

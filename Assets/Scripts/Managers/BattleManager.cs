@@ -96,6 +96,9 @@ public class BattleManager
                         + "--num-envs=4 " //나중에 전역 수정가능하게
                         + "--width=480 "
                         + "--height=270 "
+                        + "--time-scale=1 "
+                        //+ "--no-graphics "
+                        + "--torch-device=cuda "
                         + "--results-dir=" + (path + "models") + " ";
 
                 bool exist = File.Exists(string.Format("{0}models/{1}/Character.onnx", path, currentCharacterIndex));

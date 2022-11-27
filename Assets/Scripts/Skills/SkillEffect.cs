@@ -20,12 +20,15 @@ public class SkillEffect : MonoBehaviour
     public Animator anim;
 
     public int direction;
-    private bool isAttacked = false;
+    public bool isAttacked = false;
 
     Field field;
+    BattleEnvController bc;
 
     public float currentCastingTime;
     public float currentDuration;
+
+    protected static WaitForFixedUpdate wait = new WaitForFixedUpdate();
 
     void Awake() {
         sr = GetComponent<SpriteRenderer>();
@@ -46,7 +49,7 @@ public class SkillEffect : MonoBehaviour
                 currentCastingTime = anim.GetCurrentAnimatorStateInfo(0).normalizedTime;
                 Debug.Log("캐스팅 시간" + currentCastingTime);
 
-                yield return null;
+                yield return wait;
             }
 
             anim.SetTrigger("FinishCasting");
@@ -58,13 +61,14 @@ public class SkillEffect : MonoBehaviour
 
     //활성
     public virtual IEnumerator Active() {
-        yield return null;
+        yield return wait;
     }
 
-    public virtual void Initialize(GameObject caster, int skillX, int skillY) {
+    public virtual void Initialize(GameObject caster, int direction) {
         transform.parent = caster.transform.parent.transform;
 
         field = transform.GetComponentInParent<Field>();
+        bc    = transform.GetComponentInParent<BattleEnvController>();
 
         gameObject.tag = caster.gameObject.tag + "Skill";
 
@@ -82,18 +86,7 @@ public class SkillEffect : MonoBehaviour
             EnableCollider();
 
         
-        //                         x   ↑  ↗   →  ↘   ↓  ↙   ←   ↖
-        float[] dx = new float[] { 0,  0,  1,  1,  1,  0, -1, -1, -1};
-        float[] dy = new float[] { 0,  1,  1,  0, -1, -1, -1,  0,  1};
-
-        direction = 3;
-
-        for (int i=1; i<9; i++) {
-            if (dx[i] == skillX && dy[i] == skillY) {
-                direction = i;
-                break;
-            }
-        }
+        this.direction = direction;
 
         Vector3 angle = new Vector3(0, 0, 135 - direction * 45);
   
@@ -131,18 +124,30 @@ public class SkillEffect : MonoBehaviour
     //메테오는 콜라이더는 0이지만 생성좌표가 (4, 0)
     public Vector2 GetCreatePos() {
         Vector2 result = activeSkill.CreateOffset;
-        Bounds col = collider.bounds;
+        Vector2 offset = collider.offset * (transform.lossyScale / 2);
 
-        Vector2 a = col.center - transform.localPosition;
-        result += a;
+        result += offset;
 
         return result;
     }
 
-    public Vector2 GetColliderRange() {
-        Bounds col = collider.bounds;
+    //실제 콜라이더 좌표
+    public Vector2 GetCurrentPos() {
+        Vector2 fieldPos = field.transform.position;
+        Vector2 skillPos = collider.bounds.center;
 
-        return col.size;
+        return skillPos - fieldPos;
+    }
+
+    public Vector2 GetColliderRange() {
+        //Size = 스프라이트 크기 / ppu
+        //실제 크기 size * localScale
+
+        Vector2 size = collider.size;
+
+        Debug.Log(activeSkill + "Scale" + transform.lossyScale + " " + transform.localScale + " " + size + " " + size * transform.localScale);
+
+        return size * transform.localScale;
     }
 
     public Vector2 GetVelocity() {
@@ -206,5 +211,7 @@ public class SkillEffect : MonoBehaviour
         damage = damage <= 0 ? 1 : damage;
 
 		defender.status.TakeDamage(damage);
+
+        bc.AddHitReward(attacker, defender, damage);
     }
 }

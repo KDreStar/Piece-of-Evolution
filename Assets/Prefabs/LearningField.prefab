@@ -71,9 +71,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxBattleTime: 120
-  character: {fileID: 3999909076433884034}
-  enemy: {fileID: 3999909075562294496}
+  character: {fileID: 7344254361284796835}
+  enemy: {fileID: 3179299576419644045}
   timer: 0
+  finishReward: 2
+  timePenalty: -1
+  hitReward: 1
 --- !u!1001 &1494215758679520911
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1038,6 +1041,38 @@ PrefabInstance:
       propertyPath: m_BrainParameters.VectorObservationSize
       value: 607
       objectReference: {fileID: 0}
+    - target: {fileID: 1589529876771655451, guid: 61cabadac2919ff4790726486c82c837, type: 3}
+      propertyPath: m_BrainParameters.VectorActionSize.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589529876771655451, guid: 61cabadac2919ff4790726486c82c837, type: 3}
+      propertyPath: m_BrainParameters.VectorActionSize.Array.data[0]
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589529876771655451, guid: 61cabadac2919ff4790726486c82c837, type: 3}
+      propertyPath: m_BrainParameters.VectorActionSize.Array.data[1]
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589529876771655451, guid: 61cabadac2919ff4790726486c82c837, type: 3}
+      propertyPath: m_BrainParameters.VectorActionSize.Array.data[2]
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589529876771655451, guid: 61cabadac2919ff4790726486c82c837, type: 3}
+      propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589529876771655451, guid: 61cabadac2919ff4790726486c82c837, type: 3}
+      propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589529876771655451, guid: 61cabadac2919ff4790726486c82c837, type: 3}
+      propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[1]
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1589529876771655451, guid: 61cabadac2919ff4790726486c82c837, type: 3}
+      propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[2]
+      value: 9
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 61cabadac2919ff4790726486c82c837, type: 3}
 --- !u!114 &3179299576419644045 stripped
@@ -1045,17 +1080,12 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 977994712672817514, guid: 61cabadac2919ff4790726486c82c837, type: 3}
   m_PrefabInstance: {fileID: 2417778914196202471}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3999909075562294496}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d88755b75d8359549a57dc7503620df3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &3999909075562294496 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1589529876771655431, guid: 61cabadac2919ff4790726486c82c837, type: 3}
-  m_PrefabInstance: {fileID: 2417778914196202471}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3999909075562294497 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1589529876771655430, guid: 61cabadac2919ff4790726486c82c837, type: 3}
@@ -1195,6 +1225,38 @@ PrefabInstance:
       propertyPath: m_BrainParameters.VectorObservationSize
       value: 607
       objectReference: {fileID: 0}
+    - target: {fileID: 9065742834548992582, guid: 8f3addbaa235253429cd13d18b4024ee, type: 3}
+      propertyPath: m_BrainParameters.VectorActionSize.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065742834548992582, guid: 8f3addbaa235253429cd13d18b4024ee, type: 3}
+      propertyPath: m_BrainParameters.VectorActionSize.Array.data[0]
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065742834548992582, guid: 8f3addbaa235253429cd13d18b4024ee, type: 3}
+      propertyPath: m_BrainParameters.VectorActionSize.Array.data[1]
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065742834548992582, guid: 8f3addbaa235253429cd13d18b4024ee, type: 3}
+      propertyPath: m_BrainParameters.VectorActionSize.Array.data[2]
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065742834548992582, guid: 8f3addbaa235253429cd13d18b4024ee, type: 3}
+      propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065742834548992582, guid: 8f3addbaa235253429cd13d18b4024ee, type: 3}
+      propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[0]
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065742834548992582, guid: 8f3addbaa235253429cd13d18b4024ee, type: 3}
+      propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[1]
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 9065742834548992582, guid: 8f3addbaa235253429cd13d18b4024ee, type: 3}
+      propertyPath: m_BrainParameters.m_ActionSpec.BranchSizes.Array.data[2]
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 9065742834548992583, guid: 8f3addbaa235253429cd13d18b4024ee, type: 3}
       propertyPath: field
       value: 
@@ -1266,17 +1328,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9065742834548992606, guid: 8f3addbaa235253429cd13d18b4024ee, type: 3}
   m_PrefabInstance: {fileID: 5354064241662245343}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &3999909076433884034 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9065742834548992605, guid: 8f3addbaa235253429cd13d18b4024ee, type: 3}
-  m_PrefabInstance: {fileID: 5354064241662245343}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7344254361284796835 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3432162249091340412, guid: 8f3addbaa235253429cd13d18b4024ee, type: 3}
   m_PrefabInstance: {fileID: 5354064241662245343}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3999909076433884034}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d88755b75d8359549a57dc7503620df3, type: 3}

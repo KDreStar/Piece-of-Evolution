@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Slash : SkillEffect
 {
-    public override void Initialize(GameObject caster, int skillX, int skillY) {
-        base.Initialize(caster, skillX, skillY);
+    public override void Initialize(GameObject caster, int direction) {
+        base.Initialize(caster, direction);
 
         DisableCollider();
     }
@@ -18,7 +18,7 @@ public class Slash : SkillEffect
             if (anim.GetCurrentAnimatorStateInfo(0).IsName("Active"))
                 break;
 
-            yield return null;
+            yield return wait;
         }
 
         EnableCollider();
@@ -27,7 +27,7 @@ public class Slash : SkillEffect
                 currentDuration = anim.GetCurrentAnimatorStateInfo(0).normalizedTime;
                 Debug.Log("지속시간" + currentDuration);
 
-                yield return null;
+                yield return wait;
             }
         }
 

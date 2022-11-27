@@ -159,7 +159,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.8784314, g: 0.8784314, b: 0.8784314, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -212,17 +212,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2422623910292075172, guid: 926fe1a5765194345becedbde5e7a2f8, type: 3}
   m_PrefabInstance: {fileID: 7114253847371587014}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &653785452 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7114253846733251754, guid: 926fe1a5765194345becedbde5e7a2f8, type: 3}
-  m_PrefabInstance: {fileID: 7114253847371587014}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &691135715
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -530,7 +519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75cf5f0690d1d024781d8cd341358e70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textTime: {fileID: 653785452}
+  textTime: {fileID: 7114253847371587016}
   battleEnvController: {fileID: 1378900369}
   textMessage: {fileID: 1683928855}
 --- !u!114 &1683928855 stripped
@@ -1505,3 +1494,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3193738433347061496, guid: 926fe1a5765194345becedbde5e7a2f8, type: 3}
   m_PrefabInstance: {fileID: 7114253847371587014}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7114253847371587016 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7758853287492872969, guid: 926fe1a5765194345becedbde5e7a2f8, type: 3}
+  m_PrefabInstance: {fileID: 7114253847371587014}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

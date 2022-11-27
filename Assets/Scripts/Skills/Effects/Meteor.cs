@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Meteor : SkillEffect
 {
-    public override void Initialize(GameObject caster, int skillX, int skillY) {
-        base.Initialize(caster, skillX, skillY);
+    public override void Initialize(GameObject caster, int direction) {
+        base.Initialize(caster, direction);
 
         //CreateOffset로 이동후 다시 회전 초기화
         transform.Translate(activeSkill.CreateOffset);
@@ -21,7 +21,7 @@ public class Meteor : SkillEffect
             if (anim.GetCurrentAnimatorStateInfo(0).IsName("Active"))
                 break;
 
-            yield return null;
+            yield return wait;
         }
 
         EnableCollider();
@@ -30,7 +30,7 @@ public class Meteor : SkillEffect
                 currentDuration = anim.GetCurrentAnimatorStateInfo(0).normalizedTime;
                 Debug.Log("지속시간" + currentDuration);
 
-                yield return null;
+                yield return wait;
             }
         }
 

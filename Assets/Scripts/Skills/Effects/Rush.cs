@@ -7,8 +7,8 @@ public class Rush : SkillEffect
     float currentTime = 0;
     float destroyTime = 0;
 
-    public override void Initialize(GameObject caster, int skillX, int skillY) {
-        base.Initialize(caster, skillX, skillY);
+    public override void Initialize(GameObject caster, int direction) {
+        base.Initialize(caster, direction);
 
         attacker.isStopping = true;
         DisableCollider();
@@ -23,7 +23,7 @@ public class Rush : SkillEffect
             currentTime += Time.deltaTime;
             currentDuration = currentTime / destroyTime;
 
-            yield return null;
+            yield return wait;
         }
         
         currentDuration = 1;
