@@ -7,7 +7,7 @@ public class AIFactory
     public EnemyAI Create(string name) {
         switch (name) {
             case "Scarecrow":
-                return new ScarecrowAI();
+                return new Scarecrow1AI();
 
             case "Scarecrow2":
                 return new Scarecrow2AI();

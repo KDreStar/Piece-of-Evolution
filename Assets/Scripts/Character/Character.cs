@@ -39,6 +39,7 @@ public class Character : MonoBehaviour
         status = GetComponent<Status>();
         equipSkills = GetComponent<EquipSkills>();
         sr = GetComponent<SpriteRenderer>();
+        bp = GetComponent<BehaviorParameters>();
         rigid = GetComponent<Rigidbody2D>();
         agent = GetComponent<BattleAgent>();
     }

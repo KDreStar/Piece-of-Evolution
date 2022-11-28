@@ -310,15 +310,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3999909075562294520, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: baseATK
-      value: 0
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3999909075562294520, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: baseDEF
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3999909075562294520, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: baseSPD
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3999909075562294524, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: m_Model
@@ -343,11 +343,11 @@ PrefabInstance:
     - target: {fileID: 3999909075562294525, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: skills.Array.data[0]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: f50013411254fc04889868288bb9db01, type: 2}
     - target: {fileID: 3999909075562294525, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: skills.Array.data[1]
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: 17d2faab3a0164645bd45619a9247d95, type: 2}
     - target: {fileID: 3999909075562294525, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: skillList.Array.data[0]
       value: 
@@ -378,7 +378,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3999909075562294527, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: aiName
-      value: Scarecrow
+      value: Slime
       objectReference: {fileID: 0}
     - target: {fileID: 3999909076433884032, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: m_Sprite
