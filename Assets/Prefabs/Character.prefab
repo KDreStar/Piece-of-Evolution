@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SensorName: AttackerSkillsBufferSensor
-  m_ObservableSize: 37
+  m_ObservableSize: 10
   m_MaxNumObservables: 8
 --- !u!1 &4304618862309491810
 GameObject:
@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SensorName: DefenderSkillsBufferSensor
-  m_ObservableSize: 37
+  m_ObservableSize: 10
   m_MaxNumObservables: 8
 --- !u!1 &4816410478634289091
 GameObject:
@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SensorName: FieldBufferSensor
-  m_ObservableSize: 40
+  m_ObservableSize: 12
   m_MaxNumObservables: 8
 --- !u!1 &9065742834548992605
 GameObject:
@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 9065742834548992579}
   - component: {fileID: 8423538523725702433}
   - component: {fileID: 9065742834548992585}
-  - component: {fileID: 2597087820616932488}
+  - component: {fileID: 8164599287946189402}
   - component: {fileID: 9065742834548992582}
   - component: {fileID: 9065742834548992583}
   - component: {fileID: 9065742834548992580}
@@ -175,7 +175,7 @@ Transform:
   m_GameObject: {fileID: 9065742834548992605}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -5.913, y: -0.1691, z: -0.012093563}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6249259913394216882}
@@ -253,6 +253,7 @@ MonoBehaviour:
   status: {fileID: 0}
   equipSkills: {fileID: 0}
   rigid: {fileID: 0}
+  col: {fileID: 0}
   sr: {fileID: 0}
   bp: {fileID: 0}
   isStopping: 0
@@ -327,8 +328,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &2597087820616932488
-BoxCollider2D:
+--- !u!70 &8164599287946189402
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -340,19 +341,9 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.040602922, y: -0.03530699}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.78462744, y: 0.929386}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.5, y: 1}
+  m_Direction: 0
 --- !u!114 &9065742834548992582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,8 +395,7 @@ MonoBehaviour:
   defender: {fileID: 0}
   field: {fileID: 0}
   battleEnvController: {fileID: 0}
-  fieldWidth: 0
-  fieldHeight: 0
+  areaSize: {x: 30, y: 14}
   aiName: 
 --- !u!114 &9065742834548992580
 MonoBehaviour:

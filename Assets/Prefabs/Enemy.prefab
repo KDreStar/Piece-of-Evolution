@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SensorName: FieldBufferSensor
-  m_ObservableSize: 40
+  m_ObservableSize: 12
   m_MaxNumObservables: 8
 --- !u!1 &1589529876771655431
 GameObject:
@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 1589529876771655455}
   - component: {fileID: 1589529876771655450}
   - component: {fileID: 1589529876771655452}
-  - component: {fileID: 1589529876771655453}
+  - component: {fileID: 173994705786722439}
   - component: {fileID: 1589529876771655451}
   - component: {fileID: 1589529876771655448}
   - component: {fileID: 1589529876771655449}
@@ -82,7 +82,7 @@ Transform:
   m_GameObject: {fileID: 1589529876771655431}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 4.5052, y: -0.4922, z: -0.012093563}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1839920477670549345}
@@ -160,6 +160,7 @@ MonoBehaviour:
   status: {fileID: 0}
   equipSkills: {fileID: 0}
   rigid: {fileID: 0}
+  col: {fileID: 0}
   sr: {fileID: 0}
   bp: {fileID: 0}
   isStopping: 0
@@ -234,8 +235,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &1589529876771655453
-BoxCollider2D:
+--- !u!70 &173994705786722439
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -248,18 +249,8 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Size: {x: 0.5, y: 1}
+  m_Direction: 0
 --- !u!114 &1589529876771655451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -311,8 +302,7 @@ MonoBehaviour:
   defender: {fileID: 0}
   field: {fileID: 0}
   battleEnvController: {fileID: 0}
-  fieldWidth: 0
-  fieldHeight: 0
+  areaSize: {x: 30, y: 14}
   aiName: 
 --- !u!114 &1589529876771655449
 MonoBehaviour:
@@ -393,7 +383,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SensorName: DefenderSkillsBufferSensor
-  m_ObservableSize: 37
+  m_ObservableSize: 10
   m_MaxNumObservables: 8
 --- !u!1 &6039056009839692478
 GameObject:
@@ -440,5 +430,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_SensorName: AttackerSkillsBufferSensor
-  m_ObservableSize: 37
+  m_ObservableSize: 10
   m_MaxNumObservables: 8

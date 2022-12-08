@@ -24,6 +24,6 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: e0b16a377f17da741be514a884ceeca3, type: 3}
   cooltime: 1.5
   createOffset: {x: 0, y: 0}
-  range: 6
-  speed: 6
+  range: 4
+  speed: 4
   prefab: {fileID: 1327035046624340984, guid: 24496fe04e1d163469b25cc203f35fb2, type: 3}

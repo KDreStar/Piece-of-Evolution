@@ -25,7 +25,7 @@ public class Scarecrow3AI : EnemyAI
         float attackerX = agent.attacker.transform.localPosition.x;
         float attackerY = agent.attacker.transform.localPosition.y;
 
-        float halfHeight = agent.fieldHeight / 2;
+        float halfHeight = agent.field.fieldSize.y / 2;
 
         if (halfHeight - Mathf.Abs(attackerY) < bound)
             dy = -dy;

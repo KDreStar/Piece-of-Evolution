@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 3571995790979206623}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.73, y: -0.05, z: 0}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -107,6 +107,7 @@ MonoBehaviour:
   collider: {fileID: 2103499066876326963}
   anim: {fileID: 0}
   direction: 0
+  isAttacked: 0
   currentCastingTime: 0
   currentDuration: 0
 --- !u!95 &5680589928683139435

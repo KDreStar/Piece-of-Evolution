@@ -12,23 +12,14 @@ public class BattleAgent : Agent
     public Character attacker;
     public Character defender;
 
-    EnvironmentParameters m_ResetParams;
+    public EnvironmentParameters m_ResetParams;
     public Field field;
     public BattleEnvController battleEnvController;
     private BufferSensorComponent attackerSkillsBufferSensor;
     private BufferSensorComponent defenderSkillsBufferSensor;
     private BufferSensorComponent fieldBufferSensor;
 
-    private float startX;
-    private float startY;
-    private float endX;
-    private float endY;
-
-    [HideInInspector]
-    public float fieldWidth;
-    [HideInInspector]
-    public float fieldHeight;
-    ///////
+    public Vector2 areaSize = new Vector2(30, 14);
 
     public EnemyAI ai;
 
@@ -48,18 +39,6 @@ public class BattleAgent : Agent
             if (sensor.SensorName.Equals("FieldBufferSensor"))
                 fieldBufferSensor = sensor;
         }
-
-        float scale = field.leftWall.transform.localScale.x / 2;
-        startX = field.leftWall.transform.localPosition.x + scale;
-        startY = field.downWall.transform.localPosition.y + scale;
-
-        endX = field.rightWall.transform.localPosition.x - scale;
-        endY = field.upWall.transform.localPosition.y - scale;
-
-        fieldWidth = endX - startX;
-        fieldHeight = endY - startY;
-
-        Debug.Log(string.Format("[Collecting] {0} {1}", fieldWidth, fieldHeight));
 
         if (!aiName.Equals("")) {
             AIFactory temp = new AIFactory();
@@ -160,18 +139,38 @@ public class BattleAgent : Agent
         float[] binary = new float[len];
 
         for (int i=len-1; i>=0; i--) {
-            binary[i] = n % 2;
+            binary[len-1-i] = n % 2;
             n = n / 2;
         }
 
         return binary;
     }
 
-    //좌표 정규화 0~1로 함
+    //좌표 정규화 -1~1로 함
     //|----------------->|
-    public Vector2 NormalizePos(Vector2 pos) {
-        float width = fieldWidth / 2;
-        float height = fieldHeight / 2;
+    public Vector2 NormalizeRelativePos(Vector2 pos) {
+        float width = areaSize.x;
+        float height = areaSize.y;
+
+        Vector2 attackerPos = attacker.transform.localPosition;
+
+        float x = Mathf.Clamp((pos.x - attackerPos.x) / areaSize.x, -1, 1);
+        float y = Mathf.Clamp((pos.y - attackerPos.y) / areaSize.y, -1, 1);
+
+        return new Vector2(x, y);
+    }
+
+    //필드 이동 가능 구역의 좌표
+    //벽과의 거리
+    public Vector2 NormalizeFieldPos(Character character) {
+        Vector2 fieldSize = field.fieldSize;
+        Vector2 characterSize = character.GetSize();
+
+        fieldSize -= characterSize;
+        Vector2 pos = character.transform.localPosition;
+
+        float width = fieldSize.x / 2;
+        float height = fieldSize.y / 2;
 
         float x = Mathf.Clamp(pos.x / width, -1, 1);
         float y = Mathf.Clamp(pos.y / height, -1, 1);
@@ -182,27 +181,11 @@ public class BattleAgent : Agent
     //크기 정규화 (0~1)
     //|----------------->|
     public Vector2 NormalizeSize(Vector2 pos) {
-        float width = fieldWidth;
-        float height = fieldHeight;
+        float width = areaSize.x / 2;
+        float height = areaSize.y / 2;
 
         float x = Mathf.Clamp(pos.x / width, 0, 1);
         float y = Mathf.Clamp(pos.y / height, 0, 1);
-
-        return new Vector2(x, y);
-    }
-
-    //캐릭터 기준 거리 정규화 (-1~1) 안씀
-    //|----------------->| +1
-    //|<-----------------| -1
-    public Vector2 NormalizeRelativePos(Vector2 pos) {
-        float width = fieldWidth;
-        float height = fieldHeight;
-
-        float baseX = attacker.transform.localPosition.x;
-        float baseY = attacker.transform.localPosition.y;
-
-        float x = Mathf.Clamp((pos.x - baseX) / width, -1, 1);
-        float y = Mathf.Clamp((pos.y - baseY) / height, -1, 1);
 
         return new Vector2(x, y);
     }
@@ -215,17 +198,17 @@ public class BattleAgent : Agent
     public void CollectObservationsCharacter(Character a, Character d, VectorSensor sensor) {
         //캐릭터 위치 (x, y) (벽과의 거리를 나타냄)
         if (a == attacker) {
-            sensor.AddObservation(NormalizePos(a.transform.localPosition));
-            Debug.Log(string.Format("[Collecting] [{0}] [pos={1}",
-                a.tag, NormalizePos(a.transform.localPosition))
-            );
+            sensor.AddObservation(NormalizeFieldPos(a));
+            Debug.Log(string.Format("[Collecting] [{0}] [pos={1}]",
+                a.tag, NormalizeFieldPos(a)
+            ));
         } else {
             sensor.AddObservation(NormalizeRelativePos(a.transform.localPosition));
-            Debug.Log(string.Format("[Collecting] [{0}] [pos={1}",
-                a.tag, NormalizeRelativePos(a.transform.localPosition))
-            );
+            Debug.Log(string.Format("[Collecting] [{0}] [pos={1}]",
+                a.tag, NormalizeRelativePos(a.transform.localPosition)
+            ));
         }
-        
+
         //캐릭터 크기 scale 값 (x, y)
         sensor.AddObservation(NormalizeSize(a.GetSize()));
         Debug.Log(string.Format("[Collecting] [{0}] [size={1} {2}", a.tag, NormalizeSize(a.GetSize()), a.GetSize()));
@@ -236,19 +219,6 @@ public class BattleAgent : Agent
         sensor.AddObservation(Mathf.Clamp01(a.status.CurrentHP / a.status.MaxHP));
         sensor.AddObservation(NormalizeSize(new Vector2(distance1s, distance1s)));
         
-
-        /* 액티브 스킬 정보
-        - 액티브 1 / 패시브 or 없음 0
-        - 최대 쿨타임 (스킬 쿨타임 / 120초, 쿨타임이 긴 스킬이면 적절한 때에 쓰라는 것)
-        - 사용 가능 여부 (0~ 사용불가능 1 사용가능)
-        - 스킬 사정거리 (x, y)
-        - 스킬 생성 좌표 (캐릭터 기준 x, y) (양수 기준)
-        - 스킬 범위 (x, y)
-        - 효과 (2개만)
-            - 태그 (2^8)
-            - 연산자 (5)
-            - 수치 (1) (현재 수치에서 어느정도 비율인지를 확인) (패시브는 이미 적용되서 할 이유 없음)
-        */
         CollectObservationsEquipSkills(a, d);
         
     }
@@ -295,8 +265,21 @@ public class BattleAgent : Agent
         return tag;
     }
 
+
+    /* 액티브 스킬 정보
+    - 액티브 1 / 패시브 or 없음 0
+    - 최대 쿨타임 (스킬 쿨타임 / 120초, 쿨타임이 긴 스킬이면 적절한 때에 쓰라는 것)
+    - 사용 가능 여부 (0~ 사용불가능 1 사용가능)
+    - 스킬 사정거리 (x, y)
+    - 스킬 생성 좌표 (캐릭터 기준 x, y) (양수 기준)
+    - 스킬 범위 (x, y)
+    - 효과 (2개만)
+        - 태그 (2^8)
+        - 연산자 (5)
+        - 수치 (1) (현재 수치에서 어느정도 비율인지를 확인) (패시브는 이미 적용되서 할 이유 없음)
+    */
     public void CollectObservationsEquipSkills(Character a, Character d) {
-        int skillVectorSize = 1 + 1 + 1 + 2 + 2 + 2 + (8 + 5 + 1) * 2;
+        int skillVectorSize = 1 + 1 + 1 + 2 + 2 + 2 + 1;
 
         for (int i=0; i<EquipSkills.MaxSlot; i++) {
             SkillSlot skillSlot = a.equipSkills.GetSkillSlot(i);
@@ -338,7 +321,9 @@ public class BattleAgent : Agent
             listObservation[k++] = normColliderRange.x;
             listObservation[k++] = normColliderRange.y;
 
-            Debug.Log("[Collecting] Skill " + createPos + " " + colliderRange);
+            Debug.Log("[Collecting] Skill Cooltime" + activeSkill.Cooltime / 120.0f + " Current " + (1.0f - skillSlot.CurrentCooltime / activeSkill.Cooltime));
+            Debug.Log("[Collecting] Skill CreatePos " + createPos + " Collider " + colliderRange + " Range " + range);
+            Debug.Log("[Collecting] Skill Norm CreatePos " + normCreatePos + " Collider " + normColliderRange + " Range " + normRange);
 
             bool inverseTag = false;
             if (a == defender)
@@ -361,11 +346,11 @@ public class BattleAgent : Agent
     //예를 들어 데미지를 주는 스킬은 DEFENDER_DAMAGE 이지만
     //방어자의 스킬을 볼 때도 DEFENDER_DAMAGE = 적에게 데미지가 들어가는 것으로 판단을 할 수 있음
     public float[] GetObservationsEffects(Effect[] effects, Character a, Character d, bool inverseTag=false) {
-        int effectVectorSize = 8 + 5 + 1;
+        int effectVectorSize = 1;//8 + 5 + 1;
 
-        float[] result = new float[effectVectorSize * 2];
+        float[] result = new float[effectVectorSize];
 
-        for (int i=0; i<2; i++) {
+        for (int i=0; i<1; i++) {
             if (i >= effects.Length)
                 break;
 
@@ -379,6 +364,7 @@ public class BattleAgent : Agent
                 tag = InverseEffectTag(tag);
             }
 
+            /*
             float[] binary = GetBinaryEncoding((int)tag, 8);
 
             for (int bi=0; bi<binary.Length; bi++)
@@ -387,6 +373,7 @@ public class BattleAgent : Agent
             //k~k+5-1 까지 한 곳을 1로 만듦
             result[k + (int)effect.EffectOperator] = 1;
             k += 5;
+            */
 
             float damage = Managers.Battle.CalculateDamage(effect.Formula, a.status, d.status);
             result[k++] = Mathf.Clamp01(damage / d.status.CurrentHP);
@@ -414,7 +401,7 @@ public class BattleAgent : Agent
     */
     public void CollectObservationsFieldSkills() {
         List<SkillEffect> skillEffects = field.GetList();
-        int skillVectorSize = 2 + 1 + 1 + 2 + 1 + 2 + 2 + 1 + (8 + 5 + 1) * 2;
+        int skillVectorSize = 1 + 1 + 1 + 2 + 1 + 2 + 2 + 1 + 1;
 
         for (int i=0; i<8; i++) {
             if (i >= skillEffects.Count)
@@ -426,18 +413,16 @@ public class BattleAgent : Agent
             int k = 0;
 
             //시전자
-            //{1, 0} 내 스킬
-            //{0, 1} 상대 스킬
+            //0 내스킬
+            //1 상대스킬
             bool inverseTag;
             if (gameObject.CompareTag(effect.GetAttackerTag()) == true) {
-                listObservation[k] = 1;
+                listObservation[k++] = 0;
                 inverseTag = false;
             } else {
-                listObservation[k+1] = 1;
+                listObservation[k++] = 1;
                 inverseTag = true;
             }
-
-            k += 2;
 
             //캐스팅 시간
             listObservation[k++] = Mathf.Clamp01(effect.currentCastingTime);
@@ -467,7 +452,7 @@ public class BattleAgent : Agent
             bool isUsed = effect.isAttacked;
             listObservation[k++] = isUsed ? 0 : 1; 
 
-            Debug.Log("[Collecting] " + field.gameObject.name  + " Skill pos:" + effect.GetCurrentPos() + " " + pos + " range: " + skillRange + " time: " + effect.currentCastingTime + ", " + effect.currentDuration + " rotation: " + effect.transform.eulerAngles.z + " used: " + isUsed);
+            Debug.Log("[Collecting] " + field.gameObject.name + " Name: " + activeSkill.Name  + " Skill pos:" + effect.GetCurrentPos() + " " + pos + " range: " + skillRange + " time: " + effect.currentCastingTime + ", " + effect.currentDuration + " rotation: " + effect.transform.eulerAngles.z + " used: " + isUsed);
 
 
 

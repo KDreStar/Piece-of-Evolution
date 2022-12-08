@@ -23,6 +23,9 @@ public class Character : MonoBehaviour
     public Rigidbody2D rigid;
 
     [HideInInspector]
+    public CapsuleCollider2D col;
+
+    [HideInInspector]
     public SpriteRenderer sr;
 
     [HideInInspector]
@@ -41,6 +44,7 @@ public class Character : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         bp = GetComponent<BehaviorParameters>();
         rigid = GetComponent<Rigidbody2D>();
+        col = GetComponent<CapsuleCollider2D>();
         agent = GetComponent<BattleAgent>();
     }
 
@@ -53,24 +57,10 @@ public class Character : MonoBehaviour
     }
 
     public Vector2 GetSize() {
-        if (sr == null)
+        if (col == null)
             return Vector2.zero;
 
-        return sr.bounds.size;
-    }   
-
-    public float GetSizeX() {
-        if (sr == null)
-            return 0;
-        
-        return sr.bounds.size.x * transform.localScale.x;
-    }
-
-    public float GetSizeY() {
-        if (sr == null)
-            return 0;
-        
-        return sr.bounds.size.y * transform.localScale.x;
+        return col.bounds.size;
     }
 
     //배틀시 불러오는 용도
@@ -81,19 +71,11 @@ public class Character : MonoBehaviour
 
         CharacterData data = null;
 
-        if (isCharacter)
-            data = Managers.Data.GetBattleCharacterData();
-
-        if (isEnemy)
-            data = Managers.Data.GetBattleEnemyData();
-
         if (isCurrentCharacter)
             data = Managers.Data.GetCurrentCharacterData();
 
         if (data != null)
             LoadData(data);
-
-        Init();
     }
 
     public void LoadData(CharacterData data) {
@@ -126,7 +108,7 @@ public class Character : MonoBehaviour
         Init();
     }
 
-    void Init() {
+    public void Init() {
         equipSkills.Init();
         status.Init();
     }

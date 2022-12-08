@@ -310,15 +310,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3999909075562294520, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: baseATK
-      value: 50
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 3999909075562294520, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: baseDEF
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 3999909075562294520, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: baseSPD
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3999909075562294524, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: m_Model
@@ -343,11 +343,11 @@ PrefabInstance:
     - target: {fileID: 3999909075562294525, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: skills.Array.data[0]
       value: 
-      objectReference: {fileID: 11400000, guid: f50013411254fc04889868288bb9db01, type: 2}
+      objectReference: {fileID: 11400000, guid: f8ae0439baeda5044a035c410237869b, type: 2}
     - target: {fileID: 3999909075562294525, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: skills.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 17d2faab3a0164645bd45619a9247d95, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 3999909075562294525, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: skillList.Array.data[0]
       value: 
@@ -378,7 +378,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3999909075562294527, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: aiName
-      value: Slime
+      value: Scarecrow2
       objectReference: {fileID: 0}
     - target: {fileID: 3999909076433884032, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: m_Sprite
@@ -431,11 +431,11 @@ PrefabInstance:
     - target: {fileID: 4515736757712133374, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: equipSkills
       value: 
-      objectReference: {fileID: 1331505416}
+      objectReference: {fileID: 0}
     - target: {fileID: 4515736757712133374, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: equipSkillsObject
       value: 
-      objectReference: {fileID: 1331505416}
+      objectReference: {fileID: 1483840660}
     - target: {fileID: 4515736757712133374, guid: 94083a97355f54749954464101c7fdd7, type: 3}
       propertyPath: skills.Array.data[0]
       value: 
@@ -542,7 +542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Record: 1
   NumStepsToRecord: 1000
-  DemonstrationName: Ranger
+  DemonstrationName: Warrior
   DemonstrationDirectory: Assets/Demonstrations
 --- !u!1 &949226616
 GameObject:
@@ -690,11 +690,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &1331505416 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2422623909594120614, guid: 926fe1a5765194345becedbde5e7a2f8, type: 3}
-  m_PrefabInstance: {fileID: 7114253847371587014}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1378900369 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3999909075100648275, guid: 94083a97355f54749954464101c7fdd7, type: 3}
@@ -728,6 +723,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e34804f9a3152643a166c8cbbf03941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1483840660 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2422623909594120614, guid: 926fe1a5765194345becedbde5e7a2f8, type: 3}
+  m_PrefabInstance: {fileID: 7114253847371587014}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1865164711
 GameObject:
   m_ObjectHideFlags: 0

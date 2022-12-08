@@ -28,18 +28,22 @@ public class DataManager
     //배틀용
     public BattleData battleData = new BattleData();
 
-    public void Init() {
-        battleData.characterData = new CharacterData();
-        battleData.enemyData = new CharacterData();
+    public LearningData learningData = new LearningData();
 
+    public const int MaxEnemyCount = 5;
+
+    public void Init() {
         if (File.Exists(Application.persistentDataPath + "/Game.json") == false)
             SaveFirstGameData();
 
         LoadGameData();
+        LoadLearningData();
     }
 
     public void CreateCharacter(string name) {
         CharacterData temp = new CharacterData();
+
+        temp.no = gameData.characterCreateCount;
 
         temp.name = name;
         temp.baseHP = 500;
@@ -135,8 +139,27 @@ public class DataManager
         File.WriteAllText(path, json);
     }
 
+    public void SaveLearningData(CharacterData character, CharacterData enemy) {
+        string path = Application.persistentDataPath + "/Learning.json";
+
+        learningData.characterData = character;
+        learningData.enemyDatas.Add(enemy);
+
+        if (learningData.enemyDatas.Count > MaxEnemyCount)
+            learningData.enemyDatas.RemoveAt(0);
+
+        string json = JsonUtility.ToJson(learningData);
+
+        File.WriteAllText(path, json);
+    }
+
+
     public void LoadGameData() {
         string path = Application.persistentDataPath + "/Game.json";
+
+        if (File.Exists(path) == false)
+            return;
+
         string json = File.ReadAllText(path);
 
         gameData = JsonUtility.FromJson<GameData>(json);
@@ -148,6 +171,10 @@ public class DataManager
 
     public void LoadBattleData() {
         string path = Application.persistentDataPath + "/Battle.json";
+
+        if (File.Exists(path) == false)
+            return;
+
         string json = File.ReadAllText(path);
 
         battleData = JsonUtility.FromJson<BattleData>(json);
@@ -157,6 +184,26 @@ public class DataManager
 
         battleData.characterData.LoadModel();
         battleData.enemyData.LoadModel();
+    }
+
+    public void LoadLearningData() {
+        string path = Application.persistentDataPath + "/Learning.json";
+
+        if (File.Exists(path) == false)
+            return;
+
+        string json = File.ReadAllText(path);
+
+
+        learningData = JsonUtility.FromJson<LearningData>(json);
+
+        learningData.characterData.LoadSprite();
+        learningData.characterData.LoadModel();
+
+        for (int i=0; i<learningData.enemyDatas.Count; i++) {
+            learningData.enemyDatas[i].LoadModel();
+            learningData.enemyDatas[i].LoadSprite();
+        }
     }
 
     public void SetCurrentCharacterData(Character character) {
@@ -193,5 +240,16 @@ public class DataManager
 
     public CharacterData GetBattleEnemyData() {
         return battleData.enemyData;
+    }
+
+    public CharacterData GetLearningCharacterData() {
+        return learningData.characterData;
+    }
+
+    public CharacterData GetLearningEnemyData(int i) {
+        if (i >= learningData.enemyDatas.Count)
+            i = learningData.enemyDatas.Count - 1;
+
+        return learningData.enemyDatas[i];
     }
 }

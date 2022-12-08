@@ -13,4 +13,9 @@ public class BattleData
 {
     public CharacterData characterData;
     public CharacterData enemyData;
+
+    public BattleData() {
+        characterData = new CharacterData();
+        enemyData = new CharacterData();
+    }
 }

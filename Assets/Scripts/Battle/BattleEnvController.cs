@@ -118,14 +118,42 @@ public class BattleEnvController : MonoBehaviour
         field.ClearEffects();
 
         int random = Random.Range(0, 2) * 2 - 1;
+        float width = field.fieldSize.x / 2;
 
-        character.transform.position = field.transform.position + new Vector3(-5 * random, Random.Range(-2.0f, 2.0f), 0);
-        enemy.transform.position = field.transform.position + new Vector3(5 * random, Random.Range(-2.0f, 2.0f), 0);
+        character.transform.position = field.transform.position + new Vector3(-random * 0.75f * width, Random.Range(-2.0f, 2.0f), 0);
+        enemy.transform.position = field.transform.position + new Vector3(random * 0.75f * width, Random.Range(-2.0f, 2.0f), 0);
 
         Debug.Log("Reset Position " + character.transform.position);
 
+        if (Managers.Battle.isLearning == false) {
+            character.LoadData(Managers.Data.GetBattleCharacterData());
+            enemy.LoadData(Managers.Data.GetBattleEnemyData());
+        } else {
+            float randNum = enemy.agent.m_ResetParams.GetWithDefault("random", 0);
+            int count = Managers.Data.learningData.enemyDatas.Count;
+            int index = (int)(randNum * count);
+
+            if (character.dontLoad == false)
+                character.LoadData(Managers.Data.GetLearningCharacterData());
+            else
+                character.Init();
+
+            if (enemy.dontLoad == false)
+                enemy.LoadData(Managers.Data.GetLearningEnemyData(index));
+            else
+                enemy.Init();
+
+            Debug.Log("[Randomize] " + randNum + " " + index + " " + enemy.status.name);
+
+            //Debug.Log(Managers.Data.GetLearningCharacterData().baseATK + " " + Managers.Data.GetLearningEnemyData(index).baseATK);
+        }
+
+        
         character.status.SetDefaultHP();
         enemy.status.SetDefaultHP();
+
+        Debug.Log(character.status.CurrentHP);
+        Debug.Log(enemy.status.CurrentHP);
 
         for (int i=0; i<EquipSkills.MaxSlot; i++) {
 			character.equipSkills.GetSkillSlot(i).ResetCooltime();

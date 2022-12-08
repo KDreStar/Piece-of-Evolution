@@ -100,18 +100,22 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("Dice: " + second);
 
+        Skill skill = null;
+
         if (second < 50)
-            return Managers.DB.SkillDB.GetRandomSkill(1);
+            skill = Managers.DB.SkillDB.GetRandomSkill(1);
+        else if (second < 80)
+            skill = Managers.DB.SkillDB.GetRandomSkill(2);
+        else if (second < 92)
+            skill = Managers.DB.SkillDB.GetRandomSkill(3);
+        else if (second < 98)
+            skill =  Managers.DB.SkillDB.GetRandomSkill(4);
+        else
+            skill = Managers.DB.SkillDB.GetRandomSkill(5);
 
-        if (second < 80)
-            return Managers.DB.SkillDB.GetRandomSkill(2);
-
-        if (second < 92)
-            return Managers.DB.SkillDB.GetRandomSkill(3);
-
-        if (second < 98)
-            return Managers.DB.SkillDB.GetRandomSkill(4);
-
-        return Managers.DB.SkillDB.GetRandomSkill(5);
+        if (skill == null) {
+            
+        }
+        return skill;
     }
 }

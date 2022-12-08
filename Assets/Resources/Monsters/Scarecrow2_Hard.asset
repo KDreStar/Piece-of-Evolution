@@ -18,7 +18,7 @@ MonoBehaviour:
   baseDEF: 20
   baseSPD: 0
   skills:
-  - {fileID: 0}
+  - {fileID: 11400000, guid: f8ae0439baeda5044a035c410237869b, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
